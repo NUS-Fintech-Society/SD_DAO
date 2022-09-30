@@ -8,7 +8,13 @@ import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
+  return (
+    <div>
+      <Component {...pageProps} />;
+    </div>
+  );
+  
+  
 };
 
 const getBaseUrl = () => {
@@ -36,27 +42,7 @@ export default withTRPC<AppRouter>({
       ],
       url,
       transformer: superjson,
-      /**
-       * @link https://react-query.tanstack.com/reference/QueryClient
-       */
-      // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
-
-      // To use SSR properly you need to forward the client's headers to the server
-      // headers: () => {
-      //   if (ctx?.req) {
-      //     const headers = ctx?.req?.headers;
-      //     delete headers?.connection;
-      //     return {
-      //       ...headers,
-      //       "x-ssr": "1",
-      //     };
-      //   }
-      //   return {};
-      // }
     };
   },
-  /**
-   * @link https://trpc.io/docs/ssr
-   */
   ssr: false,
 })(MyApp);
