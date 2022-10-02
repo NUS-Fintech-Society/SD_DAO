@@ -1,11 +1,10 @@
-import contract from './contract.json';
+import { ethers } from 'ethers';
 import ipfsClient from 'ipfs-http-client';
-import Web3 from 'web3';
-import type { Contract } from 'web3-eth-contract';
+import contractData from './contract.json';
 import { Proposal, ProposalInfo } from './types';
-import { AbiItem } from 'web3-utils';
 
 const IPFS_URL = 'abcdao.infura-ipfs.io';
+const ADDRESS = '0x74C986e4e330162D4EfC971028455b976FDa0504';
 
 const ipfs = ipfsClient.create({
   host: IPFS_URL,
@@ -13,11 +12,27 @@ const ipfs = ipfsClient.create({
   protocol: 'https',
 });
 
-let currentContract: Contract | undefined;
-
 export async function uploadProposal(text: string) {
   const added = await ipfs.add(text);
   return added.path;
+}
+
+export async function getWalletAddress() {
+  try {
+    const provider = getWeb3Provider();
+    if (provider) {
+      const signer = provider.getSigner();
+      const address = await signer.getAddress();
+      return address;
+    }
+  } catch (err) {
+    return '';
+  }
+  return '';
+}
+
+export async function getWalletAuthenticated() {
+  return (await getWalletAddress()) !== '';
 }
 
 export async function retrieveProposal(
@@ -28,53 +43,46 @@ export async function retrieveProposal(
   );
 }
 
-export function getContract(web3: Web3) {
-  if (currentContract === undefined) {
-    currentContract = new web3.eth.Contract(
-      contract.abi as AbiItem[],
-      contract.address
-    );
+export function getWeb3Provider() {
+  if (typeof window !== undefined) {
+    // @ts-ignore
+    return new ethers.providers.Web3Provider(window.ethereum, 'ropsten');
   }
-  return currentContract;
 }
 
-export async function getProposalHashes(web3: Web3): Promise<string[]> {
-  const contract = getContract(web3);
-  return contract.methods.getProposalHashes().call();
+export function getInfuraProvider() {
+  return new ethers.providers.InfuraProvider('ropsten', process.env.PROJECT_ID);
 }
 
-export async function getProposalInfo(
-  web3: Web3,
-  ipfsHash: string
-): Promise<ProposalInfo> {
-  const contract = getContract(web3);
-  return contract.methods.getProposalInfo(ipfsHash).call();
+export function getContract() {
+  const provider = getInfuraProvider();
+  return new ethers.Contract(ADDRESS, contractData.abi, provider);
 }
 
-export async function getAllProposals(web3: Web3) {
-  const contract = getContract(web3);
-  return contract.methods.getAllProposals().call();
+export async function getProposalHashes(): Promise<string[]> {
+  const contract = getContract();
+  return contract.getProposalHashes();
 }
 
-export async function getVotesForOption(
-  web3: Web3,
-  ipfsHash: string,
-  optionIndex: number
-) {
-  const contract = getContract(web3);
-  return contract.methods.getVotesForOption(ipfsHash, optionIndex).call();
+export async function getProposalInfo(ipfsHash: string): Promise<ProposalInfo> {
+  const contract = getContract();
+  return contract.getProposalInfo(ipfsHash);
 }
 
-export async function initialiseUser(
-  web3: Web3,
-  account: string,
-  userAccount: string
-) {
-  const contract = getContract(web3);
+export async function getAllProposals() {
+  const contract = getContract();
+  return contract.getAllProposals();
+}
+
+export async function getVotesForOption(ipfsHash: string, optionIndex: number) {
+  const contract = getContract();
+  return contract.getVotesForOption(ipfsHash, optionIndex);
+}
+
+export async function initialiseUser(account: string, userAccount: string) {
+  const contract = getContract();
   try {
-    return await contract.methods
-      .initialiseUser(userAccount)
-      .send({ from: account });
+    return await contract.initialiseUser(userAccount).send({ from: account });
   } catch (err) {
     console.log(`Unsuccessful init of ${userAccount}`);
   }
@@ -82,17 +90,16 @@ export async function initialiseUser(
 
 //can change anything except .create proposal
 export async function createProposal(
-  web3: Web3,
   account: string | null,
   values: Pick<
     Proposal,
     'numOfOptions' | 'min_stake' | 'isLossVoting' | 'isAllocationProposal'
   >
 ) {
-  const contract = getContract(web3);
+  const contract = getContract();
   const ipfsHash = await uploadProposal(JSON.stringify(values));
   try {
-    return await contract.methods
+    return await contract
       .createProposal(
         ipfsHash,
         values['numOfOptions'],
@@ -109,14 +116,13 @@ export async function createProposal(
 }
 
 export async function setProposalStatus(
-  web3: Web3,
   account: string,
   ipfsHash: string,
   isActive: boolean
 ) {
-  const contract = getContract(web3);
+  const contract = getContract();
   try {
-    return await contract.methods
+    return await contract
       .setProposalStatus(ipfsHash, isActive)
       .send({ from: account });
   } catch (err) {
@@ -125,16 +131,15 @@ export async function setProposalStatus(
 }
 
 export async function sendVote(
-  web3: Web3,
   account: string | null,
   ipfsHash: string,
   optionIndex: number,
   stakeValue: number
 ) {
-  const contract = getContract(web3);
+  const contract = getContract();
   const amt = String(stakeValue * 1000000000000000000);
   try {
-    return await contract.methods
+    return await contract
       .vote(ipfsHash, optionIndex, amt)
       .send({ from: account });
   } catch (err) {

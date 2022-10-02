@@ -26,7 +26,7 @@ git checkout master
 git remote add origin https://github.com/NUS-Fintech-Society/SD_DAO
 git fetch origin
 git merge origin/master
-git checkout -b featured-branch
+git checkout -b jovan/authentication
 git push
 ```
 
