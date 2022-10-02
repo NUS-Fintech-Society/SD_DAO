@@ -1,9 +1,11 @@
+import Description from '../components/LandingPage/Description';
+import HeroBanner from '../components/LandingPage/HeroBanner';
 
-
-export default function WelcomePage() {
+export default function Index() {
   return (
     <>
-    <div></div>
+      <HeroBanner />
+      <Description />
     </>
   );
 }
