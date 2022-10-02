@@ -12,15 +12,18 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.0",
     "@headlessui/react": "^1.7.3",
-    "@heroicons/react": "^2.0.11",
+    "@heroicons/react": "1.0.6",
     "@prisma/client": "^4.3.1",
     "@trpc/client": "^9.27.2",
     "@trpc/next": "^9.27.2",
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
-    "ipfs-http-client": "52.0.2",
+    "ethers": "5.7.1",
+    "formik": "2.2.9",
+    "ipfs-http-client": "^52.0.2",
     "next": "12.3.1",
     "react": "18.2.0",
+    "react-datepicker": "4.2.1",
     "react-dom": "18.2.0",
     "react-query": "^3.39.2",
     "react-toastify": "^9.0.8",
@@ -28,6 +31,7 @@
     "web3": "^1.8.0",
     "web3-eth-contract": "^1.8.0",
     "web3-utils": "^1.8.0",
+    "yup": "0.32.9",
     "zod": "^3.18.0"
   },
   "devDependencies": {
