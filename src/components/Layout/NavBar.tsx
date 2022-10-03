@@ -1,5 +1,7 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+
+
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
@@ -102,9 +104,9 @@ export default function NavBar() {
                 <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <XIcon className="block h-6 w-6" aria-hidden="true" />
+                    <CloseIcon h={6} w={6} /> // block?
                   ) : (
-                    <MenuIcon className="block h-6 w-6" aria-hidden="true" />
+                    <HamburgerIcon h={6} w={6} /> // block?
                   )}
                 </Disclosure.Button>
               </div>
@@ -143,7 +145,7 @@ export default function NavBar() {
                 {/* Bell notifications */}
                 <button className="bg-gray-300 p-1 rounded-full text-gray-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                   <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  <BellIcon w={6} h={6} />
                 </button>
 
                 {/* Profile dropdown */}
