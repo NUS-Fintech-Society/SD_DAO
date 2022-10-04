@@ -1,11 +1,10 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-
+import { useToast } from '@chakra-ui/core';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
 import { getWalletAddress, getWeb3Provider } from '../api/api';
 import { getShortAccountHash } from '../api/utils';
 
@@ -46,25 +45,21 @@ export default function NavBar() {
     }
   };
 
-  // Toast info
-  const copyNotification = () =>
-    toast.info('Copied to clipboard', {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    });
-
+  // Toast (Chakra UI)
   function checkAccount() {
+    const toast = useToast()
     if (address !== '') {
       return (
         <div
           className="block px-4 py-2 w-full text-left cursor-pointer"
           onClick={() => {
-            copyNotification();
+            toast({
+              title: "Copied to clipboard",
+              position: 'bottom-left',
+              status: "success",
+              duration: 3000,
+              isClosable: true
+            });
             navigator.clipboard.writeText(address);
           }}
         >
@@ -72,17 +67,6 @@ export default function NavBar() {
           <span className="font-semibold text-gray-500">
             {getShortAccountHash(address)}
           </span>
-          <ToastContainer
-            position="bottom-center"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable
-            pauseOnHover={false}
-          />
         </div>
       );
     }
