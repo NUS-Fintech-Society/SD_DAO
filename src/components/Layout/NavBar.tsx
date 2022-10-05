@@ -1,6 +1,6 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { useToast } from '@chakra-ui/react'
 import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import { useToast } from '@chakra-ui/react';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
