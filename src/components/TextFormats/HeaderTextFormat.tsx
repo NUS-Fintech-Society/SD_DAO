@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import { useToast } from '@chakra-ui/core';
 
 export default function HeaderTextFormat({
   header,
@@ -7,17 +7,7 @@ export default function HeaderTextFormat({
   header: string;
   info: string;
 }) {
-  const copyNotification = () =>
-    toast.info('Copied to clipboard', {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    });
-
+  const toast = useToast();
   return (
     <div className="flex flex-col space-y-1 mb-1">
       <div className="text-lg font-medium cursor-default line-clamp-1">
@@ -26,7 +16,13 @@ export default function HeaderTextFormat({
       <div
         className="text-md font-medium text-gray-500 cursor-pointer line-clamp-1"
         onClick={() => {
-          copyNotification();
+          toast({
+            title: "Copied to clipboard",
+            position: 'bottom-left',
+            status: "success",
+            duration: 3000,
+            isClosable: true
+          });
           navigator.clipboard.writeText(info);
         }}
       >
