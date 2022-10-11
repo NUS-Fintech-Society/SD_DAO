@@ -1336,6 +1336,11 @@
     "@ethersproject/properties" "^5.7.0"
     "@ethersproject/strings" "^5.7.0"
 
+"@fontsource/chakra-petch@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/chakra-petch/-/chakra-petch-4.5.9.tgz#590b98223b5db50290f5e202887d35fd34b62063"
+  integrity sha512-53gZP08NrZdDB2zSZV5+eg51iKg+pGKCHiALbB8FTv6Gp2EDPGV39ixAhO72bJhChEbTwrH5yJ7GFYLN7S93ow==
+
 "@fontsource/inter@^4.5.13":
   version "4.5.13"
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.13.tgz#db4b0177992091816962c4a4a24b1e060cc750bf"
