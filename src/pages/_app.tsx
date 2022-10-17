@@ -1,5 +1,4 @@
 import { AppProps } from 'next/app';
-import 'react-toastify/dist/ReactToastify.css';
 import NavBar from '../components/Layout/NavBar';
 import '../styles/index.css';
 

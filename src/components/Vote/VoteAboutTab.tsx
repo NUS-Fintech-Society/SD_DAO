@@ -1,6 +1,5 @@
 import HeaderTextFormat from '../TextFormats/HeaderTextFormat';
 import IndividualLineFormat from '../TextFormats/IndividualLineFormat';
-
 export default function VoteAboutTab() {
   return (
     <>

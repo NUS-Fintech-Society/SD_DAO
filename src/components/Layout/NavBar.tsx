@@ -18,6 +18,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function NavBar() {
+  const toast = useToast()
   const router = useRouter();
   const [address, setAddress] = useState('');
 
@@ -47,7 +48,6 @@ export default function NavBar() {
 
   // Toast (Chakra UI)
   function checkAccount() {
-    const toast = useToast()
     if (address !== '') {
       return (
         <div
