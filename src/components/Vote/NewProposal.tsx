@@ -14,7 +14,7 @@ import { getCurrentDateTime, showCurrentDate } from './voteUtils';
 import Link from 'next/link';
 import { Proposal } from '../api/types';
 import { Toast } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/core';
+import { useToast } from '@chakra-ui/react';
 import DatePicker from "react-datepicker";
 
 

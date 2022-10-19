@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { Toast } from '@chakra-ui/react';
 import {
   getProposalInfo,
   getWalletAuthenticated,
@@ -12,8 +12,10 @@ import {
 import { Proposal, ProposalInfo } from '../api/types';
 import { getShortAccountHash } from '../api/utils';
 import { getReadableDate } from './voteUtils';
+import { useToast } from '@chakra-ui/react';
 
 export default function VoteDetail({ ipfsHash }: { ipfsHash: string }) {
+  const toast = useToast()
   const [authenticated, setAuthenticated] = useState(false);
   // Getting proposal content
   const [proposalContent, setProposalContent] = useState<Proposal | null>(null);
@@ -53,27 +55,21 @@ export default function VoteDetail({ ipfsHash }: { ipfsHash: string }) {
 
   //Amount Toasts
   const amountError = () =>
-    toast.warn('Amount must be greater than min stake value', {
-      position: 'bottom-center',
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      toastId: 'amountError',
+    toast({
+      title: 'Amount must be greater than min stake value',
+      position: 'bottom-left',
+      status: 'warning',
+      duration: 4000,
+      isClosable: true
     });
 
   const confirmationMessage = () =>
-    toast.success('🦊 Confirm on MetaMask!', {
-      position: 'bottom-center',
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      toastId: 'confirmationMessage',
+    toast({
+      title: '🦊 Confirm on MetaMask!', 
+      position: 'bottom-left',
+      status: 'success',  
+      duration: 4000,
+      isClosable: true
     });
 
   const [selected, setSelected] = useState<number | null>(null);
