@@ -9,7 +9,7 @@ import { getWalletAddress, getWeb3Provider } from '../api/api';
 import { getShortAccountHash } from '../api/utils';
 
 const navigation = [
-  { name: 'Dashboard', href: `/` },
+  { name: 'Home', href: `/` },
   { name: 'Vote', href: `/vote` },
 ];
 
@@ -71,14 +71,14 @@ export default function NavBar() {
       );
     }
     return (
-      <button className="block px-4 py-2 w-full text-left" onClick={login}>
-        Login
+      <button className="bg-fintech-yellow text-black rounded-2xl px-5 py-1.5 w-full font-chakraPetch tracking-widest" onClick={login}>
+        SIGN IN
       </button>
     );
   }
 
   return (
-    <Disclosure as="nav" className="bg-gray-100">
+    <Disclosure as="nav" className="bg-fintech-blue drop-shadow-2xl">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -94,21 +94,22 @@ export default function NavBar() {
                   )}
                 </Disclosure.Button>
               </div>
+
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 items-center hidden sm:flex">
-                  IMAGE HERE
+                  <img className='font-chakraPetch text-2xl text-white' src='../public/fintechsoc-logo 1.png' alt='Fintech Logo'>
+                  </img>
                 </div>
+              </div>
+
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">                
+                {/* Home, Vote */}
                 <div className="hidden sm:block sm:ml-6">
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 px-5">
                     {navigation.map((item) => (
                       <Link key={item.name} href={item.href} passHref>
                         <a
-                          className={classNames(
-                            router.pathname === item.href
-                              ? 'bg-gray-900 text-white'
-                              : 'text-gray-600 hover:bg-gray-500 hover:text-white',
-                            'px-3 py-2 rounded-md text-sm font-medium'
-                          )}
+                          className={classNames( 'px-3 py-2 rounded-md text-sm font-Inter text-white hover:underline')}
                           aria-current={
                             router.pathname === item.href ? 'page' : undefined
                           }
@@ -119,20 +120,15 @@ export default function NavBar() {
                     ))}
                   </div>
                 </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
                 {/* Account Hash */}
                 <div className="text-gray-400 font-semibold text-sm">
                   {checkAccount()}
                 </div>
 
-                {/* Bell notifications */}
-                <button className="bg-gray-300 p-1 rounded-full text-gray-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon w={6} h={6} />
-                </button>
+                {/* Pending Design and Logic - If not loggedin, show only Account Hash - If logged in, show only Profile Dropdown*/}
 
-                {/* Profile dropdown */}
+                {/* Profile Dropdown */}
                 <Menu as="div" className="ml-3 relative">
                   <div>
                     <Menu.Button className="bg-gray-100 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
@@ -199,7 +195,12 @@ export default function NavBar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
+                
               </div>
+
+
+
+
             </div>
           </div>
 
