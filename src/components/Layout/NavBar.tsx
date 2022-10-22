@@ -1,6 +1,7 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { useToast } from '@chakra-ui/react'
 import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Image from 'next/image';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -97,8 +98,7 @@ export default function NavBar() {
 
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 items-center hidden sm:flex">
-                  <img className='font-chakraPetch text-2xl text-white' src='../public/fintechsoc-logo 1.png' alt='Fintech Logo'>
-                  </img>
+                  <img src='/fintech_logo.png' alt='Fintech Logo' width='110px'/>
                 </div>
               </div>
 
@@ -126,14 +126,19 @@ export default function NavBar() {
                   {checkAccount()}
                 </div>
 
-                {/* Pending Design and Logic - If not loggedin, show only Account Hash - If logged in, show only Profile Dropdown*/}
+                {/* Pending Design and Logic - If not loggedin, show only Account Hash - If logged in, show only Profile Dropdown
 
-                {/* Profile Dropdown */}
+                Bell notifications
+                <button className="hidden sm:block sm:ml-6 text-xl p-1 rounded-full text-white">
+                  <BellIcon/>
+                </button>
+
+                Profile Dropdown
                 <Menu as="div" className="ml-3 relative">
                   <div>
                     <Menu.Button className="bg-gray-100 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
-                      {/* Placeholder Image */}
+                      Placeholder Image
                       <img
                         className="h-8 w-8 rounded-full"
                         src="https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
@@ -195,12 +200,10 @@ export default function NavBar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-                
+                */}
+
+
               </div>
-
-
-
-
             </div>
           </div>
 
