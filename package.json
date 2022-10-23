@@ -28,7 +28,7 @@
     "@trpc/next": "^9.27.2",
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
-    "ethers": "5.7.1",
+    "ethers": "^5.7.1",
     "formik": "2.2.9",
     "framer-motion": "^7.5.2",
     "ipfs-http-client": "^52.0.2",
