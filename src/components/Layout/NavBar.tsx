@@ -1,6 +1,7 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { useToast } from '@chakra-ui/react'
 import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Image from 'next/image';
 
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -9,7 +10,7 @@ import { getWalletAddress, getWeb3Provider } from '../api/api';
 import { getShortAccountHash } from '../api/utils';
 
 const navigation = [
-  { name: 'Dashboard', href: `/` },
+  { name: 'Home', href: `/` },
   { name: 'Vote', href: `/vote` },
 ];
 
@@ -71,14 +72,14 @@ export default function NavBar() {
       );
     }
     return (
-      <button className="block px-4 py-2 w-full text-left" onClick={login}>
-        Login
+      <button className="bg-fintech-yellow text-black rounded-2xl px-5 py-1.5 w-full font-chakraPetch tracking-widest" onClick={login}>
+        SIGN IN
       </button>
     );
   }
 
   return (
-    <Disclosure as="nav" className="bg-gray-100">
+    <Disclosure as="nav" className="bg-fintech-blue drop-shadow-2xl">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -88,27 +89,27 @@ export default function NavBar() {
                 <Disclosure.Button className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="sr-only">Open main menu</span>
                   {open ? (
-                    <CloseIcon h={6} w={6} /> // block?
+                    <CloseIcon h={12} w={12} /> // block?
                   ) : (
-                    <HamburgerIcon h={6} w={6} /> // block?
+                    <HamburgerIcon h={12} w={12} /> // block?
                   )}
                 </Disclosure.Button>
               </div>
+
               <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex-shrink-0 items-center hidden sm:flex">
-                  IMAGE HERE
+                  <img src='/fintech_logo.png' alt='Fintech Logo' width='110px'/>
                 </div>
+              </div>
+
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">                
+                {/* Home, Vote */}
                 <div className="hidden sm:block sm:ml-6">
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4 px-5">
                     {navigation.map((item) => (
                       <Link key={item.name} href={item.href} passHref>
                         <a
-                          className={classNames(
-                            router.pathname === item.href
-                              ? 'bg-gray-900 text-white'
-                              : 'text-gray-600 hover:bg-gray-500 hover:text-white',
-                            'px-3 py-2 rounded-md text-sm font-medium'
-                          )}
+                          className={classNames( 'px-3 py-2 rounded-md text-sm font-Inter text-white hover:underline')}
                           aria-current={
                             router.pathname === item.href ? 'page' : undefined
                           }
@@ -119,25 +120,25 @@ export default function NavBar() {
                     ))}
                   </div>
                 </div>
-              </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
                 {/* Account Hash */}
                 <div className="text-gray-400 font-semibold text-sm">
                   {checkAccount()}
                 </div>
 
-                {/* Bell notifications */}
-                <button className="bg-gray-300 p-1 rounded-full text-gray-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon w={6} h={6} />
+                {/* Pending Design and Logic - If not loggedin, show only Account Hash - If logged in, show only Profile Dropdown
+
+                Bell notifications
+                <button className="hidden sm:block sm:ml-6 text-xl p-1 rounded-full text-white">
+                  <BellIcon/>
                 </button>
 
-                {/* Profile dropdown */}
+                Profile Dropdown
                 <Menu as="div" className="ml-3 relative">
                   <div>
                     <Menu.Button className="bg-gray-100 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                       <span className="sr-only">Open user menu</span>
-                      {/* Placeholder Image */}
+                      Placeholder Image
                       <img
                         className="h-8 w-8 rounded-full"
                         src="https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
@@ -199,6 +200,9 @@ export default function NavBar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
+                */}
+
+
               </div>
             </div>
           </div>
