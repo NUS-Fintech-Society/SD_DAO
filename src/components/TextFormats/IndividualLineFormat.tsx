@@ -2,7 +2,7 @@ export default function IndividualLineFormat({
   header,
   type = 'default',
 }: {
-  header: String;
+  header: string;
   type?: 'default' | 'first' | 'last';
 }) {
   if (type === 'first') {

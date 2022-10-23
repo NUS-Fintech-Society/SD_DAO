@@ -11,10 +11,12 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { createProposal, getWalletAddress } from '../api/api';
 import { getCurrentDateTime, showCurrentDate } from './voteUtils';
-import DatePicker from 'react-datepicker';
 import Link from 'next/link';
 import { Proposal } from '../api/types';
-import { toast } from 'react-toastify';
+import { Toast } from '@chakra-ui/react';
+import { useToast } from '@chakra-ui/react';
+import DatePicker from "react-datepicker";
+
 
 const formTypes = [
   { label: 'Loss Voting', value: 'loss' },
@@ -65,6 +67,7 @@ const proposalSchema = Yup.object().shape({
 });
 
 export default function NewProposal() {
+  const toast = useToast()
   const [address, setAddress] = useState('');
 
   useEffect(() => {
@@ -73,14 +76,12 @@ export default function NewProposal() {
 
   //Toast for error messages
   const errorNotification = (error: any) =>
-    toast.info(error, {
-      position: 'bottom-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
+    toast({
+      title: "Error",
+      position: 'bottom-left',
+      status: "error",
+      duration: 3000,
+      isClosable: true
     });
 
   return (
