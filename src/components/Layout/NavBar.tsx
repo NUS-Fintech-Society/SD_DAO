@@ -82,7 +82,7 @@ export default function NavBar() {
                 {navigation_loggedin.map((item) => (
                   <Link key={item.name} href={item.href} passHref>
                     <a
-                      className={classNames( 'pr-3 py-2 rounded-md text-sm font-Inter text-white hover:underline')}
+                      className={classNames( 'pr-3 py-2 rounded-md text-md font-Inter text-white hover:underline')}
                       aria-current={
                         router.pathname === item.href ? 'page' : undefined
                       }
@@ -202,7 +202,7 @@ export default function NavBar() {
               {navigation_loggedout.map((item) => (
                 <Link key={item.name} href={item.href} passHref>
                   <a
-                    className={classNames( 'px-3 py-2 rounded-md text-sm font-Inter text-white hover:underline')}
+                    className={classNames( 'px-3 py-2 rounded-md text-md font-Inter text-white hover:underline')}
                     aria-current={
                       router.pathname === item.href ? 'page' : undefined
                     }
