@@ -1,4 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, Transition } from "@headlessui/react";
 import {
   Field,
   FieldArray,
@@ -6,53 +6,52 @@ import {
   Form,
   Formik,
   useFormikContext,
-} from 'formik';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import * as Yup from 'yup';
-import { createProposal, getWalletAddress } from '../api/api';
-import { getCurrentDateTime, showCurrentDate } from './voteUtils';
-import Link from 'next/link';
-import { Proposal } from '../api/types';
-import { Toast } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/react';
+} from "formik";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import * as Yup from "yup";
+import { createProposal, getWalletAddress } from "../api/api";
+import { getCurrentDateTime, showCurrentDate } from "./voteUtils";
+import Link from "next/link";
+import { Proposal } from "../api/types";
+import { Toast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import DatePicker from "react-datepicker";
 
-
 const formTypes = [
-  { label: 'Loss Voting', value: 'loss' },
-  { label: 'Allocation Proposal', value: 'allocation' },
+  { label: "Loss Voting", value: "loss" },
+  { label: "Allocation Proposal", value: "allocation" },
 ];
 
 const minStakeValues = [
-  { label: 'No Minimum', value: 0 },
-  { label: '1 coin', value: 1 },
-  { label: '5 coins', value: 5 },
-  { label: '10 coins', value: 10 },
+  { label: "No Minimum", value: 0 },
+  { label: "1 coin", value: 1 },
+  { label: "5 coins", value: 5 },
+  { label: "10 coins", value: 10 },
 ];
 
-let initialType = 'loss';
+let initialType = "loss";
 let initialMinStakeVal = 0;
 
 const initialValues = {
-  title: '',
-  content: '',
+  title: "",
+  content: "",
   type: initialType,
-  options: [{ id: 1, label: '' }],
+  options: [{ id: 1, label: "" }],
   min_stake: initialMinStakeVal,
   end_date: getCurrentDateTime(),
 };
 
 async function submitProposal(
   account: string | null,
-  values: Pick<Proposal, 'min_stake' | 'options' | 'type'>
+  values: Pick<Proposal, "min_stake" | "options" | "type">
 ) {
   if (account !== null) {
     const finalValues = {
       ...values,
       create_date: getCurrentDateTime(),
       numOfOptions: values.options.length,
-      isLossVoting: values.type === 'loss',
-      isAllocationProposal: values.type === 'allocation',
+      isLossVoting: values.type === "loss",
+      isAllocationProposal: values.type === "allocation",
       userId: account,
     };
 
@@ -61,14 +60,14 @@ async function submitProposal(
 }
 
 const proposalSchema = Yup.object().shape({
-  title: Yup.string().required('Title is required'),
-  content: Yup.string().required('Content is required'),
-  options: Yup.array().min(2, 'Please have at least 2 options'),
+  title: Yup.string().required("Title is required"),
+  content: Yup.string().required("Content is required"),
+  options: Yup.array().min(2, "Please have at least 2 options"),
 });
 
 export default function NewProposal() {
-  const toast = useToast()
-  const [address, setAddress] = useState('');
+  const toast = useToast();
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     getWalletAddress().then((addr) => setAddress(addr));
@@ -78,10 +77,10 @@ export default function NewProposal() {
   const errorNotification = (error: any) =>
     toast({
       title: "Error",
-      position: 'bottom-left',
+      position: "bottom-left",
       status: "error",
       duration: 3000,
-      isClosable: true
+      isClosable: true,
     });
 
   return (
@@ -175,7 +174,7 @@ export default function NewProposal() {
                             type="button"
                             className="p-2 border-2 border-gray-200 rounded-full items-center px-8 font-bold w-full text-center justify-center"
                             onClick={() =>
-                              push({ id: values.options.length + 1, label: '' })
+                              push({ id: values.options.length + 1, label: "" })
                             }
                           >
                             Add option
@@ -203,7 +202,7 @@ export default function NewProposal() {
                       }
                       onClick={() => {
                         getWalletAddress().then((address) => {
-                          submitProposal(address || '', values);
+                          submitProposal(address || "", values);
                           setSubmitting(false);
                         });
                       }}
@@ -284,7 +283,7 @@ function CustomStakeInput({
   field,
   form,
   ...props
-}: FieldProps<typeof initialValues['min_stake']>) {
+}: FieldProps<typeof initialValues["min_stake"]>) {
   let [isOpen, setIsOpen] = useState(false);
   let [stakeLabel, setStakeLabel] = useState(getLabel());
   let buttonRefs = useRef(
@@ -314,7 +313,7 @@ function CustomStakeInput({
       );
       return filtered && filtered.value;
     } catch (error) {
-      return 'Select Minimum Stake';
+      return "Select Minimum Stake";
     }
   }
 
@@ -411,7 +410,7 @@ function CustomVoteInput({
   field,
   form,
   ...props
-}: FieldProps<typeof initialValues['type']>) {
+}: FieldProps<typeof initialValues["type"]>) {
   let [isOpen, setIsOpen] = useState(false);
   let buttonRefs = useRef(
     formTypes.map(() => React.createRef<HTMLButtonElement>())
@@ -439,7 +438,7 @@ function CustomVoteInput({
       );
       return filteredTypes && filteredTypes.label;
     } catch (error) {
-      return 'Select Type';
+      return "Select Type";
     }
   }
 
@@ -535,7 +534,7 @@ function CustomVoteInput({
 function CustomDateInput({
   field,
   ...props
-}: FieldProps<typeof initialValues['end_date']>) {
+}: FieldProps<typeof initialValues["end_date"]>) {
   const { setFieldValue } = useFormikContext();
   let [isOpen, setIsOpen] = useState(false);
 

@@ -1,38 +1,38 @@
-import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { useToast } from '@chakra-ui/react'
-import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import Image from 'next/image';
+import { Disclosure, Menu, Transition } from "@headlessui/react";
+import { useToast } from "@chakra-ui/react";
+import { BellIcon, HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import Image from "next/image";
 
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
-import { getWalletAddress, getWeb3Provider } from '../api/api';
-import { getShortAccountHash } from '../api/utils';
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { Fragment, useEffect, useState } from "react";
+import { getWalletAddress, getWeb3Provider } from "../api/api";
+import { getShortAccountHash } from "../api/utils";
 
 const navigation_loggedout = [
-  { name: 'Home', href: `/` },
-  { name: 'Vote', href: `/vote` },
+  { name: "Home", href: `/` },
+  { name: "Vote", href: `/vote` },
 ];
 
 const navigation_loggedin = [
-  { name: 'Dashboard', href: '/'},
-  { name: 'Vote', href: `/vote` },
-]
+  { name: "Dashboard", href: "/" },
+  { name: "Vote", href: `/vote` },
+];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
-  const toast = useToast()
+  const toast = useToast();
   const router = useRouter();
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     getWalletAddress().then((address) => setAddress(address));
   }, []);
 
-  // Pending Log In Page 
+  // Pending Log In Page
 
   // const login = async () => {
   //   const provider = getWeb3Provider();
@@ -43,7 +43,7 @@ export default function NavBar() {
   //     setAddress(address || '');
   //   }
   // };
-  
+
   const [login, setLoginState] = useState(false);
 
   // const logout = async () => {
@@ -70,23 +70,32 @@ export default function NavBar() {
             )}
           </Disclosure.Button>
         </div>
-        
+
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 items-center hidden sm:flex">
             <Link href="/">
-              <img src='/fintech_logo.png' alt='Fintech Logo' width='110px' className='cursor-pointer'/>
+              <img
+                src="/fintech_logo.png"
+                alt="Fintech Logo"
+                width="110px"
+                className="cursor-pointer"
+              />
             </Link>
           </div>
 
-          <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
+          <div
+            className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}
+          >
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4 pr-5">
                 {navigation_loggedin.map((item) => (
                   <Link key={item.name} href={item.href} passHref>
                     <a
-                      className={classNames( 'pr-3 py-2 rounded-md text-md font-Inter text-white hover:underline')}
+                      className={classNames(
+                        "pr-3 py-2 rounded-md text-md font-Inter text-white hover:underline"
+                      )}
                       aria-current={
-                        router.pathname === item.href ? 'page' : undefined
+                        router.pathname === item.href ? "page" : undefined
                       }
                     >
                       {item.name}
@@ -97,11 +106,13 @@ export default function NavBar() {
             </div>
           </div>
         </div>
-        
-        <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
+
+        <div
+          className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}
+        >
           {/* Bell notifications */}
           <button className="hidden sm:block sm:ml-6 text-xl p-1 rounded-full text-white">
-            <BellIcon/>
+            <BellIcon />
           </button>
 
           {/* Profile Dropdown */}
@@ -133,8 +144,8 @@ export default function NavBar() {
                       <Link href={`/profile`} passHref>
                         <a
                           className={classNames(
-                            active ? 'bg-gray-200' : '',
-                            'block px-4 py-2 text-sm text-gray-700'
+                            active ? "bg-gray-200" : "",
+                            "block px-4 py-2 text-sm text-gray-700"
                           )}
                         >
                           Profile
@@ -148,8 +159,8 @@ export default function NavBar() {
                     <a
                       href="/setting"
                       className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700'
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700"
                       )}
                     >
                       Settings
@@ -160,9 +171,10 @@ export default function NavBar() {
                   {({ active }) => (
                     <div
                       className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700' 
-                      )} onClick={() => setLoginState(!login)}
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm text-gray-700"
+                      )}
+                      /*onClick={() => setLoginState(!login)}*/
                     >
                       Log Out
                     </div>
@@ -172,7 +184,6 @@ export default function NavBar() {
             </Transition>
           </Menu>
         </div>
-        
       </div>
     );
   }
@@ -195,20 +206,29 @@ export default function NavBar() {
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 items-center hidden sm:flex">
             <Link href="/">
-              <img src='/fintech_logo.png' alt='Fintech Logo' width='110px' className='cursor-pointer'/>
+              <img
+                src="/fintech_logo.png"
+                alt="Fintech Logo"
+                width="110px"
+                className="cursor-pointer"
+              />
             </Link>
           </div>
         </div>
-            
-        <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
+
+        <div
+          className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}
+        >
           <div className="hidden sm:block sm:ml-6">
             <div className="flex space-x-4 px-5">
               {navigation_loggedout.map((item) => (
                 <Link key={item.name} href={item.href} passHref>
                   <a
-                    className={classNames( 'px-3 py-2 rounded-md text-md font-Inter text-white hover:underline')}
+                    className={classNames(
+                      "px-3 py-2 rounded-md text-md font-Inter text-white hover:underline"
+                    )}
                     aria-current={
-                      router.pathname === item.href ? 'page' : undefined
+                      router.pathname === item.href ? "page" : undefined
                     }
                   >
                     {item.name}
@@ -217,9 +237,14 @@ export default function NavBar() {
               ))}
             </div>
           </div>
-          <button className="bg-fintech-yellow text-black rounded-2xl px-5 py-1.5 w-full font-chakraPetch tracking-widest" onClick={() => setLoginState(!login)}>
-            SIGN IN
-          </button>
+          <Link href="/SignInPage">
+            <button
+              className="bg-fintech-yellow text-black rounded-2xl px-5 py-1.5 w-full font-chakraPetch tracking-widest"
+              /*onClick={() => setLoginState(!login)}*/
+            >
+              SIGN IN
+            </button>
+          </Link>
         </div>
       </div>
     );
@@ -236,43 +261,41 @@ export default function NavBar() {
           {/* Mobile menu dropdown */}
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {login ? 
-                navigation_loggedin.map((item) => (
-                  <Link key={item.name} href={item.href} passHref>
-                    <a
-                      className={classNames(
-                        router.pathname === item.href
-                          ? 'bg-gray-900 text-white'
-                          : 'text-gray-600 hover:bg-gray-500 hover:text-white',
-                        'block px-3 py-2 rounded-md text-base font-medium'
-                      )}
-                      aria-current={
-                        router.pathname === item.href ? 'page' : undefined
-                      }
-                    >
-                      {item.name}
-                    </a>
-                  </Link>
-                )) 
-                :
-                navigation_loggedout.map((item) => (
-                  <Link key={item.name} href={item.href} passHref>
-                    <a
-                      className={classNames(
-                        router.pathname === item.href
-                          ? 'bg-gray-900 text-white'
-                          : 'text-gray-600 hover:bg-gray-500 hover:text-white',
-                        'block px-3 py-2 rounded-md text-base font-medium'
-                      )}
-                      aria-current={
-                        router.pathname === item.href ? 'page' : undefined
-                      }
-                    >
-                      {item.name}
-                    </a>
-                  </Link>
-                )) 
-              }
+              {login
+                ? navigation_loggedin.map((item) => (
+                    <Link key={item.name} href={item.href} passHref>
+                      <a
+                        className={classNames(
+                          router.pathname === item.href
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-600 hover:bg-gray-500 hover:text-white",
+                          "block px-3 py-2 rounded-md text-base font-medium"
+                        )}
+                        aria-current={
+                          router.pathname === item.href ? "page" : undefined
+                        }
+                      >
+                        {item.name}
+                      </a>
+                    </Link>
+                  ))
+                : navigation_loggedout.map((item) => (
+                    <Link key={item.name} href={item.href} passHref>
+                      <a
+                        className={classNames(
+                          router.pathname === item.href
+                            ? "bg-gray-900 text-white"
+                            : "text-gray-600 hover:bg-gray-500 hover:text-white",
+                          "block px-3 py-2 rounded-md text-base font-medium"
+                        )}
+                        aria-current={
+                          router.pathname === item.href ? "page" : undefined
+                        }
+                      >
+                        {item.name}
+                      </a>
+                    </Link>
+                  ))}
             </div>
           </Disclosure.Panel>
         </>
