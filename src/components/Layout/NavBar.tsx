@@ -239,7 +239,7 @@ export default function NavBar() {
           </div>
           <Link href="/SignInPage">
             <button
-              className="bg-fintech-yellow text-black rounded-2xl px-5 py-1.5 w-full font-chakraPetch tracking-widest"
+              className="bg-fintech-yellow text-black rounded-2xl px-5 py-1.5 w-full font-chakraPetch tracking-widest hover:bg-yellow-400"
               /*onClick={() => setLoginState(!login)}*/
             >
               SIGN IN
