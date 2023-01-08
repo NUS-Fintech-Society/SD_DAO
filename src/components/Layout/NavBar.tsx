@@ -15,7 +15,7 @@ const navigation_loggedout = [
 ];
 
 const navigation_loggedin = [
-  { name: 'Dashboard', href: '/'},
+  { name: 'Home', href: '/'},
   { name: 'Vote', href: `/vote` },
 ]
 
@@ -73,11 +73,13 @@ export default function NavBar() {
         
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 items-center hidden sm:flex">
-            <Link href="/">
+            {/* <Link href="/">
               <img src='/fintech_logo.png' alt='Fintech Logo' width='110px' className='cursor-pointer'/>
-            </Link>
+            </Link> */}
           </div>
-
+        </div>
+        
+        <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
           <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
             <div className="hidden sm:block sm:ml-6">
               <div className="flex space-x-4 pr-5">
@@ -96,14 +98,6 @@ export default function NavBar() {
               </div>
             </div>
           </div>
-        </div>
-        
-        <div className={`absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0`}>
-          {/* Bell notifications */}
-          <button className="hidden sm:block sm:ml-6 text-xl p-1 rounded-full text-white">
-            <BellIcon/>
-          </button>
-
           {/* Profile Dropdown */}
           <Menu as="div" className="ml-3 relative">
             <div>
@@ -134,10 +128,10 @@ export default function NavBar() {
                         <a
                           className={classNames(
                             active ? 'bg-gray-200' : '',
-                            'block px-4 py-2 text-sm text-gray-700'
+                            'flex align-middle px-4 py-2 text-sm text-gray-700'
                           )}
                         >
-                          Profile
+                        <img src='/profile_icon.png' alt='profile icon' width='25x' className='mr-2'/> My Profile
                         </a>
                       </Link>
                     </div>
@@ -145,26 +139,13 @@ export default function NavBar() {
                 </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="/setting"
-                      className={classNames(
-                        active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700'
-                      )}
-                    >
-                      Settings
-                    </a>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
                     <div
                       className={classNames(
                         active ? 'bg-gray-100' : '',
-                        'block px-4 py-2 text-sm text-gray-700' 
+                        'flex align-middle px-4 py-2 text-sm text-gray-700 cursor-pointer' 
                       )} onClick={() => setLoginState(!login)}
                     >
-                      Log Out
+                      <img src='/logout_icon.png' alt='logout icon' width='25x' className='mr-2'/> Log Out
                     </div>
                   )}
                 </Menu.Item>
@@ -194,9 +175,9 @@ export default function NavBar() {
 
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 items-center hidden sm:flex">
-            <Link href="/">
+            {/* <Link href="/">
               <img src='/fintech_logo.png' alt='Fintech Logo' width='110px' className='cursor-pointer'/>
-            </Link>
+            </Link> */}
           </div>
         </div>
             
@@ -217,9 +198,16 @@ export default function NavBar() {
               ))}
             </div>
           </div>
-          <button className="bg-fintech-yellow text-black rounded-2xl px-5 py-1.5 w-full font-chakraPetch tracking-widest" onClick={() => setLoginState(!login)}>
-            SIGN IN
-          </button>
+          <div className=''>
+            <button className="border text-white rounded-2xl px-5 font-chakraPetch tracking-wide" onClick={() => setLoginState(!login)}>
+              Login
+            </button>
+          </div>
+          <div className='ml-5'>
+            <button className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide" onClick={() => setLoginState(!login)}>
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
     );
