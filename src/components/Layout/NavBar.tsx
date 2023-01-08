@@ -56,7 +56,7 @@ export default function NavBar() {
   //   }
   // };
 
-  function loggedInNavbar(open) {
+  function loggedInNavbar(open: boolean) {
     return (
       <div className="relative flex items-center justify-between h-16">
         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -177,7 +177,7 @@ export default function NavBar() {
     );
   }
 
-  function loggedOutNavbar(open) {
+  function loggedOutNavbar(open: boolean) {
     return (
       <div className="relative flex items-center justify-between h-16">
         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">

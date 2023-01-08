@@ -34,7 +34,7 @@
     "framer-motion": "^7.5.2",
     "ipfs-http-client": "^52.0.2",
     "next": "12.3.1",
-    "next-auth": "^4.15.0",
+    "next-auth": "^4.18.7",
     "proptypes": "^1.1.0",
     "react": "18.2.0",
     "react-datepicker": "^4.8.0",
@@ -50,6 +50,7 @@
   "devDependencies": {
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
+    "@types/react-datepicker": "^4.8.0",
     "@types/react-dom": "18.0.5",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
     "@typescript-eslint/parser": "^5.33.0",
