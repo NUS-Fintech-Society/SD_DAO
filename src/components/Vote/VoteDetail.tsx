@@ -223,7 +223,7 @@ export default function VoteDetail({ ipfsHash }: { ipfsHash: string }) {
                           <div className="py-1 font-thin text-sm">
                             {isSelected()
                               ? `You are voting for: ${
-                                  proposalContent.options[selected!].label
+                                  proposalContent!.options![selected!]!.label!
                                 }`
                               : 'Please choose an option!'}
                           </div>
@@ -413,7 +413,7 @@ function PreviousVotesList({
       proposalInfo.votes.forEach((vote) => {
         temp.push({
           address: getShortAccountHash(vote.voter),
-          choice: proposalContent.options[vote.option].label,
+          choice: proposalContent!.options![vote.option!]!.label!,
           amount: String(vote.amount / 10 ** 18),
         });
       });
@@ -480,9 +480,9 @@ function CurrentResultsLoss({
           choice: option.label,
           percentage:
             Math.round(
-              proposalInfo.stakedValuePerOption[index] / 10 ** 14 / totalStaked
+              proposalInfo!.stakedValuePerOption![index!]! / 10 ** 14 / totalStaked
             ) / 100,
-          label: String(proposalInfo.stakedValuePerOption[index] / 10 ** 18),
+          label: String(proposalInfo!.stakedValuePerOption![index!]! / 10 ** 18),
         });
       });
       return temp;
@@ -534,7 +534,7 @@ function CurrentResultsAllocation({
       });
       sortedVotes.forEach((vote) => {
         temp.push({
-          choice: proposalContent.options[vote.option].label,
+          choice: proposalContent!.options![vote.option!]!.label!,
           percentage: Math.round(vote.amount / 10 ** 14 / totalStaked) / 100,
           label: String(vote.amount / 10 ** 18),
         });
