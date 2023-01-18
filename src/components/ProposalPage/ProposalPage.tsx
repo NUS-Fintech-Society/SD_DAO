@@ -4,7 +4,7 @@ import {HiOutlineArrowLeft, HiOutlineArrowRight} from 'react-icons/hi'
 import PrevProject from "./ProjectBox/PrevProjects";
 import NextProject from "./ProjectBox/NextProject";
 
-export default function ProposalPage() {
+export default function ProjectsPage() {
 
     const[nextPage, setNextPage] = useState(false);
 
