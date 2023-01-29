@@ -4,8 +4,10 @@ import HeroBanner from '../components/LandingPage/HeroBanner';
 export default function Index() {
   return (
     <>
-      <HeroBanner />
-      <Description />
+      <div>
+        <HeroBanner />
+        <Description />
+      </div>
     </>
   );
 }

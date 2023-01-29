@@ -73,9 +73,9 @@ export default function NavBar() {
         
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 items-center hidden sm:flex">
-            {/* <Link href="/">
-              <img src='/fintech_logo.png' alt='Fintech Logo' width='110px' className='cursor-pointer'/>
-            </Link> */}
+            <Link href="/">
+              <img src='/fintech_logo.png' alt='Fintech Logo' className='cursor-pointer w-30vh relative right-10vh top-10vh'/>
+            </Link>
           </div>
         </div>
         
@@ -175,9 +175,9 @@ export default function NavBar() {
 
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 items-center hidden sm:flex">
-            {/* <Link href="/">
-              <img src='/fintech_logo.png' alt='Fintech Logo' width='110px' className='cursor-pointer'/>
-            </Link> */}
+          <Link href="/">
+              <img src='/fintech_logo.png' alt='Fintech Logo' className='cursor-pointer w-30vh relative right-10vh top-10vh'/>
+            </Link>
           </div>
         </div>
             
@@ -214,7 +214,7 @@ export default function NavBar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-fintech-blue drop-shadow-2xl">
+    <Disclosure as="nav" className="bg-transparent drop-shadow-2xl">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">

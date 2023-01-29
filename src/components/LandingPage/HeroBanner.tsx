@@ -1,7 +1,7 @@
 export default function HeroBanner() {
   return (
-    <div className="text-center py-8 bg-fintech-blue font-chakraPetch">
-      <div className="text-6xl pt-20 text-white">NUS FinTech Society</div>
+    <div className="text-center py-8 font-chakraPetch">
+      <div className="text-6xl pt-20 text-black">NUS FinTech Society</div>
       <a
         href="https://fintechsociety.comp.nus.edu.sg/"
         target="_blank"
