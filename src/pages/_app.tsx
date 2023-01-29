@@ -8,7 +8,7 @@ function App({ Component, pageProps }: AppProps<{
   session: Session;
 }>) {
   return (
-    <div>
+    <div className='bg-landing-page h-screen'>
       <SessionProvider session={pageProps.session}>
       <NavBar />
       <Component {...pageProps} />
