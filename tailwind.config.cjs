@@ -21,6 +21,9 @@ module.exports = {
         '15vh': '15vh',
         '20vh': '20vh',
         '30vh': '30vh',
+      },
+      maxWidth: {
+        '20vw': '20vw',
       }
     },
   },
