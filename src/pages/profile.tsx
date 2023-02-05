@@ -3,6 +3,10 @@ import { getWalletAddress } from '../components/api/api';
 import { getAccountHash } from '../components/api/utils';
 import NavBar from '../components/Layout/NavBar';
 import HeaderTextFormat from '../components/TextFormats/HeaderTextFormat';
+import {Stack,HStack, VStack, Center, Card,Image,CardHeader,Heading, CardBody, Box, Text} from '@chakra-ui/react'
+import profileSVG from '../../public/profilepage.svg';
+import {AiFillGithub,AiFillLinkedin} from "react-icons/ai"
+import {MdOutlineAlternateEmail} from "react-icons/md";
 
 const sampleData = {
   id: 1,
@@ -10,6 +14,9 @@ const sampleData = {
   email: 'test@hmail.com',
   phone: '987654321',
   dob: '11/2/1982',
+  role: 'Software Developer',
+  github: "pikachu",
+  linkedin: "jonthepikachu",
   avatar:
     'https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
   created_at: 'test',
@@ -25,113 +32,70 @@ export default function Profile() {
     getWalletAddress().then((addr) => setAddress(addr));
   }, []);
 
-  function PanelItem({ label }: { label: string }) {
-    return (
-      <div
-        className={
-          page === label
-            ? 'border-r-4 border-indigo-500 cursor-pointer hover:text-gray-400 hover:border-indigo-300'
-            : 'cursor-pointer hover:text-gray-400'
-        }
-        onClick={() => setPage(label)}
-      >
-        {label}
-      </div>
-    );
-  }
-
   function PanelLeft() {
     return (
-      <div className="relative flex flex-col border border-gray-200 shadow-lg text-center rounded-lg">
-        <div className="text-xl z-10 my-3">{sampleData.nickname}</div>
-        <img
-          className="rounded-full mx-auto w-1/2 h-1/2 z-10"
+      <div className="relative flex flex-col text-center w-1/5 pb-48">
+        <Image
+          className="rounded-xl mx-auto w-1/2 h-1/2 z-10"
           src={sampleData.avatar}
           alt=""
         />
-        <div className="absolute bg-gray-100 inset-x-0 bottom-0 h-3/5 rounded-b-lg"></div>
-        <div className="flex flex-col space-y-3 z-10 text-left py-4 px-6 w-full text-lg font-medium">
-          <PanelItem label="Profile" />
-          <PanelItem label="Settings" />
-          <PanelItem label="History" />
-        </div>
+        <div className="text-xl z-10 my-3">{sampleData.nickname}</div>
+        <div className="text-xl z-10 my-3">{sampleData.role}</div>
       </div>
+
     );
   }
 
-  function ProfileTab() {
+  function MediaPanel() {
     return (
-      <div className="flex flex-col border border-gray-100 shadow-lg rounded-lg w-full">
-        <div className="p-8">
-          <HeaderTextFormat
-            header={'Hash ID'}
-            info={address ? address : 'Login to see account hash'}
-          />
-          <HeaderTextFormat header={'Nickname'} info={sampleData['nickname']} />
-          <HeaderTextFormat header={'Email'} info={sampleData['email']} />
-          <HeaderTextFormat header={'Phone'} info={sampleData['phone']} />
-          <HeaderTextFormat
-            header={'Year'}
-            info={'Year ' + sampleData['year']}
-          />
-          <HeaderTextFormat
-            header={'Department'}
-            info={sampleData['department']}
-          />
-        </div>
+      <div className="relative flex flex-col" >
+        <Card className= "px-3 py-2" variant = "elevated" borderRadius= "25px" shadow={"base"} w={'sm'}>
+          <div className='inline-flex flex-row space-x-5 py-2'>
+          <AiFillGithub size = {30}/>
+          <div className="text-xl">{sampleData.github}</div>
+          </div>
+          <div className='inline-flex flex-row space-x-5 py-2'>
+          <AiFillLinkedin color = "steelblue" size = {30}/>
+          <div className="text-xl">{sampleData.linkedin}</div>
+          </div>
+          <div className='inline-flex flex-row space-x-5 py-2'>
+          <MdOutlineAlternateEmail color = "lightgray" size = {30}/>
+          <div className="text-xl">{sampleData.email}</div>
+          </div>
+          
+        </Card>
       </div>
-    );
+    )
   }
 
-  function SettingsTab() {
+  function AboutPanel() {
     return (
-      <div className="flex flex-col border border-gray-100 shadow-lg rounded-lg w-full">
-        <div className="p-8">Settings</div>
-      </div>
-    );
-  }
-
-  function HistoryTab() {
-    return (
-      <div className="flex flex-col border border-gray-100 shadow-lg rounded-lg w-full">
-        <div className="p-8">History</div>
-      </div>
-    );
-  }
-
-  function PanelRight() {
-    if (page === 'Profile') {
-      return <ProfileTab />;
-    }
-    if (page === 'Settings') {
-      return <SettingsTab />;
-    }
-    if (page === 'History') {
-      return <HistoryTab />;
-    }
-    return <div className="class">Impossible Div</div>;
+      <Card variant = "elevated" borderRadius= "25px" shadow={"base"} w={'2xl'} >
+        <CardHeader>
+        <Heading size='md'>About</Heading>
+      </CardHeader>
+      <CardBody>
+        <Text> I started freeCodeCamp back in 2014. Since then, a ton of people have asked for my advice on how to learn to code and ultimately get freelance clients and developer jobs. So last year, I wrote an entire book summarizing my many tips. Even though one of the Big 5 book publishers in New York was interested in a book deal, I decided to instead make this book freely available to everyone who wants to become a professional developer. I hope it's helpful for you and your friends who are getting into coding. (full-length book – roughly 6 hour read): https://www.freecodecamp.org/news/learn-to-code-book/
+</Text>
+      </CardBody>
+      </Card>
+    )
   }
 
   return (
-    <div className="w-full h-full">
-      <div className="flex flex-col max-w-7xl mx-auto p-2 mb-10">
-        <div className="flex flex-col px-4">
-          <div className="text-4xl text-gray-700 my-4">User Profile</div>
-          <div className="flex items-center">
-            <div className="hidden lg:flex flex-row space-x-6 w-full">
-              <div className="w-1/3">
-                <PanelLeft />
-              </div>
-              <PanelRight />
-            </div>
-            <div className="flex flex-col w-full lg:hidden space-y-4">
-              <ProfileTab />
-              <SettingsTab />
-              <HistoryTab />
-            </div>
-          </div>
-        </div>
-      </div>
+    <div className='profilePage' >
+    <Center paddingTop={"150"} mt={-16}>
+    <HStack spacing={"80"}>
+    <PanelLeft /> 
+    <VStack alignItems={"end"} paddingRight = {"10"} spacing ={"10"} paddingBottom = "48">
+        <MediaPanel/>
+        <AboutPanel/>
+      </VStack> 
+      </HStack>
+      </Center>
     </div>
+      
+
   );
 }
