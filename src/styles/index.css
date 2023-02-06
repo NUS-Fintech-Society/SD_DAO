@@ -21,3 +21,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.proposalBackground {
+  background-image: url( '../components/Proposal/newproposalpage.svg' );
+  background-size: cover; 
+  background-attachment: scroll;
+}
