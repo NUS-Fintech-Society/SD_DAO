@@ -8,6 +8,7 @@
 }
 
 body {
+  height: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -21,8 +22,8 @@ code {
     monospace;
 }
 
-.profilePage {
-  background-image: url( "../../public/profilepage.svg" );
+.proposalBackground {
+  background-image: url( '../components/Proposal/newproposalpage.svg' );
   background-size: cover; 
   background-attachment: scroll;
 }
