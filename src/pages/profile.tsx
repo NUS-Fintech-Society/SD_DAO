@@ -4,7 +4,6 @@ import { getAccountHash } from '../components/api/utils';
 import NavBar from '../components/Layout/NavBar';
 import HeaderTextFormat from '../components/TextFormats/HeaderTextFormat';
 import {Stack,HStack, VStack, Center, Card,Image,CardHeader,Heading, CardBody, Box, Text} from '@chakra-ui/react'
-import profileSVG from '../../public/profilepage.svg';
 import {AiFillGithub,AiFillLinkedin} from "react-icons/ai"
 import {MdOutlineAlternateEmail} from "react-icons/md";
 
@@ -84,9 +83,9 @@ export default function Profile() {
   }
 
   return (
-    <div className='profilePage' >
+    <div className='bg-profile-page bg-no-repeat bg-cover bg-left-top h-screen' >
     <Center paddingTop={"150"} mt={-16}>
-    <HStack spacing={"80"}>
+    <HStack spacing={"80"} paddingLeft = {"20"}>
     <PanelLeft /> 
     <VStack alignItems={"end"} paddingRight = {"10"} spacing ={"10"} paddingBottom = "48">
         <MediaPanel/>
