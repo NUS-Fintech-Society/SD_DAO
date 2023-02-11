@@ -24,9 +24,9 @@ import {
 } from "formik";
 
 export default function SignInPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [show, setShow] = React.useState(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [show, setShow] = React.useState<boolean>(false);
   const handleClick = () => setShow(!show);
 
   return (
