@@ -15,7 +15,6 @@ function App({ Component, pageProps }: AppProps<{
       <NavBar />
       <Component {...pageProps} />
       </SessionProvider>
-    </div>
     </ChakraProvider>
   );
 }
