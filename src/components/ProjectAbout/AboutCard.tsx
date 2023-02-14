@@ -20,6 +20,7 @@ interface AboutCardProps {
 const AboutCard: React.FC<AboutCardProps> = props => {
 
   return (
+    <>
     <HStack spacing={'5'}>
         {/*For side name and department card*/}
         <Card
@@ -30,10 +31,10 @@ const AboutCard: React.FC<AboutCardProps> = props => {
         w={'md'}
         borderRadius={'40'}
         >
-          <CardBody padding={'12'}>
+          <CardBody padding={'12'} maxH={'300'}>
             <VStack spacing={'6'} align={'start'} >
             <Text fontSize={'xl'} color={'#aaaaaa'}>Name</Text>
-            <Text fontSize={'2xl'}>{props.name}</Text>
+            <Text fontSize={'2xl'} >{props.name}</Text>
             <Text fontSize={'xl'} color={'#aaaaaa'}>Department</Text>
             <Text fontSize={'2xl'}>{props.department}</Text>
             </VStack>
@@ -45,18 +46,19 @@ const AboutCard: React.FC<AboutCardProps> = props => {
         variant='elevated'
         backgroundColor='#ECECEC'
         shadow={'lg'}
-        w={'5xl'}
+        maxW={'5xl'}
         borderRadius={'40'}
         >
-            <CardBody padding={'12'}>
+            <CardBody padding={'12'} minH={'300'}>
               <HStack>
             <Box marginRight='200'>
               <Text fontSize={'xl'} color={'#aaaaaa'}>About</Text>
-            <Text fontSize={'xl'} paddingTop={"6"} overflow='overflow-wrap' >
+            <Text fontSize={'xl'} paddingTop={"6"} overflow='overflow-wrap' maxW={"500"}>
                 {props.about}
             </Text>
             </Box>
-            <VStack align={'start'} spacing={'6'}> 
+            
+            <VStack align={'start'} pt={'10'} spacing={'6'}> 
                 <Tag size={'2xl'} background={'transparent'}>
                   <Center>
                   <AiFillGithub size={'30'}/>
@@ -82,6 +84,7 @@ const AboutCard: React.FC<AboutCardProps> = props => {
             </CardBody>
         </Card>
     </HStack>
+    </>
   )
 }
 
