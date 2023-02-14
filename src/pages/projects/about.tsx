@@ -1,10 +1,9 @@
 import React, {useState, useRef} from 'react';
-import {Center, VStack, useDisclosure, Modal, ModalOverlay, Input, 
+import {Center, VStack, useDisclosure, Modal, ModalOverlay, 
   ModalCloseButton, ModalContent, ModalHeader, ModalBody, ModalFooter,
-  Box, Heading, Image, Button, FormControl} from '@chakra-ui/react';
+  Box, Heading, Image, Button, Textarea} from '@chakra-ui/react';
 import AboutCard from '../../components/ProjectAbout/AboutCard';
 import {MdOutlineModeEdit} from "react-icons/md";
-import { Field, Form, Formik } from 'formik';
 
 
 interface ProposalProps {
@@ -44,7 +43,7 @@ const About: React.FC<ProposalProps> = props => {
     
         const { isOpen, onOpen, onClose } = useDisclosure()
         const modal = () => {
-          const aboutInputRef = useRef<HTMLInputElement>(null);
+          const aboutInputRef = useRef<HTMLTextAreaElement>(null);
           var canSubmit = true;
           const handleSubmit = () => {
             if (!aboutInputRef.current!.value) {
@@ -64,7 +63,7 @@ const About: React.FC<ProposalProps> = props => {
                 <ModalHeader>Edit About</ModalHeader>
                 <ModalCloseButton />
                       <ModalBody>
-                        <Input type={'text'} ref={aboutInputRef} />
+                        <Textarea resize={'none'} h={"200"} ref={aboutInputRef} />
                       </ModalBody>
                       <ModalFooter>
                       <Button variant='ghost' mr={3} onClick={onClose}>
@@ -72,7 +71,6 @@ const About: React.FC<ProposalProps> = props => {
                       </Button>
                       <Button backgroundColor='#cccccc' type='submit' color={'white'} onClick={() => { handleSubmit() , canSubmit ? onClose() : undefined}}>Submit</Button>
                       </ModalFooter>
-            
               </ModalContent>
             </Modal>
           </>
