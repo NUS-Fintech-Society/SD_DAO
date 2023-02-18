@@ -33,10 +33,10 @@ const AboutCard: React.FC<AboutCardProps> = props => {
         >
           <CardBody padding={'12'} maxH={'300'}>
             <VStack spacing={'6'} align={'start'} >
-            <Text fontSize={'xl'} color={'#aaaaaa'}>Name</Text>
-            <Text fontSize={'2xl'} >{props.name}</Text>
-            <Text fontSize={'xl'} color={'#aaaaaa'}>Department</Text>
-            <Text fontSize={'2xl'}>{props.department}</Text>
+            <Text fontSize={'xl'} color={'#494848'}>Name</Text>
+            <Text fontSize={'2xl'} color={'black'}>{props.name}</Text>
+            <Text fontSize={'xl'} color={'#494848'}>Department</Text>
+            <Text fontSize={'2xl'} color={'black'}>{props.department}</Text>
             </VStack>
           </CardBody>
         </Card>
@@ -52,8 +52,8 @@ const AboutCard: React.FC<AboutCardProps> = props => {
             <CardBody padding={'12'} minH={'300'}>
               <HStack>
             <Box marginRight='200'>
-              <Text fontSize={'xl'} color={'#aaaaaa'}>About</Text>
-            <Text fontSize={'xl'} paddingTop={"6"} overflow='overflow-wrap' maxW={"500"}>
+              <Text fontSize={'xl'} color={'#494848'}>About</Text>
+            <Text fontSize={'xl'} color={'black'} paddingTop={"6"} overflow='overflow-wrap' maxW={"500"}>
                 {props.about}
             </Text>
             </Box>
@@ -61,22 +61,22 @@ const AboutCard: React.FC<AboutCardProps> = props => {
             <VStack align={'start'} pt={'10'} spacing={'6'}> 
                 <Tag size={'2xl'} background={'transparent'}>
                   <Center>
-                  <AiFillGithub size={'30'}/>
-                  <TagLabel fontSize={'2xl'} pl={'3'}>{props.github}</TagLabel>
+                  <AiFillGithub size={'30'} color="black"/>
+                  <TagLabel fontSize={'2xl'} pl={'3'} color={'black'}>{props.github}</TagLabel>
                   </Center>
                 </Tag>
                 
                 <Tag size={'2xl'} background={'transparent'}>
                   <Center>
                   <AiFillLinkedin color = "steelblue" size={'30'}/>
-                  <TagLabel fontSize={'2xl'} pl={'3'} >{props.linkedin}</TagLabel>
+                  <TagLabel fontSize={'2xl'} pl={'3'} color={'black'}>{props.linkedin}</TagLabel>
                   </Center>
                 </Tag>
                 
                 <Tag size={'2xl'} background={'transparent'}>
                   <Center>
                   <MdOutlineAlternateEmail color = "lightgray" size={'30'}/>
-                  <TagLabel fontSize={'2xl'} pl={'3'}>{props.email}</TagLabel>
+                  <TagLabel fontSize={'2xl'} pl={'3'} color={'black'}>{props.email}</TagLabel>
                   </Center>
                 </Tag>
             </VStack>

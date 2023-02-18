@@ -42,18 +42,18 @@ const About: React.FC<ProposalProps> = props => {
         }
     
         const { isOpen, onOpen, onClose } = useDisclosure()
-        const modal = () => {
-          const aboutInputRef = useRef<HTMLTextAreaElement>(null);
-          var canSubmit = true;
+        const EditAboutModal = () => {
+          const useAboutInputRef = useRef<HTMLTextAreaElement>(null);
+          let canSubmit = true;
           const handleSubmit = () => {
-            if (!aboutInputRef.current!.value) {
+            if (!useAboutInputRef.current!.value) {
               canSubmit = false;
               alert("Please type something!");
-            } else if (aboutInputRef.current!.value.length > 160) {
+            } else if (useAboutInputRef.current!.value.length > 160) {
               canSubmit = false;
               alert("About should not be more than 160 characters");
             } else {
-              setAbout(aboutInputRef.current!.value);
+              setAbout(useAboutInputRef.current!.value);
             }
           }
           return <>
@@ -63,7 +63,7 @@ const About: React.FC<ProposalProps> = props => {
                 <ModalHeader>Edit About</ModalHeader>
                 <ModalCloseButton />
                       <ModalBody>
-                        <Textarea resize={'none'} h={"200"} ref={aboutInputRef} />
+                        <Textarea resize={'none'} h={"200"} ref={useAboutInputRef} />
                       </ModalBody>
                       <ModalFooter>
                       <Button variant='ghost' mr={3} onClick={onClose}>
@@ -100,13 +100,13 @@ const About: React.FC<ProposalProps> = props => {
         />
         </Box>
         </Center>
-        <Button onClick={onOpen} alignSelf={'end'} variant={'ghost'} leftIcon={<MdOutlineModeEdit  />}></Button>
+        <Button onClick={onOpen} alignSelf={'end'} variant={'ghost'} leftIcon={<MdOutlineModeEdit color='black'  />}></Button>
         <AboutCard department={testData.department} name={testData.name} about={about} github={testData.github} linkedin={testData.linkedin} email={testData.email}/>
         </VStack>
         </Center>
         </Box>
         </VStack>
-        {modal()}
+        {EditAboutModal()}
         </div>
         
     </>
