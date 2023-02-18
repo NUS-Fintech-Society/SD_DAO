@@ -22,8 +22,10 @@ code {
     monospace;
 }
 
+
 .projectBackground {
   background-image: url( '../components/ProjectAbout/ProjectAboutPage.svg' );
   background-size: cover; 
   background-attachment: scroll;
 }
+
