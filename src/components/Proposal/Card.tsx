@@ -3,8 +3,8 @@ import {Card, Stack, CardBody, HStack,
     Box, Heading, Spacer, Text, 
     Button, VStack, useDisclosure, 
     Modal, Input, ModalOverlay, ModalContent, 
-    ModalCloseButton, FormControl, ModalFooter, FormLabel,
-    ModalHeader, ModalBody, Center, useNumberInput, IconButton } from '@chakra-ui/react'
+    ModalCloseButton,
+    ModalHeader, Center, useNumberInput, IconButton } from '@chakra-ui/react'
 import { AddIcon, MinusIcon } from '@chakra-ui/icons';
 
 
@@ -51,12 +51,12 @@ const Cards: React.FC<CardProps> = props => {
         <Stack padding={5} spacing={'-12'} >
             <CardBody>
             <HStack> 
-                <Heading size={"lg"} fontWeight={'normal'} >{props.proposedTitle}</Heading>
+                <Heading size={"lg"} fontWeight={'normal'} color={'black'}>{props.proposedTitle}</Heading>
                 <Spacer />
-                <Text fontSize={'lg'} >{props.proposedType}</Text>
+                <Text fontSize={'lg'} color={'black'}>{props.proposedType}</Text>
             </HStack>
             <Box marginRight='200'>
-            <Text fontSize={'xl'} paddingTop={"6"} overflow='overflow-wrap' >
+            <Text fontSize={'xl'} color={'black'} paddingTop={"6"} overflow='overflow-wrap' >
                 {props.proposedDescription}
             </Text>
             </Box>
