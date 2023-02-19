@@ -1,4 +1,4 @@
-import NewProposal from '../../components/Vote/NewProposal';
+import NewProposal from "../../components/Vote/NewProposal";
 
 const NewProposalPage = () => {
   return (
