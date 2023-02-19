@@ -6,6 +6,7 @@ import AboutCard from '../../components/ProjectAbout/AboutCard';
 import {MdOutlineModeEdit} from "react-icons/md";
 
 
+
 interface ProposalProps {
     proposedTitle1: string;
     proposedDescription1: string;
@@ -78,7 +79,7 @@ const About: React.FC<ProposalProps> = props => {
 
   return (
     <>
-        <div className={"projectBackground"}>
+        <div className={"bg-about-page bg-no-repeat bg-cover bg-left-top h-screen"}>
         
         <VStack mt={-16} >
         <Box p={'100'}>
