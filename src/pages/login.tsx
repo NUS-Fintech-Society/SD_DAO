@@ -45,7 +45,7 @@ export default function SignInPage() {
 
   return (
     <>
-      <div className=" bg-login-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+      <div className="bg-login-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
         <div className="py-5">
           <form className="form mx-10 my-20 rounded">
             <div className="grid grid-cols-2">

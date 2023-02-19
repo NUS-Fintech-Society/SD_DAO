@@ -13,6 +13,7 @@ import {
   Button,
   Heading,
   Text,
+  Center,
 } from "@chakra-ui/react";
 
 export default function SignUpPage() {
@@ -36,8 +37,8 @@ export default function SignUpPage() {
 
   return (
     <>
-      <div className=" bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
-        <div className="py-3">
+      <div className="bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+        <Center className="py-25">
           <form className="form mx-20 my rounded justify-center">
             <div className="grid place-items-center">
               <div className="px-20 py-5">
@@ -114,7 +115,7 @@ export default function SignUpPage() {
               </div>
             </div>
           </form>
-        </div>
+        </Center>
       </div>
     </>
   );
