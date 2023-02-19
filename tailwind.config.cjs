@@ -15,6 +15,7 @@ module.exports = {
       backgroundImage: {
         'landing-page': "url('/landingpage.svg')",
         'proposal-page': "url('/newproposalpage.svg')"
+        'profile-page': "url('/profilepage.svg')"
       },
       spacing: {
         '5vh': '5vh',
