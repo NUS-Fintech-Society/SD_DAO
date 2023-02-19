@@ -3,27 +3,28 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'MSUIGothic';
-  src: url('/Users/jiawei/Desktop/SD_DAO/public/fonts/MS Gothic.ttf') format('truetype');
+  font-family: "MSUIGothic";
+  src: url("/Users/jiawei/Desktop/SD_DAO/public/fonts/MS Gothic.ttf")
+    format("truetype");
 }
 
 body {
   height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 .proposalBackground {
-  background-image: url( '../components/Proposal/newproposalpage.svg' );
-  background-size: cover; 
+  background-image: url("../components/Proposal/newproposalpage.svg");
+  background-size: cover;
   background-attachment: scroll;
 }

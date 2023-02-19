@@ -30,7 +30,7 @@ export default function SignInPage() {
   const handleClick = () => setShow(!show);
 
   return (
-    <>
+    <div className="bg-login-page bg-no-repeat bg-cover bg-left-top h-screen">
       <div className="py-5">
         <form className="form mx-10 my-20 rounded shadow-xl">
           <div className="grid grid-cols-2">
@@ -80,8 +80,11 @@ export default function SignInPage() {
                   LOGIN
                 </button>
               </div>
+              <div className="flex flex-col items-center justify-center mt-2">
+                <Link href="/signuppage">Sign up</Link>
+              </div>
             </div>
-            <div className="bg-fintech-blue flex flex-cols place-items-center">
+            {/* <div className="bg-fintech-blue flex flex-cols place-items-center">
               <Link href="/">
                 <img
                   src="/fintech_logo.png"
@@ -89,10 +92,10 @@ export default function SignInPage() {
                   className="cursor-pointer w-2/3 max-w-md mx-auto"
                 />
               </Link>
-            </div>
+            </div> */}
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 }

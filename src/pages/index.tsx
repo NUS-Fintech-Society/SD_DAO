@@ -1,10 +1,10 @@
-import Description from '../components/LandingPage/Description';
-import HeroBanner from '../components/LandingPage/HeroBanner';
+import Description from "../components/LandingPage/Description";
+import HeroBanner from "../components/LandingPage/HeroBanner";
 
 export default function Index() {
   return (
     <>
-      <div>
+      <div className="bg-landing-page bg-no-repeat bg-cover bg-left-top h-screen">
         <HeroBanner />
         <Description />
       </div>
