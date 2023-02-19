@@ -14,7 +14,7 @@ import {
 
 
 
-export default function signinpage({ login }: { login: boolean }) {
+export default function SignInPage() {
 
 
   const [userFound, setUserFound] = React.useState(false);
@@ -41,7 +41,7 @@ export default function signinpage({ login }: { login: boolean }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = React.useState(false);
-  const [isLogin, setIsLogin] = useState(login);
+  const [isLogin, setIsLogin] = useState(false);
   const handleClick = () => setShow(!show);
   const handleLogin = () => {
     //if backend fetch is successful
@@ -131,6 +131,3 @@ export default function signinpage({ login }: { login: boolean }) {
     </>
   );
 }
-SignInPage.getInitialProps = ({ query }: { query: any }) => {
-  return { login: query.login || false };
-};

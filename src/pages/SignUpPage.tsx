@@ -41,20 +41,10 @@ export default function SignUpPage() {
         <>
             <div className=' bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen'>
                 <div className="py-3">
-                    <div className="blue flex flex-cols place-items-center">
-                        <Link href="/">
-                            <img
-                                src="/fintech_logo.png"
-                                alt="Fintech Logo"
-                                className="cursor-pointer max-w-md mx-auto"
-
-                            />
-                        </Link>
-                    </div>
                     <form className="form mx-20 my rounded justify-center">
                         <div className="grid place-items-center">
                             <div className="px-20 py-5">
-                                <h1 className="text-3xl mb-5 mt-0 text-center font-bold text-[#5D6379]"> Sign Up </h1>
+                                <h1 className="text-3xl  mt-36 text-center font-bold text-[#5D6379]"> Sign Up </h1>
                                 <div className="text-l justify-center items-center">
                                     <h2 className="mb-1"> Email </h2>
                                     <div className="w-80 flex flex-col rounded-full">
