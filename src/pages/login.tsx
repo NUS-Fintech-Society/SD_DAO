@@ -1,24 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { getAccountHash } from "../../components/api/utils";
-import NavBar from "../../components/Layout/NavBar";
-import HeaderTextFormat from "../../components/TextFormats/HeaderTextFormat";
-import Description from "../../components/LandingPage/Description";
-import HeroBanner from "../../components/LandingPage/HeroBanner";
+import { getAccountHash } from "../components/api/utils";
+import NavBar from "../components/Layout/NavBar";
+import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
+import Description from "../components/LandingPage/Description";
+import HeroBanner from "../components/LandingPage/HeroBanner";
 import router, { useRouter } from "next/router";
-import {
-  Input,
-  Button,
-} from "@chakra-ui/react";
-
-
-
+import { Input, Button } from "@chakra-ui/react";
 
 export default function SignInPage() {
-
-
   const [userFound, setUserFound] = React.useState(false);
-  const handleSubmit = async (event: { preventDefault: () => void; }) => {
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
     /*for backend, submit button sends a request to search for the email in the database, if not found return false, else return true*/
     event.preventDefault();
 
@@ -32,12 +24,11 @@ export default function SignInPage() {
     */
     if (userFound) {
       // if the user exists, redirect to the main page
-
     } else {
       // if the user doesn't exist, show an alert
-      alert('No user found');
+      alert("No user found");
     }
-  }
+  };
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = React.useState(false);
@@ -46,13 +37,14 @@ export default function SignInPage() {
   const handleLogin = () => {
     //if backend fetch is successful
     setIsLogin(true);
-    router.push({ pathname: '../components/Layout/NavBar', query: { login: true } });
+    router.push({
+      pathname: "../components/Layout/NavBar",
+      query: { login: true },
+    });
   };
-
 
   return (
     <>
-
       <div className="py-5">
         <form className="form mx-10 my-20 rounded">
           <div className="grid grid-cols-2">
@@ -101,19 +93,17 @@ export default function SignInPage() {
                 >
                   LOGIN
                 </button>
-                <Link href="/SignUpPage">
+                <Link href="/signup">
                   <div className="flex flex-col mt-2">
-
                     <button
                       className="text-black font-chakraPetch underline"
-                    /*onClick={() => setLoginState(!login)}*/
+                      /*onClick={() => setLoginState(!login)}*/
                     >
                       Sign Up
                     </button>
                   </div>
                 </Link>
               </div>
-
             </div>
             <div className=" flex flex-cols place-items-center">
               <Link href="/">
@@ -127,7 +117,6 @@ export default function SignInPage() {
           </div>
         </form>
       </div>
-
     </>
   );
 }
