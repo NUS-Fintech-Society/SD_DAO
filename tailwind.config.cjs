@@ -16,6 +16,7 @@ module.exports = {
         'landing-page': "url('/landingpage.svg')",
         'proposal-page': "url('/newproposalpage.svg')"
         'profile-page': "url('/profilepage.svg')"
+        'about-page': "url('/ProjectAboutPage.svg')"
       },
       spacing: {
         '5vh': '5vh',
