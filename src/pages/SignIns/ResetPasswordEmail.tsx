@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { getAccountHash } from "../components/api/utils";
-import NavBar from "../components/Layout/NavBar";
-import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
-import Description from "../components/LandingPage/Description";
-import HeroBanner from "../components/LandingPage/HeroBanner";
+import { getAccountHash } from "../../components/api/utils";
+import NavBar from "../../components/Layout/NavBar";
+import HeaderTextFormat from "../../components/TextFormats/HeaderTextFormat";
+import Description from "../../components/LandingPage/Description";
+import HeroBanner from "../../components/LandingPage/HeroBanner";
 import {
     Input,
     InputGroup,

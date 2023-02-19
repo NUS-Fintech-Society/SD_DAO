@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { getAccountHash } from "../components/api/utils";
-import NavBar from "../components/Layout/NavBar";
-import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
-import Description from "../components/LandingPage/Description";
-import HeroBanner from "../components/LandingPage/HeroBanner";
+import { getAccountHash } from "../../components/api/utils";
+import NavBar from "../../components/Layout/NavBar";
+import HeaderTextFormat from "../../components/TextFormats/HeaderTextFormat";
+import Description from "../../components/LandingPage/Description";
+import HeroBanner from "../../components/LandingPage/HeroBanner";
 import {
     Input,
     InputGroup,
@@ -73,7 +73,7 @@ export default function SignUpPage() {
                                         />
                                         <Button
                                             onClick={handleClick}
-                                            className="pr-5 pt-2 pb-2 bg-white"
+                                            className="pr-5 pt-2 pb-2 bg-white text-black"
                                         >
                                             {show ? "Hide" : "Show"}
                                         </Button>
