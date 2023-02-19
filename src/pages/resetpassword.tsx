@@ -26,7 +26,7 @@ export default function ResetPasswordEmail() {
     // exists, change the state of the emailFound
     if (emailFound) {
       // if the user exists, redirect to the main page
-      window.location.href = "/EnterNewPassword";
+      window.location.href = "/enternewpassword";
     } else {
       // if the user doesn't exist, show an alert
       alert("No user found");

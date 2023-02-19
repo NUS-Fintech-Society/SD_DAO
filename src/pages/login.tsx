@@ -84,7 +84,7 @@ export default function SignInPage() {
                     </Button>
                   </div>
                   <div className="flex flex-row justify-end mt-3">
-                    <Link href="/ResetPasswordEmail">Forgot password?</Link>
+                    <Link href="/resetpassword">Forgot password?</Link>
                   </div>
                 </div>
                 <div className="flex flex-col items-center justify-center">

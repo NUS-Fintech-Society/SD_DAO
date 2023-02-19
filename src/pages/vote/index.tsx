@@ -26,6 +26,13 @@ export default function Vote() {
 
   return (
     <div className="bg-view-proposal-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+      <Link href="/">
+        <img
+          src="/fintech_logo.png"
+          alt="Fintech Logo"
+          className="cursor-pointer max-w-20vw top-5vh fixed"
+        />
+      </Link>
       <div className="w-full h-full">
         <div className="flex flex-col max-w-7xl mx-auto p-2 mb-10">
           <div className="w-full">

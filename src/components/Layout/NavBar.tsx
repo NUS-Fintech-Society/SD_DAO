@@ -243,13 +243,13 @@ export default function NavBar() {
             {login ? loggedInNavbar(open) : loggedOutNavbar(open)}
           </div>
 
-          <Link href="/">
+          {/* <Link href="/">
             <img
               src="/fintech_logo.png"
               alt="Fintech Logo"
               className="cursor-pointer max-w-20vw top-5vh fixed"
             />
-          </Link>
+          </Link> */}
 
           {/* Mobile menu dropdown */}
           <Disclosure.Panel className="sm:hidden">
