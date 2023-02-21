@@ -75,7 +75,7 @@ export default function Profile() {
         <Heading size='md'>About</Heading>
       </CardHeader>
       <CardBody>
-        <Text> I started freeCodeCamp back in 2014. Since then, a ton of people have asked for my advice on how to learn to code and ultimately get freelance clients and developer jobs. So last year, I wrote an entire book summarizing my many tips. Even though one of the Big 5 book publishers in New York was interested in a book deal, I decided to instead make this book freely available to everyone who wants to become a professional developer. I hope it's helpful for you and your friends who are getting into coding. (full-length book – roughly 6 hour read): https://www.freecodecamp.org/news/learn-to-code-book/
+        <Text> I started freeCodeCamp back in 2014. Since then, a ton of people have asked for my advice on how to learn to code and ultimately get freelance clients and developer jobs. So last year, I wrote an entire book summarizing my many tips. Even though one of the Big 5 book publishers in New York was interested in a book deal, I decided to instead make this book freely available to everyone who wants to become a professional developer. I hope it&apos;s helpful for you and your friends who are getting into coding. (full-length book – roughly 6 hour read): https://www.freecodecamp.org/news/learn-to-code-book/
 </Text>
       </CardBody>
       </Card>

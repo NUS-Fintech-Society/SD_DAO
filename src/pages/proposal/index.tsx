@@ -40,14 +40,18 @@ const Proposal: React.FC<ProposalProps> = props => {
 
     
 
-    const testData: {proposedTitle: string;
+    const testData: {
+                    id: number;
+                    proposedTitle: string;
                     proposedDescription: string;
                     endDate: string;
                     minStake: number;
                     proposedType: string;
-                    remainingTokens: number}[] = 
+                    remainingTokens: number
+                } [] = 
     [
         {
+            id: 1,
             proposedTitle: "Proposed Title 1", 
             proposedDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             endDate: "9/8/2023",
@@ -56,6 +60,7 @@ const Proposal: React.FC<ProposalProps> = props => {
             remainingTokens: 6,
         },
         {
+            id: 2,
             proposedTitle: "Proposed Title 2", 
             proposedDescription: "Second entry of Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             endDate: "1/8/2023",
@@ -64,6 +69,7 @@ const Proposal: React.FC<ProposalProps> = props => {
             remainingTokens: 6,
         },
         {
+            id: 3,
             proposedTitle: "Proposed Title 3", 
             proposedDescription: "Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             endDate: "5/12/2023",
@@ -72,6 +78,7 @@ const Proposal: React.FC<ProposalProps> = props => {
             remainingTokens: 66,
         },
         {
+            id: 4,
             proposedTitle: "Proposed Title 3", 
             proposedDescription: "Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             endDate: "5/12/2023",
@@ -80,6 +87,7 @@ const Proposal: React.FC<ProposalProps> = props => {
             remainingTokens: 6,
         },
         {
+            id: 5,
             proposedTitle: "Proposed Title 3", 
             proposedDescription: "Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
             endDate: "5/12/2023",
@@ -132,7 +140,7 @@ const Proposal: React.FC<ProposalProps> = props => {
         </Wrap>
         <VStack>
         {testData.map(obj => {
-            return <Box paddingBottom={5}>
+            return <Box key={obj.id} paddingBottom={5}>
             <Card proposedTitle={obj.proposedTitle} proposedDescription={obj.proposedDescription} proposedType={obj.proposedType} endDate={obj.endDate} minStake={obj.minStake} remainingTokens={obj.remainingTokens} />
             </Box>
         })}
