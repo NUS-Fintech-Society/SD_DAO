@@ -215,6 +215,7 @@ export default function NavBar() {
           <div className="">
             <Link href="/signinpage">
               <button
+
                 className="border border-black text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
                 /*onClick={() => setLoginState(!login)}*/
               >
@@ -237,7 +238,7 @@ export default function NavBar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-transparent drop-shadow-2xl">
+    <Disclosure as="nav" className="fixed z-10 w-screen bg-transparent drop-shadow-2xl">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -297,3 +298,4 @@ export default function NavBar() {
     </Disclosure>
   );
 }
+
