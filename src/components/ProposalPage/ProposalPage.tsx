@@ -21,7 +21,7 @@ export default function ProjectsPage() {
     }
 
     return (
-        <div>
+        <div className="bg-[url('/newproposalpage.svg')]">
             <h1 className="absolute top-1/4 -translate-y-1/4 left-1/2 -translate-x-1/2 text-5xl">
                 Projects
             </h1>
@@ -33,7 +33,7 @@ export default function ProjectsPage() {
                         </button>
                     </div>
                 </div>
-                <div className="w-8/12 h-[290px] flex-none overflow-scroll relative">
+                <div className="w-8/12 h-[290px] flex-none overflow-scroll relative mt-24">
                     {!nextPage && 
                     <>
                         <div className="flex space-x-16 absolute w-full justify-center">
