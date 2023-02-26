@@ -10,12 +10,10 @@ function App({ Component, pageProps }: AppProps<{
 }>) {
   return (
     <ChakraProvider>
-    <div className='bg-landing-page bg-no-repeat bg-cover bg-left-top h-screen'>
-      <SessionProvider session={pageProps.session}>
-      <NavBar />
-      <Component {...pageProps} />
-      </SessionProvider>
-    </div>
+    <SessionProvider session={pageProps.session}>
+    <NavBar />
+    <Component {...pageProps} />
+    </SessionProvider>
     </ChakraProvider>
   );
 }
