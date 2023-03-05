@@ -213,7 +213,7 @@ export default function NavBar() {
             </div>
           </div>
           <div className="">
-            <Link href="/signinpage">
+            <Link href="/login">
               <button
 
                 className="border border-black text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
@@ -225,12 +225,11 @@ export default function NavBar() {
           </div>
 
           <div className="ml-5">
-            <button
-              className="border border-black text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
-              onClick={() => setLoginState(!login)}
-            >
-              Sign Up
-            </button>
+            <Link href={"/signup"}>
+              <button className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide">
+                Sign Up
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -245,13 +244,13 @@ export default function NavBar() {
             {login ? loggedInNavbar(open) : loggedOutNavbar(open)}
           </div>
 
-          <Link href="/">
+          {/* <Link href="/">
             <img
               src="/fintech_logo.png"
               alt="Fintech Logo"
               className="cursor-pointer max-w-20vw top-5vh fixed"
             />
-          </Link>
+          </Link> */}
 
           {/* Mobile menu dropdown */}
           <Disclosure.Panel className="sm:hidden">
