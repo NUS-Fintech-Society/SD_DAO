@@ -163,7 +163,8 @@ const Proposal: React.FC<ProposalProps> = (props) => {
               <VStack>
                 {testData.map((obj) => {
                   return (
-                    <Box paddingBottom={5}>
+                    <Box paddingBottom={5}
+                    key = {obj.proposedTitle}>
                       <Card
                         proposedTitle={obj.proposedTitle}
                         proposedDescription={obj.proposedDescription}

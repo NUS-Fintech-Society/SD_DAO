@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Head from "next/head";
+import { useCallback } from "react";
+import { useRouter } from "next/router";
+import { signUpSchema, ISignUp } from "./api/auth/auth";
+import { trpc } from "../utils/trpc";
+import type { NextPage } from "next";
 import { getAccountHash } from "../components/api/utils";
 import NavBar from "../components/Layout/NavBar";
 import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
@@ -16,7 +24,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 
-export default function SignUpPage() {
+const SignUpPage: NextPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
@@ -24,20 +32,32 @@ export default function SignUpPage() {
   const [showRe, setShowRe] = React.useState(false);
   const handleClick = () => setShow(!show);
   const handleSecond = () => setShowRe(!showRe);
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    if (password == confirmPassword) {
-      //for backend, if passwords match, then push user's email and password to the database
-      window.location.href = "/signinpage";
-    } else {
-      // the passwords do not match
-      alert("passwords do not match");
-    }
-  };
+  const router = useRouter();
+  const { register, handleSubmit } = useForm<ISignUp>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const { mutateAsync } = trpc.useMutation(["signup"]);
+
+  const onSubmit = useCallback(
+    async (data: ISignUp) => {
+      const result = await mutateAsync(data);
+      if (result.status === 201) {
+        router.push("/");
+      }
+    },
+    [mutateAsync, router]
+  );
 
   return (
     <>
-      <div className="bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+    
+      <div className=" bg-no-repeat bg-signup-page bg-cover bg-left-top h-screen -mt-16">
+      <main>
+        <form
+          className="flex items-center justify-center h-screen w-full"
+          onSubmit={handleSubmit(onSubmit)}
+        >
         <Center className="py-25">
           <form className="form mx-20 my rounded justify-center">
             <div className="grid place-items-center">
@@ -54,10 +74,10 @@ export default function SignUpPage() {
                       variant="outline"
                       className="mb-2 pt-2 pb-2 pl-4 rounded-full"
                       type="email"
-                      name="Username"
                       placeholder="Username"
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      {...register("email")}
+                      //onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
 
@@ -67,10 +87,11 @@ export default function SignUpPage() {
                       bg="white"
                       className="pt-2 pb-2 pl-4 mr-5 w-full rounded-full bg-[#C7C7C7] justify-center items-center"
                       type={show ? "text" : "password"}
-                      name="Password"
+            
                       placeholder="Password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      {...register("password")}
+                      //onChange={(e) => setPassword(e.target.value)}
                     />
                     <Button
                       onClick={handleClick}
@@ -116,7 +137,10 @@ export default function SignUpPage() {
             </div>
           </form>
         </Center>
+        </form>
+      </main>
       </div>
+      
     </>
   );
 }

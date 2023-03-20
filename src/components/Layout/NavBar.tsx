@@ -8,10 +8,12 @@ import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { getWalletAddress, getWeb3Provider } from "../api/api";
 import { getShortAccountHash } from "../api/utils";
+import { useSession } from "next-auth/react";
+import { requireAuth } from "../../pages/api/auth/requireAuth";
 
 const navigation_loggedout = [
   { name: "Home", href: `/` },
-  { name: "Vote", href: `/vote` },
+  { name: "Vote", href: `/vote` }
 ];
 
 const navigation_loggedin = [
@@ -22,6 +24,10 @@ const navigation_loggedin = [
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
+
+export const getServerSideProps = requireAuth(async (ctx) => {
+  return { props: {} };
+});
 
 export default function NavBar() {
   const toast = useToast();
@@ -56,7 +62,11 @@ export default function NavBar() {
   //   }
   // };
 
+ 
+  
+  const { data } = useSession();
   function loggedInNavbar(open: boolean) {
+    
     return (
       <div className="relative flex items-center justify-between h-16">
         <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -186,6 +196,11 @@ export default function NavBar() {
             )}
           </Disclosure.Button>
         </div>
+        <div className="my-4 bg-gray-700 rounded-lg p-4">
+            <pre>
+              <code>{JSON.stringify(data, null, 2)}</code>
+            </pre>
+            </div>
 
         <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
           <div className="flex-shrink-0 items-center hidden sm:flex"></div>
@@ -212,18 +227,16 @@ export default function NavBar() {
               ))}
             </div>
           </div>
-          <div className="">
-            <Link href="/login">
-              <button
 
-                className="border border-black text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
-                /*onClick={() => setLoginState(!login)}*/
+          <div className="ml-5">
+            <Link href={"/login"}>
+              <button
+                className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
               >
                 Login
               </button>
             </Link>
           </div>
-
           <div className="ml-5">
             <Link href={"/signup"}>
               <button className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide">
@@ -231,6 +244,10 @@ export default function NavBar() {
               </button>
             </Link>
           </div>
+
+
+
+          
         </div>
       </div>
     );

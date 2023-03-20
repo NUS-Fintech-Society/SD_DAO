@@ -4,6 +4,8 @@ import "../styles/index.css";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
 import { ChakraProvider } from "@chakra-ui/react";
+import { withTRPC } from "@trpc/next";
+import { ServerRouter } from "../server/router/router";
 
 function App({
   Component,
@@ -23,4 +25,23 @@ function App({
   );
 }
 
-export default App;
+try { const client = withTRPC<ServerRouter>({
+  config({ ctx }) {
+    
+    const url =  
+       "http://localhost:3000";
+
+    return {
+      url,
+      headers: {
+        "x-ssr": "1",
+      },
+    };
+  },
+  ssr: true
+  
+})(App);
+
+} catch (error) {
+  console.log(error);
+}

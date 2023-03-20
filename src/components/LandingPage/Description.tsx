@@ -10,7 +10,7 @@ export default function Description() {
         interact with the DAO and vote on a range of society-wide decisions.
       </div>
       <header className="text-center text-2xl p-4 font-semibold ">
-        What does ABC represent?
+      What does ABC represent?
       </header>
       <ol className="text-center">
         <li>

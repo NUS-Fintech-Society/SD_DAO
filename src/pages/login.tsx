@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
+import { useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import { loginSchema, ILogin } from "./api/auth/auth";
 import { getAccountHash } from "../components/api/utils";
 import NavBar from "../components/Layout/NavBar";
 import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
@@ -9,43 +16,36 @@ import router, { useRouter } from "next/router";
 import { Input, Button } from "@chakra-ui/react";
 
 export default function SignInPage() {
+  const { register, handleSubmit } = useForm<ILogin>({
+    resolver: zodResolver(loginSchema),
+  });
   const [userFound, setUserFound] = React.useState(false);
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    /*for backend, submit button sends a request to search for the email in the database, if not found return false, else return true*/
-    event.preventDefault();
-
-    // make a call to backend to check if the user exists in the database
-    /*
-    const response = await fetch('/api/check-user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username}),
-    });
-    */
-    if (userFound) {
-      // if the user exists, redirect to the main page
-    } else {
-      // if the user doesn't exist, show an alert
-      alert("No user found");
-    }
-  };
+  const onSubmit = useCallback(async (data: ILogin) => {
+    console.log("success"),
+    await signIn("credentials", { ...data, callbackUrl: "./Navbar" });
+  }, []);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = React.useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const handleClick = () => setShow(!show);
-  const handleLogin = () => {
-    //if backend fetch is successful
-    setIsLogin(true);
-    router.push({
-      pathname: "../components/Layout/NavBar",
-      query: { login: true },
-    });
-  };
+  // const handleLogin = () => {
+  //   //if backend fetch is successful
+  //   setIsLogin(true);
+  //   router.push({
+  //     pathname: "../components/Layout/NavBar",
+  //     query: { login: true },
+  //   });
+  // };
 
   return (
     <>
       <div className="bg-login-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+        <main>
+        <form
+          className="flex items-center justify-center h-screen w-full"
+          onSubmit={handleSubmit(onSubmit)}
+        >
         <div className="py-5">
           <form className="form mx-10 my-20 rounded">
             <div className="grid grid-cols-2">
@@ -59,10 +59,10 @@ export default function SignInPage() {
                       variant="outline"
                       className="mb-2 pt-2 pb-2 pl-4 rounded-full bg-[#C7C7C7]"
                       type="email"
-                      name="Username"
+                   
                       placeholder="Username"
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      {...register("email")}
                     />
                   </div>
                   <h2 className="mb-1"> Password </h2>
@@ -71,10 +71,10 @@ export default function SignInPage() {
                       bg="white"
                       className="pt-2 pb-2 pl-4 mr-5 w-full rounded-full bg-[#C7C7C7]"
                       type={show ? "text" : "password"}
-                      name="Password"
+
                       placeholder="Password"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      {...register("password")}
                     />
                     <Button
                       onClick={handleClick}
@@ -90,7 +90,7 @@ export default function SignInPage() {
                 <div className="flex flex-col items-center justify-center">
                   <button
                     className="bg-fintech-yellow text-black font-bold rounded-2xl px-7 py-1.5 mt-10 font-chakraPetch tracking-widest hover:bg-yellow-400"
-                    onClick={handleLogin}
+                
                   >
                     LOGIN
                   </button>
@@ -118,6 +118,8 @@ export default function SignInPage() {
             </div>
           </form>
         </div>
+        </form>
+      </main>
       </div>
     </>
   );
