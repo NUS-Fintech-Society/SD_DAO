@@ -11,6 +11,7 @@ import {
   InputRightElement,
   Stack,
   Button,
+  Center,
   Heading,
   Text,
 } from "@chakra-ui/react";
@@ -30,9 +31,9 @@ export default function SignInPage() {
   const handleClick = () => setShow(!show);
 
   return (
-    <div className="bg-login-page bg-no-repeat bg-cover bg-left-top h-screen">
+    <div className="bg-login-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
       <div className="py-5">
-        <form className="form mx-10 my-20 rounded shadow-xl">
+        <form className="form mx-10 my-20">
           <div className="grid grid-cols-2">
             <div className="px-20 py-20">
               <h1 className="text-3xl mb-5 mt-0"> Login </h1>
