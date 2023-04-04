@@ -143,7 +143,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
             </Text>
           </VStack>
         </Center>
-        <Center paddingTop={"20"}>
+        <Center padding={"20"}>
           <Stack direction={"column"}>
             <Wrap>
               <Button
