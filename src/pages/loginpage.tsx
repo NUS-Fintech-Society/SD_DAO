@@ -31,12 +31,12 @@ export default function SignInPage() {
   const handleClick = () => setShow(!show);
 
   return (
-    <div className="bg-login-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+    <div className="bg-login-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16">
       <div className="py-5">
         {/* <Center> */}
-        <form className="form mx-auto my-30 max-w-screen-lg">
+        <div className="form mx-auto my-30 max-w-screen-md">
           {/* <div className="grid grid-cols-2"> */}
-          <div className="px-40 pt-36 lg:pt-40 xl:pt-48 2xl:pt-52">
+          <div className="px-20 pt-36 lg:pt-40 xl:pt-48 2xl:pt-64">
             <h1 className="text-3xl mb-5 mt-0"> Login </h1>
             <div className="text-l">
               <h2 className="mb-1"> Email </h2>
@@ -96,7 +96,7 @@ export default function SignInPage() {
               </Link>
             </div> */}
           {/* </div> */}
-        </form>
+        </div>
         {/* </Center> */}
       </div>
     </div>

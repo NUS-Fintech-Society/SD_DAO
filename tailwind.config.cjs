@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: "class",
   theme: {
     extend: {
       backgroundColor: {
@@ -17,6 +18,9 @@ module.exports = {
         "profile-page": "url('/profilepage.svg')",
         "signup-page": "url('/signuppage.svg')",
         "login-page": "url('/loginpage.svg')",
+        "proposal-page": "url('/proposalpage.svg')",
+        "new-proposal-page": "url('/newproposalpage.svg')",
+        "vote-page": "url('/votepage.svg')",
       },
       spacing: {
         "5vh": "5vh",
