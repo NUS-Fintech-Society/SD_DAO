@@ -31,6 +31,7 @@
     "@trpc/react": "^9.27.2",
     "@trpc/server": "^9.27.2",
     "argon2": "^0.30.3",
+    "bcryptjs": "^2.4.3",
     "ethers": "5.7.1",
     "formik": "2.2.9",
     "framer-motion": "^7.5.2",
@@ -52,6 +53,7 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-datepicker": "^4.8.0",
