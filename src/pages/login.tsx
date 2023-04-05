@@ -83,7 +83,7 @@ export default function SignInPage() {
               </button>
             </div>
             <div className="flex flex-col items-center justify-center mt-2">
-              <Link href="/signuppage">Sign up</Link>
+              <Link href="/signup">Sign up</Link>
             </div>
           </div>
           {/* <div className="bg-fintech-blue flex flex-cols place-items-center">

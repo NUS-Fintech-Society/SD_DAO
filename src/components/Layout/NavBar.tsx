@@ -213,7 +213,7 @@ export default function NavBar() {
             </div>
           </div>
           <div className="">
-            <Link href="/loginpage">
+            <Link href="/login">
               <button
                 className="border text-white rounded-2xl px-5 font-chakraPetch tracking-wide"
                 /*onClick={() => setLoginState(!login)}*/
@@ -224,7 +224,7 @@ export default function NavBar() {
           </div>
 
           <div className="ml-5">
-            {/* <Link href="/signuppage"> */}
+            {/* <Link href="/signup"> */}
             <button
               className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
               onClick={() => setLoginState(!login)}
