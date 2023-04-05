@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, { NextAuthOptions } from "next-auth"
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
@@ -9,7 +9,7 @@ import { loginSchema } from "./auth";
 import { compare } from 'bcryptjs'
 import type { User } from '@prisma/client'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt',
         maxAge: 24 * 60 * 60,
@@ -89,4 +89,6 @@ export default NextAuth({
         signIn: "/pages/login",
         newUser: "/pages/signup",
     },
-})
+}
+
+export default NextAuth(authOptions)
