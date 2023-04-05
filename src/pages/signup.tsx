@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { getWalletAddress } from "../components/api/api";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Head from "next/head";
@@ -11,18 +12,25 @@ import type { NextPage } from "next";
 import { getAccountHash } from "../components/api/utils";
 import NavBar from "../components/Layout/NavBar";
 import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
-import Description from "../components/LandingPage/Description";
-import HeroBanner from "../components/LandingPage/HeroBanner";
 import {
   Input,
   InputGroup,
   InputRightElement,
-  Stack,
   Button,
-  Heading,
-  Text,
+  Stack,
+  HStack,
+  VStack,
   Center,
+  Card,
+  Image,
+  CardHeader,
+  Heading,
+  CardBody,
+  Box,
+  Text,
 } from "@chakra-ui/react";
+import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { MdOutlineAlternateEmail } from "react-icons/md";
 
 const SignUpPage: NextPage = () => {
   const [username, setUsername] = useState("");
@@ -42,17 +50,16 @@ const SignUpPage: NextPage = () => {
   const onSubmit = useCallback(
     async (data: ISignUp) => {
       const result = await mutateAsync(data);
-      if (result.status === 201) {
-        router.push("/");
-      }
+      // if (result.status === 201) {
+      //   router.push("/");
+      // }
     },
     [mutateAsync, router]
   );
 
   return (
     <>
-    
-      <div className=" bg-no-repeat bg-signup-page bg-cover bg-left-top h-screen -mt-16">
+      <div className="bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen">
       <main>
         <form
           className="flex items-center justify-center h-screen w-full"
@@ -143,4 +150,5 @@ const SignUpPage: NextPage = () => {
       
     </>
   );
+
 }

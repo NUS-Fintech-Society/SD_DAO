@@ -11,6 +11,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import "../../components/Proposal/newproposalpage.svg";
 
 interface ProposalProps {
   proposedTitle1: string;
@@ -125,24 +126,20 @@ const Proposal: React.FC<ProposalProps> = (props) => {
 
   return (
     <>
-      <div className={"bg-proposal-page bg-no-repeat bg-cover h-screen w-100%"}>
-        <div className={"bg-proposal-page bg-no-repeat bg-cover h-100% w-100%"}>
-          <Center mt={-16}>
-            <VStack>
-              <Heading mt={200} color={"black"}>
-                Proposals
-              </Heading>
-              <Text
-                mt={200}
-                backgroundColor={"#AEAEAE"}
-                fontSize={20}
-                borderRadius={"full"}
-                color={"black"}
-                align={"center"}
-                w={"36"}
-                h={"8"}
-              >
-                Project XYZ
+      <div className={"proposalBackground"}>
+        <Center mt={-16}>
+          <VStack>
+            <Heading mt={200}>Proposals</Heading>
+            <Text
+              mt={200}
+              backgroundColor={"#AEAEAE"}
+              fontSize={20}
+              borderRadius={"full"}
+              align={"center"}
+              w={"36"}
+              h={"8"}
+            >
+              Project XYZ
               </Text>
             </VStack>
           </Center>
@@ -180,7 +177,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
             </Stack>
           </Center>
         </div>
-      </div>
+     
     </>
   );
 };

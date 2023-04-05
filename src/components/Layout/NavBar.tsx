@@ -238,11 +238,14 @@ export default function NavBar() {
             </Link>
           </div>
           <div className="ml-5">
-            <Link href={"/signup"}>
-              <button className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide">
-                Sign Up
-              </button>
-            </Link>
+            {/* <Link href="/signup"> */}
+            <button
+              className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
+              onClick={() => setLoginState(!login)}
+            >
+              Sign Up
+            </button>
+            {/* </Link> */}
           </div>
 
 
