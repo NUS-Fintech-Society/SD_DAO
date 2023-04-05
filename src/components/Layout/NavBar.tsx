@@ -87,7 +87,7 @@ export default function NavBar() {
                   <Link key={item.name} href={item.href} passHref>
                     <a
                       className={classNames(
-                        "pr-3 py-2 rounded-md text-md font-Inter text-white hover:underline"
+                        "pr-3 py-2 rounded-md text-md font-Inter text-black hover:underline"
                       )}
                       aria-current={
                         router.pathname === item.href ? "page" : undefined
@@ -200,7 +200,7 @@ export default function NavBar() {
                 <Link key={item.name} href={item.href} passHref>
                   <a
                     className={classNames(
-                      "px-3 py-2 rounded-md text-md font-Inter text-white hover:underline"
+                      "px-3 py-2 rounded-md text-md font-Inter text-black hover:underline"
                     )}
                     aria-current={
                       router.pathname === item.href ? "page" : undefined
@@ -215,7 +215,8 @@ export default function NavBar() {
           <div className="">
             <Link href="/login">
               <button
-                className="border text-white rounded-2xl px-5 font-chakraPetch tracking-wide"
+
+                className="border border-black text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
                 /*onClick={() => setLoginState(!login)}*/
               >
                 Login
@@ -239,20 +240,20 @@ export default function NavBar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-transparent drop-shadow-2xl">
+    <Disclosure as="nav" className="fixed z-10 w-screen bg-transparent drop-shadow-2xl">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             {login ? loggedInNavbar(open) : loggedOutNavbar(open)}
           </div>
 
-          <Link href="/">
+          {/* <Link href="/">
             <img
               src="/fintech_logo.png"
               alt="Fintech Logo"
               className="cursor-pointer max-w-20vw top-5vh fixed"
             />
-          </Link>
+          </Link> */}
 
           {/* Mobile menu dropdown */}
           <Disclosure.Panel className="sm:hidden">
@@ -299,3 +300,4 @@ export default function NavBar() {
     </Disclosure>
   );
 }
+

@@ -15,12 +15,16 @@ module.exports = {
       },
       backgroundImage: {
         "landing-page": "url('/landingpage.svg')",
+
         "profile-page": "url('/profilepage.svg')",
         "signup-page": "url('/signuppage.svg')",
         "login-page": "url('/loginpage.svg')",
         "proposal-page": "url('/proposalpage.svg')",
         "new-proposal-page": "url('/newproposalpage.svg')",
         "vote-page": "url('/votepage.svg')",
+        "view-proposal-page": "url('/viewproposalpage.svg')",
+        "about-page": "url('/ProjectAboutPage.svg')",
+
       },
       spacing: {
         "5vh": "5vh",

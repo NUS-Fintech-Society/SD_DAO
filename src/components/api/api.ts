@@ -4,7 +4,7 @@ import contractData from './contract.json';
 import { Proposal, ProposalInfo } from './types';
 
 const IPFS_URL = 'abcdao.infura-ipfs.io';
-const ADDRESS = '0x74C986e4e330162D4EfC971028455b976FDa0504';
+const ADDRESS = '0x0091d2eb482899b2bc0e786706daa77ed1604c2b';
 
 const ipfs = ipfsClient.create({
   host: IPFS_URL,
@@ -46,12 +46,12 @@ export async function retrieveProposal(
 export function getWeb3Provider() {
   if (typeof window !== undefined) {
     // @ts-ignore
-    return new ethers.providers.Web3Provider(window.ethereum, 'ropsten');
+    return new ethers.providers.Web3Provider(window.ethereum, 'goerli');
   }
 }
 
 export function getInfuraProvider() {
-  return new ethers.providers.InfuraProvider('ropsten', process.env.PROJECT_ID);
+  return new ethers.providers.InfuraProvider('goerli', process.env.PROJECT_ID);
 }
 
 export function getContract() {
