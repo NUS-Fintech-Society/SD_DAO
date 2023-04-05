@@ -1,5 +1,7 @@
 import NextAuth from "next-auth"
-import { NextAuthOptions } from "next-auth";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "../../../server/db/client"
@@ -27,7 +29,7 @@ export default NextAuth({
            authorize: async(credentials, req) => {
                 const creds = await loginSchema.parseAsync(credentials);
                 const user = await prisma.user.findFirst({
-                    where: { email: creds.email },
+                    where: {email: creds.email},
                   });
           
                   if (!user) {
@@ -70,14 +72,7 @@ export default NextAuth({
             token.id = account.id
           }
           return token
-        },
-        session: async ({ session, token }) => {
-            if (token) {
-              session.id = token.id;
-            }
-      
-            return session;
-          } 
+        }
     },
 
     // jwt: {
