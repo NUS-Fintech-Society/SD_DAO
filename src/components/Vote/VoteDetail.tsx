@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Link from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { Toast } from '@chakra-ui/react';
 import {
   getProposalInfo,
   getWalletAuthenticated,
@@ -12,8 +12,10 @@ import {
 import { Proposal, ProposalInfo } from '../api/types';
 import { getShortAccountHash } from '../api/utils';
 import { getReadableDate } from './voteUtils';
+import { useToast } from '@chakra-ui/react';
 
 export default function VoteDetail({ ipfsHash }: { ipfsHash: string }) {
+  const toast = useToast()
   const [authenticated, setAuthenticated] = useState(false);
   // Getting proposal content
   const [proposalContent, setProposalContent] = useState<Proposal | null>(null);
@@ -53,27 +55,21 @@ export default function VoteDetail({ ipfsHash }: { ipfsHash: string }) {
 
   //Amount Toasts
   const amountError = () =>
-    toast.warn('Amount must be greater than min stake value', {
-      position: 'bottom-center',
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      toastId: 'amountError',
+    toast({
+      title: 'Amount must be greater than min stake value',
+      position: 'bottom-left',
+      status: 'warning',
+      duration: 4000,
+      isClosable: true
     });
 
   const confirmationMessage = () =>
-    toast.success('🦊 Confirm on MetaMask!', {
-      position: 'bottom-center',
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      toastId: 'confirmationMessage',
+    toast({
+      title: '🦊 Confirm on MetaMask!', 
+      position: 'bottom-left',
+      status: 'success',  
+      duration: 4000,
+      isClosable: true
     });
 
   const [selected, setSelected] = useState<number | null>(null);
@@ -227,7 +223,7 @@ export default function VoteDetail({ ipfsHash }: { ipfsHash: string }) {
                           <div className="py-1 font-thin text-sm">
                             {isSelected()
                               ? `You are voting for: ${
-                                  proposalContent.options[selected!].label
+                                  proposalContent!.options![selected!]!.label!
                                 }`
                               : 'Please choose an option!'}
                           </div>
@@ -417,7 +413,7 @@ function PreviousVotesList({
       proposalInfo.votes.forEach((vote) => {
         temp.push({
           address: getShortAccountHash(vote.voter),
-          choice: proposalContent.options[vote.option].label,
+          choice: proposalContent!.options![vote.option!]!.label!,
           amount: String(vote.amount / 10 ** 18),
         });
       });
@@ -484,9 +480,9 @@ function CurrentResultsLoss({
           choice: option.label,
           percentage:
             Math.round(
-              proposalInfo.stakedValuePerOption[index] / 10 ** 14 / totalStaked
+              proposalInfo!.stakedValuePerOption![index!]! / 10 ** 14 / totalStaked
             ) / 100,
-          label: String(proposalInfo.stakedValuePerOption[index] / 10 ** 18),
+          label: String(proposalInfo!.stakedValuePerOption![index!]! / 10 ** 18),
         });
       });
       return temp;
@@ -538,7 +534,7 @@ function CurrentResultsAllocation({
       });
       sortedVotes.forEach((vote) => {
         temp.push({
-          choice: proposalContent.options[vote.option].label,
+          choice: proposalContent!.options![vote.option!]!.label!,
           percentage: Math.round(vote.amount / 10 ** 14 / totalStaked) / 100,
           label: String(vote.amount / 10 ** 18),
         });
