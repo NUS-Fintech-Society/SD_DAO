@@ -7,7 +7,7 @@ import { signUpSchema } from "../../pages/api/auth/auth";
 export const serverRouter = trpc.router<Context>().mutation("signup", {
   input: signUpSchema,
   resolve: async ({ input, ctx }) => {
-    const { username, email, password } = input;
+    const { id, email, password } = input;
 
     const exists = await ctx.prisma.user.findFirst({
       where: { email },
@@ -22,15 +22,15 @@ export const serverRouter = trpc.router<Context>().mutation("signup", {
 
     const hashedPassword = await hash(password);
 
-    const result = await ctx.prisma.user.create({
-      data: { username, email, password: hashedPassword },
-    });
+    // const result = await ctx.prisma.user.create({
+    //   data: { id, email, hashedPassword },
+    // });
 
-    return {
-      status: 201,
-      message: "Account created successfully",
-      result: result.email,
-    };
+    // return {
+    //   status: 201,
+    //   message: "Account created successfully",
+    //   result: result.email,
+    // };
   },
 });
 

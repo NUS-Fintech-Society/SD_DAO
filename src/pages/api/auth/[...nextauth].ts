@@ -1,11 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth"
-import { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import type { AppProps } from "next/app";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "../../../server/db/client"
-import { loginSchema } from "./auth";
 import { compare } from 'bcryptjs'
 import type { User } from '@prisma/client'
 
