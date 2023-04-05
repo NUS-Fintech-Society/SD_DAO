@@ -49,6 +49,7 @@
     "zod": "^3.18.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-datepicker": "^4.8.0",

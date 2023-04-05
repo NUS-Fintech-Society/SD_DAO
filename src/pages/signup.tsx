@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
+
+import { getWalletAddress } from "../components/api/api";
 import { getAccountHash } from "../components/api/utils";
 import NavBar from "../components/Layout/NavBar";
 import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
-import Description from "../components/LandingPage/Description";
-import HeroBanner from "../components/LandingPage/HeroBanner";
 import {
-  Input,
-  InputGroup,
-  InputRightElement,
   Stack,
-  Button,
-  Heading,
-  Text,
+  HStack,
+  VStack,
   Center,
+  Card,
+  Image,
+  CardHeader,
+  Heading,
+  CardBody,
+  Box,
+  Text,
 } from "@chakra-ui/react";
+import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
+import { MdOutlineAlternateEmail } from "react-icons/md";
 
 export default function SignUpPage() {
   const [username, setUsername] = useState("");
@@ -37,7 +41,7 @@ export default function SignUpPage() {
 
   return (
     <>
-      <div className="bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+      <div className="bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen">
         <Center className="py-25">
           <form className="form mx-20 my rounded justify-center">
             <div className="grid place-items-center">
@@ -119,4 +123,5 @@ export default function SignUpPage() {
       </div>
     </>
   );
+
 }

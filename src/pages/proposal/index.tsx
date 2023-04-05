@@ -11,6 +11,7 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
+import "../../components/Proposal/newproposalpage.svg";
 
 interface ProposalProps {
   proposedTitle1: string;
@@ -125,60 +126,55 @@ const Proposal: React.FC<ProposalProps> = (props) => {
 
   return (
     <>
-      <div className={"bg-proposal-page bg-no-repeat bg-cover h-screen w-100%"}>
-        <div className={"bg-proposal-page bg-no-repeat bg-cover h-100% w-100%"}>
-          <Center mt={-16}>
-            <VStack>
-              <Heading mt={200} color={"black"}>
-                Proposals
-              </Heading>
-              <Text
-                mt={200}
-                backgroundColor={"#AEAEAE"}
-                fontSize={20}
-                borderRadius={"full"}
+      <div className={"proposalBackground"}>
+        <Center mt={-16}>
+          <VStack>
+            <Heading mt={200}>Proposals</Heading>
+            <Text
+              mt={200}
+              backgroundColor={"#AEAEAE"}
+              fontSize={20}
+              borderRadius={"full"}
+              align={"center"}
+              w={"36"}
+              h={"8"}
+            >
+              Project XYZ
+            </Text>
+          </VStack>
+        </Center>
+        <Center padding={"20"}>
+          <Stack direction={"column"}>
+            <Wrap>
+              <Button
+                leftIcon={
+                  <AddIcon color={"black"} width={3} paddingTop={0.5} />
+                }
+                backgroundColor="#D9D9D9"
                 color={"black"}
-                align={"center"}
-                w={"36"}
-                h={"8"}
+                size="md"
               >
-                Project XYZ
-              </Text>
+                New Proposal
+              </Button>
+            </Wrap>
+            <VStack>
+              {testData.map((obj) => {
+                return (
+                  <Box paddingBottom={5}>
+                    <Card
+                      proposedTitle={obj.proposedTitle}
+                      proposedDescription={obj.proposedDescription}
+                      proposedType={obj.proposedType}
+                      endDate={obj.endDate}
+                      minStake={obj.minStake}
+                      remainingTokens={obj.remainingTokens}
+                    />
+                  </Box>
+                );
+              })}
             </VStack>
-          </Center>
-          <Center paddingTop={"20"}>
-            <Stack direction={"column"}>
-              <Wrap>
-                <Button
-                  leftIcon={
-                    <AddIcon color={"black"} width={3} paddingTop={0.5} />
-                  }
-                  backgroundColor="#D9D9D9"
-                  color={"black"}
-                  size="md"
-                >
-                  New Proposal
-                </Button>
-              </Wrap>
-              <VStack>
-                {testData.map((obj) => {
-                  return (
-                    <Box paddingBottom={5}>
-                      <Card
-                        proposedTitle={obj.proposedTitle}
-                        proposedDescription={obj.proposedDescription}
-                        proposedType={obj.proposedType}
-                        endDate={obj.endDate}
-                        minStake={obj.minStake}
-                        remainingTokens={obj.remainingTokens}
-                      />
-                    </Box>
-                  );
-                })}
-              </VStack>
-            </Stack>
-          </Center>
-        </div>
+          </Stack>
+        </Center>
       </div>
     </>
   );

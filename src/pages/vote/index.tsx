@@ -25,38 +25,35 @@ export default function Vote() {
   }
 
   return (
-    <div className="bg-view-proposal-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
-      <Link href="/">
-        <img
-          src="/fintech_logo.png"
-          alt="Fintech Logo"
-          className="cursor-pointer max-w-20vw top-5vh fixed"
-        />
-      </Link>
-      <div className="w-full h-full">
-        <div className="flex flex-col max-w-7xl mx-auto p-2 mb-10">
-          <div className="w-full">
-            <div className="flex flex-row items-center justify-between px-4 ">
-              <div className="text-4xl text-gray-700 my-4">Proposals</div>
-              <div className="flex lg:hidden">
-                <Link href={`${router.pathname}/new-proposal`}>
-                  <div className="bg-gray-200 text-gray-600 px-3 py-2 rounded-md text-sm font-medium cursor-pointer hover:bg-indigo-100">
-                    New Proposal
+    <div className="bg-vote-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16">
+      <div className="py-5">
+        <div className="px-20 pt-36 lg:pt-40 xl:pt-48 2xl:pt-64">
+          <div className="w-full h-full">
+            <div className="flex flex-col max-w-7xl p-2 mb-10">
+              <div className="w-full">
+                <div className="flex flex-row items-center justify-between px-4 ">
+                  <div className="text-4xl text-gray-700 my-4">Proposals</div>
+                  <div className="flex lg:hidden">
+                    <Link href={`${router.pathname}/new-proposal`}>
+                      <div className="bg-gray-200 text-gray-600 px-3 py-2 rounded-md text-sm font-medium cursor-pointer hover:bg-indigo-100">
+                        New Proposal
+                      </div>
+                    </Link>
                   </div>
-                </Link>
+                </div>
+                <div className="hidden lg:flex flex-row space-x-6 w-full">
+                  <div className="w-1/3">
+                    <VotePanelLeft
+                      rightPanelName={rightPanelName}
+                      setRightPanelName={setRightPanelName}
+                    />
+                  </div>
+                  <PanelRight />
+                </div>
+                <div className="flex flex-col w-full lg:hidden space-y-4">
+                  <VoteList />
+                </div>
               </div>
-            </div>
-            <div className="hidden lg:flex flex-row space-x-6 w-full">
-              <div className="w-1/3">
-                <VotePanelLeft
-                  rightPanelName={rightPanelName}
-                  setRightPanelName={setRightPanelName}
-                />
-              </div>
-              <PanelRight />
-            </div>
-            <div className="flex flex-col w-full lg:hidden space-y-4">
-              <VoteList />
             </div>
           </div>
         </div>
