@@ -45,3 +45,5 @@ try { const client = withTRPC<ServerRouter>({
 } catch (error) {
   console.log(error);
 }
+
+export default App
