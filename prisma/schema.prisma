@@ -104,4 +104,3 @@ enum LogType {
   WARNING
   ERROR
 }
-
