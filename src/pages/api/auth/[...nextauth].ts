@@ -1,7 +1,9 @@
-import NextAuth, { User } from "next-auth"
+import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "../../../server/db/client"
+import { compare } from 'bcryptjs'
+import type { User } from '@prisma/client'
 
 export default NextAuth({
     session: {
