@@ -35,7 +35,7 @@ export default function ProjectsPage() {
             </button>
           </div>
         </div>
-        <div className="w-8/12 h-[290px] flex-none overflow-scroll relative">
+        <div className="w-8/12 h-[290px] flex-none  relative">
           {!nextPage && (
             <>
               <div className="flex space-x-16 absolute w-full justify-center">

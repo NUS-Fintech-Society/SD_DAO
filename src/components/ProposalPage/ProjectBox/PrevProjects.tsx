@@ -5,21 +5,21 @@ const PrevProject = () => {
         <>
             <ProjectBox
                 title="Project 01"
-                aboutUrl="#none"
-                viewUrl="#none"
-                addUrl="#none"
+                aboutUrl="/projects/about"
+                viewUrl="/proposal"
+                addUrl="/proposal/newproposal"
                 />
             <ProjectBox
                 title="Project 02"
-                aboutUrl="#none"
-                viewUrl="#none"
-                addUrl="#none"
+                aboutUrl="/projects/about"
+                viewUrl="/proposal"
+                addUrl="/proposal/newproposal"
             />
             <ProjectBox
                 title="Project 03"
-                aboutUrl="#none"
-                viewUrl="#none"
-                addUrl="#none"
+                aboutUrl="/projects/about"
+                viewUrl="/proposal"
+                addUrl="/proposal/newproposal"
             />
         </>
     )

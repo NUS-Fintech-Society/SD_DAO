@@ -11,12 +11,12 @@ import { getShortAccountHash } from "../api/utils";
 
 const navigation_loggedout = [
   { name: "Home", href: `/` },
-  { name: "Vote", href: `/vote` },
+  { name: "Projects", href: `/projects` },
 ];
 
 const navigation_loggedin = [
   { name: "Home", href: "/" },
-  { name: "Vote", href: `/vote` },
+  { name: "Projects", href: `/projects` },
 ];
 
 function classNames(...classes: string[]) {
@@ -212,27 +212,29 @@ export default function NavBar() {
               ))}
             </div>
           </div>
+{/* == Login Button ==
           <div className="">
             <Link href="/login">
               <button
 
                 className="border text-white rounded-2xl px-5 font-chakraPetch tracking-wide"
-                /*onClick={() => setLoginState(!login)}*/
+                onClick={() => setLoginState(!login)
               >
                 Login
               </button>
             </Link>
           </div>
+ */}
 
-          <div className="ml-5">
-            {/* <Link href="/signup"> */}
+           <div className="ml-5">
+             <Link href="/signup">
             <button
               className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
               onClick={() => setLoginState(!login)}
             >
-              Sign Up
+              Login
             </button>
-            {/* </Link> */}
+             </Link> 
           </div>
         </div>
       </div>
