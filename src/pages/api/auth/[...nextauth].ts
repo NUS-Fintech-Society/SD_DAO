@@ -57,7 +57,8 @@ export default NextAuth({
       // We need this to ensure that the client knows when to log in
       async session({ session, token }) {
         if (session && session.user && token) {
-          session.user.id = token.sub || ''
+          // this part i changed id to name as a brute force approach
+          session.user.name = token.sub || ''
           session.user.image = token.picture
         }
 
