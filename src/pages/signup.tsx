@@ -16,6 +16,9 @@ import {
   CardBody,
   Box,
   Text,
+  Input,
+  Button,
+  Link,
 } from "@chakra-ui/react";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { MdOutlineAlternateEmail } from "react-icons/md";
