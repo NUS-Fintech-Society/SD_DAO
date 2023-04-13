@@ -58,7 +58,7 @@ export default NextAuth({
       async session({ session, token }) {
         if (session && session.user && token) {
           // this part i changed id to name as a brute force approach
-          session.user.name = token.sub || ''
+          session.user.id = token.sub || ''
           session.user.image = token.picture
         }
 
