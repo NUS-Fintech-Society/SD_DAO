@@ -4,10 +4,16 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "../../../server/db/client"
 import { compare } from 'bcryptjs'
 import type { User } from '@prisma/client'
+import { DefaultSession } from "next-auth";
+import { Toast, useToast } from "@chakra-ui/react";
+
+
 
 export default NextAuth({
+   secret: process.env.NEXTAUTH_SECRET,
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
+      
     },
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -21,24 +27,35 @@ export default NextAuth({
               email: string
               password: string
             }
-  
+           
             // Step 2: If no credentials are provided, throw an error
             if (!credential || !email || !password) {
+              
               throw new Error('No email or password provided')
+              
             }
   
             // Step 3: Get the user by the email
             const adapterUser = await prisma.user.findUnique({
               where: { email },
             })
-            if (!adapterUser) throw new Error('Invalid email or password')
-  
+            
+            
+            if (!adapterUser)  {
+              
+              
+              throw new Error('User not found')
+            }
             // Step 4: Type cast it to the type of User
             const account = adapterUser as User
+            
   
             // If the account is found, challenge the hashPassword with the password
             const success = await compare(password, account.hashedPassword)
-            if (!success) throw new Error('Invalid email or password')
+  
+            
+            
+            if (!success) throw new Error('Invalid password')
   
             // The user object is passed to the session callback in session.data.user
             return {
@@ -55,11 +72,13 @@ export default NextAuth({
     ],
     callbacks: {
       // We need this to ensure that the client knows when to log in
-      async session({ session, token }) {
+      async session({ session, token, user }) {
         if (session && session.user && token) {
           // this part i changed id to name as a brute force approach
+          
           session.user.name = token.sub || ''
           session.user.image = token.picture
+         
         }
 
         return session
@@ -74,7 +93,7 @@ export default NextAuth({
     },
 
   jwt: {
-      secret: "",
+      secret: "1",
       maxAge: 24 * 60 * 60, 
   },
   pages: {
@@ -93,3 +112,18 @@ export default NextAuth({
     //       return token
     //     }
     //   }
+
+declare module "next-auth" {
+  interface Session {
+    user?: {
+      id: string;
+    } & DefaultSession["user"];
+  }
+}
+
+// export const getServerAuthSession = (ctx: {
+//   req: GetServerSidePropsContext["req"];
+//   res: GetServerSidePropsContext["res"];
+// }) => {
+//   return getServerSession(ctx.req, ctx.res, authOptions);
+// };

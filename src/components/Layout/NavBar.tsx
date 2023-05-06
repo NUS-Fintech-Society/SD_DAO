@@ -2,12 +2,29 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { useToast } from "@chakra-ui/react";
 import { BellIcon, HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import {hash} from 'bcryptjs'
+import { signOut } from 'next-auth/react';
 
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Fragment, useEffect, useState } from "react";
 import { getWalletAddress, getWeb3Provider } from "../api/api";
 import { getShortAccountHash } from "../api/utils";
+
+const handleSubmit = async() => {
+  
+  const result = await signOut({
+    redirect: false,
+  
+  });
+ 
+  if (result) {
+    window.location.href = '/';
+  }
+
+};
+
 
 const navigation_loggedout = [
   { name: "Home", href: `/` },
@@ -24,6 +41,10 @@ function classNames(...classes: string[]) {
 }
 
 export default function NavBar() {
+  const password = '123';
+  const numSaltRounds = 8;
+  const hashed = hash(password, numSaltRounds);
+
   const toast = useToast();
   const router = useRouter();
   const [address, setAddress] = useState("");
@@ -31,6 +52,9 @@ export default function NavBar() {
   useEffect(() => {
     getWalletAddress().then((address) => setAddress(address));
   }, []);
+
+
+ 
 
   // Pending Log In Page
 
@@ -45,7 +69,12 @@ export default function NavBar() {
   // };
 
   const [login, setLoginState] = useState(false);
-
+  const { data: session } = useSession();
+  useEffect(() => {
+    console.log(session);
+   
+}, [session]); //Add session state to the useEffect
+  
   // const logout = async () => {
   //   setAddress('');
   //   const provider = getWeb3Provider();
@@ -152,7 +181,7 @@ export default function NavBar() {
                         active ? "bg-gray-100" : "",
                         "flex align-middle px-4 py-2 text-sm text-gray-700 cursor-pointer"
                       )}
-                      onClick={() => setLoginState(!login)}
+                      onClick={() => handleSubmit()}
                     >
                       <img
                         src="/logout_icon.png"
@@ -244,7 +273,7 @@ export default function NavBar() {
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-            {login ? loggedInNavbar(open) : loggedOutNavbar(open)}
+            {session ? loggedInNavbar(open) : loggedOutNavbar(open)}
           </div>
 
           {/* <Link href="/">
@@ -258,7 +287,7 @@ export default function NavBar() {
           {/* Mobile menu dropdown */}
           <Disclosure.Panel className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              {login
+              {session
                 ? navigation_loggedin.map((item) => (
                     <Link key={item.name} href={item.href} passHref>
                       <a
