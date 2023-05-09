@@ -1,11 +1,12 @@
-import NextAuth from "next-auth"
+import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { prisma } from "../../../server/db/client"
 import { compare } from 'bcryptjs'
+import { env } from '../../../env/server.mjs'
 import type { User } from '@prisma/client'
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt'
     },
@@ -53,6 +54,11 @@ export default NextAuth({
         },
       }),
     ],
+    pages: {
+      signIn: '/login',
+      // signOut: '/auth/signout',
+    },
+    secret: env.NODE_ENV,
     callbacks: {
         async jwt({ token, account }) {
           // Persist the OAuth access_token to the token right after signin
@@ -62,4 +68,6 @@ export default NextAuth({
           return token
         }
       }
-})
+}
+
+export default NextAuth(authOptions)

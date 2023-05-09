@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import Link from "next/link";
 import { getAccountHash } from "../components/api/utils";
 import NavBar from "../components/Layout/NavBar";
@@ -29,7 +31,18 @@ export default function SignInPage() {
   const [password, setPassword] = useState<string>("");
   const [show, setShow] = React.useState<boolean>(false);
   const handleClick = () => setShow(!show);
+  const router = useRouter();
 
+  const signin = async () => {
+    const res = await signIn('credentials', {
+      email: username,
+      password: password,
+      redirect: false,
+    })
+
+    console.log(res)
+    router.push('/')
+  }
   return (
     <div className="bg-login-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16">
       <div className="py-5">
@@ -77,7 +90,7 @@ export default function SignInPage() {
             <div className="flex flex-col items-center justify-center">
               <button
                 className="bg-fintech-yellow text-black rounded-2xl px-7 py-1.5 mt-10 font-chakraPetch tracking-widest hover:bg-yellow-400"
-                /*onClick={() => setLoginState(!login)}*/
+                onClick={signin}
               >
                 LOGIN
               </button>

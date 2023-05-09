@@ -4,7 +4,9 @@ import { getAccountHash } from "../components/api/utils";
 import NavBar from "../components/Layout/NavBar";
 import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
 import Link from "next/link";
-
+import { useSession } from 'next-auth/react';
+import { prisma } from "../server/db/client";
+import type { User } from '@prisma/client'
 import {
   Stack,
   HStack,
@@ -21,27 +23,57 @@ import {
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { MdOutlineAlternateEmail } from "react-icons/md";
 
-const sampleData = {
-  id: 1,
-  nickname: "Jon",
+const sampleData: User = {
+  id: '1',
+  name: "Jon",
   email: "test@hmail.com",
   phone: "987654321",
-  dob: "11/2/1982",
-  role: "Software Developer",
-  github: "pikachu",
+  roles: "Software Developer",
+  discord: "pikachu",
   linkedin: "jonthepikachu",
-  avatar:
-    "https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
-  created_at: "test",
-  year: 1,
+  image: "https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
   department: "Blockchain",
+  attendance: null,
+  batch: null,
+  gender: null,
+  faculty: null,
+  hobbies: null,
+  level: "",
+  personal_email: null,
+  telegram: null,
+  wallet: null,
+  year: null,
+  date_of_birth: null,
+  diet: null,
+  hashedPassword: "",
+  isAdmin: null,
+  major: null,
+  race: null,
+  shirt: null,
+  total_events: null
 };
+
+const avatar = "https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80";
 
 export default function Profile() {
   const [page, setPage] = useState("Profile");
   const [address, setAddress] = useState("");
-
+  const [userData, setUserData] = useState<User>(sampleData);
+  const { data: session, status } = useSession({ required: true });
+  console.log(session)
   useEffect(() => {
+    const getUser = async () => {
+      const email = session?.user?.email;
+      if (!email) throw new Error('Cannot get email');
+    
+      const currentUser = await prisma.user.findUnique({
+        where: { email: email },
+      });
+      console.log(currentUser);
+      if (!currentUser) throw new Error('Invalid email');
+      setUserData(currentUser as User);
+    };
+    getUser();
     getWalletAddress().then((addr) => setAddress(addr));
   }, []);
 
@@ -50,11 +82,11 @@ export default function Profile() {
       <div className="relative flex flex-col text-center w-1/5 pb-48">
         <Image
           className="rounded-xl mx-auto w-1/2 h-1/2 z-10"
-          src={sampleData.avatar}
+          src={userData.image? userData.image: avatar}
           alt=""
         />
-        <div className="text-xl z-10 my-3">{sampleData.nickname}</div>
-        <div className="text-xl z-10 my-3">{sampleData.role}</div>
+        <div className="text-xl z-10 my-3">{userData.name}</div>
+        <div className="text-xl z-10 my-3">{userData.roles}</div>
       </div>
     );
   }
@@ -71,15 +103,15 @@ export default function Profile() {
         >
           <div className="inline-flex flex-row space-x-5 py-2">
             <AiFillGithub size={30} />
-            <div className="text-xl">{sampleData.github}</div>
+            <div className="text-xl">{userData.discord}</div>
           </div>
           <div className="inline-flex flex-row space-x-5 py-2">
             <AiFillLinkedin color="steelblue" size={30} />
-            <div className="text-xl">{sampleData.linkedin}</div>
+            <div className="text-xl">{userData.linkedin}</div>
           </div>
           <div className="inline-flex flex-row space-x-5 py-2">
             <MdOutlineAlternateEmail color="lightgray" size={30} />
-            <div className="text-xl">{sampleData.email}</div>
+            <div className="text-xl">{userData.email}</div>
           </div>
         </Card>
       </div>
