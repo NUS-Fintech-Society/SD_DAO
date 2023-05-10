@@ -9,13 +9,41 @@ import { WagmiConfig, configureChains, createConfig, mainnet } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { goerli } from 'viem/chains';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { WALLET_CONNECT_PROJECT_ID } from '../constants/walletConnect';
 
-const { publicClient, webSocketPublicClient } = configureChains(
+const { chains, publicClient, webSocketPublicClient } = configureChains(
   [goerli, mainnet],
   [publicProvider(), infuraProvider({ apiKey: process.env.INFURA_API_KEY! })]
 );
 
 const config = createConfig({
+  connectors: [
+    new MetaMaskConnector({ chains }),
+    new CoinbaseWalletConnector({
+      chains,
+      options: {
+        appName: 'ABCDao',
+      },
+    }),
+    new WalletConnectConnector({
+      chains,
+      options: {
+        projectId: WALLET_CONNECT_PROJECT_ID,
+        showQrModal: true,
+      },
+    }),
+    new InjectedConnector({
+      chains,
+      options: {
+        name: 'Injected',
+        shimDisconnect: true,
+      },
+    }),
+  ],
   publicClient,
   webSocketPublicClient,
 });
