@@ -5,6 +5,7 @@ import NavBar from "../components/Layout/NavBar";
 import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
 import Description from "../components/LandingPage/Description";
 import HeroBanner from "../components/LandingPage/HeroBanner";
+import { signIn } from 'next-auth/react';
 import {
   Input,
   InputGroup,
@@ -14,6 +15,8 @@ import {
   Center,
   Heading,
   Text,
+  Toast,
+  useToast,
 } from "@chakra-ui/react";
 import {
   Field,
@@ -25,14 +28,41 @@ import {
 } from "formik";
 
 export default function SignInPage() {
-  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [show, setShow] = React.useState<boolean>(false);
   const handleClick = () => setShow(!show);
+  const [error, setError] = useState('');
+  const toast = useToast()
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+
+    const result = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    })
+
+    if (result != null) {
+      if (result.error) { 
+        toast({
+          title: result.error,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        })
+      }
+      else {
+        window.location.href = '/';
+      }
+    } 
+  };
 
   return (
     <div className="bg-login-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16">
       <div className="py-5">
+        <form onSubmit={handleSubmit}>
         {/* <Center> */}
         <div className="form mx-auto my-30 max-w-screen-md">
           {/* <div className="grid grid-cols-2"> */}
@@ -46,10 +76,12 @@ export default function SignInPage() {
                   variant="outline"
                   className="mb-2 pt-2 pb-2 pl-4"
                   type="email"
-                  name="Username"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id = "email"
+                  name="Email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <h2 className="mb-1"> Password </h2>
@@ -58,10 +90,12 @@ export default function SignInPage() {
                   bg="#F2F2F2"
                   className="pt-2 pb-2 pl-4 mr-5 w-full"
                   type={show ? "text" : "password"}
+                  id = "password"
                   name="Password"
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <Button
                   onClick={handleClick}
@@ -76,6 +110,7 @@ export default function SignInPage() {
             </div>
             <div className="flex flex-col items-center justify-center">
               <button
+                type="submit"
                 className="bg-fintech-yellow text-black rounded-2xl px-7 py-1.5 mt-10 font-chakraPetch tracking-widest hover:bg-yellow-400"
                 /*onClick={() => setLoginState(!login)}*/
               >
@@ -98,6 +133,7 @@ export default function SignInPage() {
           {/* </div> */}
         </div>
         {/* </Center> */}
+        </form>
       </div>
     </div>
   );
