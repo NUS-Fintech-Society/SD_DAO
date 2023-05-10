@@ -12,6 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import "../../components/Proposal/newproposalpage.svg";
+import { getProposalHashes, getProposalInfo, getWalletAuthenticated, retrieveProposal } from "../../components/api/api";
+import { ProposalInfo } from "../../components/api/types";
+import { Proposal } from "../../components/api/types";
 
 interface ProposalProps {
   proposedTitle1: string;
@@ -23,28 +26,71 @@ interface ProposalProps {
 }
 
 const Proposal: React.FC<ProposalProps> = (props) => {
-  // const [authenticated, setAuthenticated] = useState(false);
-  // // Getting proposal content
-  // const [proposalContent, setProposalContent] = useState<Proposal | null>(null);
-  // const [proposalInfo, setProposalInfo] = useState<ProposalInfo | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
+  // Getting proposal content
+  const [proposalContent, setProposalContent] = useState<Proposal | null>(null);
+  const [proposalInfo, setProposalInfo] = useState<ProposalInfo | null>(null);
+
+  // const [proposalList, setProposalList] = useState<Proposal[]>([]);
+  // const [proposalToShow, setProposalToShow] = useState(0);
 
   // useEffect(() => {
-  //   getWalletAuthenticated().then((isAuthenticated) =>
-  //     setAuthenticated(isAuthenticated)
-  //   );
-  // }, []);
-
-  // useEffect(() => {
-  //   async function getProposal() {
-  //     await retrieveProposal(ipfsHash).then((proposal) => {
-  //       setProposalContent(proposal);
-  //     });
-  //     await getProposalInfo(ipfsHash).then((info) => {
-  //       setProposalInfo(info);
+  //   if (proposalList.length === 0) {
+  //     getProposalHashes().then((proposalData: string[]) => {
+  //       setProposalToShow(proposalData.length);
+  //       if (proposalData.length) {
+  //         proposalData.forEach(async (element) => {
+  //           if (element) {
+  //             await retrieveProposal(element).then((data) => {
+  //               const new_data = { ...data, ipfs: element };
+  //               setProposalList((prevState) => [...prevState, new_data]);
+  //             });
+  //           }
+  //         });
+  //       }
   //     });
   //   }
-  //   getProposal();
-  // }, [ipfsHash]);
+  // }, []);
+
+  const [proposalList, setProposalList] = useState<Proposal[]>([]);
+  const [proposalToShow, setProposalToShow] = useState(0);
+
+  useEffect(() => {
+    if (proposalList.length === 0) {
+      getProposalHashes().then((proposalData: string[]) => {
+        setProposalToShow(proposalData.length);
+        if (proposalData.length) {
+          proposalData.forEach(async (element) => {
+            if (element) {
+              await retrieveProposal(element).then((data) => {
+                const new_data = { ...data, ipfs: element };
+                setProposalList((prevState) => [...prevState, new_data]);
+              });
+            }
+          });
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    getWalletAuthenticated().then((isAuthenticated) =>
+      setAuthenticated(isAuthenticated)
+    );
+  }, []);
+
+  useEffect(() => {
+    async function getProposal() {
+      await retrieveProposal(props.ipfsHash.ipfsHash).then((proposal) => {
+        setProposalContent(proposal);
+      });
+      await getProposalInfo(props.ipfsHash.ipfsHash).then((info) => {
+        setProposalInfo(info);
+      });
+    }
+    getProposal();
+    console.log(proposalContent);
+  }, [props.ipfsHash]);
 
   const testData: {
     proposedTitle: string;
@@ -158,7 +204,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
               </Button>
             </Wrap>
             <VStack>
-              {testData.map((obj) => {
+              {proposalContent.map((obj) => {
                 return (
                   <Box paddingBottom={5}
                   key = {obj.proposedTitle}>
