@@ -1,11 +1,12 @@
 # Redesigned DAO Website
 
-# How do I contribute
+# Getting Started
 
-1. yarn install to build dependencies ( Don't use npm install )
-2. yarn dev while editing code for live changes
-3. yarn build to ensure there's no error during compilation
-4. commit to your own branch once there's no errors
+1. `yarn install` to build dependencies (Don't use `npm install`)
+2. Create a `.env` file and update the appropriate fields (create an Infura API key [here](https://app.infura.io/dashboard))
+3. `yarn dev` while editing code for live changes
+4. `yarn build` to ensure there's no error during compilation
+5. commit to your own branch once there's no errors
 
 ## Smart Contract
 
