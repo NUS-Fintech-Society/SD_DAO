@@ -15,7 +15,10 @@ export default defineNextConfig({
   swcMinify: true,
   // Next.js i18n docs: https://nextjs.org/docs/advanced-features/i18n-routing
   i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ['en'],
+    defaultLocale: 'en',
+  },
+  env: {
+    INFURA_API_KEY: process.env.INFURA_API_KEY,
   },
 });

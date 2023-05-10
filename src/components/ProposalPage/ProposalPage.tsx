@@ -1,11 +1,14 @@
-import { useState } from "react";
-import ProjectBox from "./ProjectBox/ProjectBox";
-import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi";
-import PrevProject from "./ProjectBox/PrevProjects";
-import NextProject from "./ProjectBox/NextProject";
+import { useState } from 'react';
+import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
+import useGetProposals from '../../hooks/useGetProposals';
+import NextProject from './ProjectBox/NextProject';
+import PrevProject from './ProjectBox/PrevProjects';
 
 export default function ProjectsPage() {
   const [nextPage, setNextPage] = useState(false);
+  const { data } = useGetProposals();
+
+  console.log({ data });
 
   function handleNextPage() {
     if (!nextPage) {
