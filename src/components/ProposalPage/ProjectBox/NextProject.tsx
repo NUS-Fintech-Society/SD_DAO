@@ -3,19 +3,19 @@ const NextProject = () => {
     return (
         <>
             <ProjectBox
-                title="Project 04"
+                title="SD FTS Site"
                 aboutUrl="#none"
                 viewUrl="#none"
                 addUrl="#none"
                 />
             <ProjectBox
-                title="Project 05"
+                title="SD General"
                 aboutUrl="#none"
                 viewUrl="#none"
                 addUrl="#none"
             />
             <ProjectBox
-                title="Project 06"
+                title="IA General"
                 aboutUrl="#none"
                 viewUrl="#none"
                 addUrl="#none"

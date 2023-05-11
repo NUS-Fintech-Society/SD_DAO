@@ -101,9 +101,9 @@ const Proposal: React.FC<ProposalProps> = (props) => {
     remainingTokens: number;
   }[] = [
     {
-      proposedTitle: "Proposed Title 1",
+      proposedTitle: "",
       proposedDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "",
       endDate: "9/8/2023",
       minStake: 90,
       proposedType: "DAO",
@@ -204,7 +204,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
               </Button>
             </Wrap>
             <VStack>
-              {proposalContent.map((obj) => {
+              {proposalContent && proposalContent.map((obj) => {
                 return (
                   <Box paddingBottom={5}
                   key = {obj.proposedTitle}>
