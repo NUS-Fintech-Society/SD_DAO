@@ -1,5 +1,6 @@
 import ipfsClient from 'ipfs-http-client';
 import { ethers } from 'ethers';
+import contractData from './contract.json';
 import { Proposal, ProposalInfo } from './types';
 
 const IPFS_URL = 'abcdao.infura-ipfs.io';

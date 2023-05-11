@@ -204,7 +204,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
               </Button>
             </Wrap>
             <VStack>
-              {proposalContent && proposalContent.map((obj) => {
+              {testData.map((obj) => {
                 return (
                   <Box paddingBottom={5}
                   key = {obj.proposedTitle}>
