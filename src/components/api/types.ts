@@ -1,4 +1,5 @@
 export interface Proposal {
+    map(arg0: (obj: any) => JSX.Element): import("react").ReactNode;
     ipfs: string;
     title: string;
     content: string;
