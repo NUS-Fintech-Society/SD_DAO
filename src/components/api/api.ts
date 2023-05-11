@@ -1,4 +1,5 @@
 import ipfsClient from 'ipfs-http-client';
+import { ethers } from 'ethers';
 import { Proposal, ProposalInfo } from './types';
 
 const IPFS_URL = 'abcdao.infura-ipfs.io';
@@ -56,6 +57,7 @@ export function getContract() {
   const provider = getInfuraProvider();
   return new ethers.Contract(ADDRESS, contractData.abi, provider);
 }
+
 
 export async function getProposalHashes(): Promise<string[]> {
   const contract = getContract();
