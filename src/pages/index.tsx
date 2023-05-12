@@ -4,7 +4,7 @@ import HeroBanner from "../components/LandingPage/HeroBanner";
 export default function Index() {
   return (
     <>
-      <div className="bg-landing-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+      <div className="bg-landing-page bg-no-repeat bg-cover bg-left-top">
         <HeroBanner />
         <Description />
       </div>

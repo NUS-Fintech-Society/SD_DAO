@@ -23,11 +23,9 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div>
-      <h1 className="absolute top-1/4 -translate-y-1/4 left-1/2 -translate-x-1/2 text-5xl">
-        Projects
-      </h1>
-      <div className="flex h-screen place-items-center">
+    <div className="flex items-center justify-center flex-col space-y-4 pt-16">
+      <h1 className="text-center text-5xl pt-12 pb-6">Projects</h1>
+      <div className="flex h-full place-items-center w-full">
         <div className="w-2/12 flex items-center">
           <div className="w-full text-right">
             <button onClick={handlePrevPage} className="mr-3">

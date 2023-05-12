@@ -1,6 +1,6 @@
 export default function Description() {
   return (
-    <div className="p-8 max-w-prose mx-auto">
+    <div className="p-8 pb-16 max-w-prose mx-auto">
       <header className="text-center text-2xl p-4 font-semibold">
         What is ABC DAO?
       </header>

@@ -14,10 +14,14 @@ import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { WALLET_CONNECT_PROJECT_ID } from '../constants/walletConnect';
+import { clientEnv } from '../env/schema.mjs';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [goerli, mainnet],
-  [publicProvider(), infuraProvider({ apiKey: process.env.INFURA_API_KEY! })]
+  [
+    publicProvider(),
+    infuraProvider({ apiKey: clientEnv.NEXT_PUBLIC_INFURA_API_KEY! }),
+  ]
 );
 
 const config = createConfig({

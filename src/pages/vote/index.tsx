@@ -1,31 +1,31 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import "react-datepicker/dist/react-datepicker.css";
-import VoteAboutTab from "../../components/Vote/VoteAboutTab";
-import VoteList from "../../components/Vote/VoteList";
-import { VotePanelLeft } from "../../components/Vote/VotePanelLeft";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
+import VoteAboutTab from '../../components/Vote/VoteAboutTab';
+import VoteList from '../../components/Vote/VoteList';
+import { VotePanelLeft } from '../../components/Vote/VotePanelLeft';
 
 export default function Vote() {
-  const [rightPanelName, setRightPanelName] = useState("Proposals");
+  const [rightPanelName, setRightPanelName] = useState('Proposals');
   const router = useRouter();
 
   function PanelRight() {
-    if (rightPanelName === "Proposals") {
+    if (rightPanelName === 'Proposals') {
       return (
         <div className="w-full">
           <VoteList />
         </div>
       );
     }
-    if (rightPanelName === "About") {
+    if (rightPanelName === 'About') {
       return <VoteAboutTab />;
     }
     return null;
   }
 
   return (
-    <div className="bg-vote-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16">
+    <div className="bg-vote-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen">
       <div className="py-5">
         <div className="px-20 pt-36 lg:pt-40 xl:pt-48 2xl:pt-64">
           <div className="w-full h-full">

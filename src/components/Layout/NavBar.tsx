@@ -1,43 +1,39 @@
-import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { useToast } from "@chakra-ui/react";
-import { BellIcon, HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import Image from "next/image";
-import { useSession } from "next-auth/react";
-import {hash} from 'bcryptjs'
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { useToast } from '@chakra-ui/react';
+import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { hash } from 'bcryptjs';
 import { signOut } from 'next-auth/react';
 
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { Fragment, useEffect, useState } from "react";
-import { getWalletAddress, getWeb3Provider } from "../api/api";
-import { getShortAccountHash } from "../api/utils";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Fragment, useEffect, useState } from 'react';
+import { getWalletAddress, getWeb3Provider } from '../api/api';
+import { getShortAccountHash } from '../api/utils';
 
-const handleSubmit = async() => {
-  
+const handleSubmit = async () => {
   const result = await signOut({
     redirect: false,
-  
   });
- 
+
   if (result) {
     window.location.href = '/';
   }
-
 };
 
-
 const navigation_loggedout = [
-  { name: "Home", href: `/` },
-  { name: "Projects", href: `/projects` },
+  { name: 'Home', href: `/` },
+  { name: 'Projects', href: `/projects` },
 ];
 
 const navigation_loggedin = [
-  { name: "Home", href: "/" },
-  { name: "Projects", href: `/projects` },
+  { name: 'Home', href: '/' },
+  { name: 'Projects', href: `/projects` },
 ];
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function NavBar() {
@@ -47,14 +43,11 @@ export default function NavBar() {
 
   const toast = useToast();
   const router = useRouter();
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState('');
 
   useEffect(() => {
     getWalletAddress().then((address) => setAddress(address));
   }, []);
-
-
- 
 
   // Pending Log In Page
 
@@ -72,9 +65,8 @@ export default function NavBar() {
   const { data: session } = useSession();
   useEffect(() => {
     console.log(session);
-   
-}, [session]); //Add session state to the useEffect
-  
+  }, [session]); //Add session state to the useEffect
+
   // const logout = async () => {
   //   setAddress('');
   //   const provider = getWeb3Provider();
@@ -116,10 +108,10 @@ export default function NavBar() {
                   <Link key={item.name} href={item.href} passHref>
                     <a
                       className={classNames(
-                        "pr-3 py-2 rounded-md text-md font-Inter text-black hover:underline"
+                        'pr-3 py-2 rounded-md text-md font-Inter text-black hover:underline'
                       )}
                       aria-current={
-                        router.pathname === item.href ? "page" : undefined
+                        router.pathname === item.href ? 'page' : undefined
                       }
                     >
                       {item.name}
@@ -158,8 +150,8 @@ export default function NavBar() {
                       <Link href={`/profile`} passHref>
                         <a
                           className={classNames(
-                            active ? "bg-gray-200" : "",
-                            "flex align-middle px-4 py-2 text-sm text-gray-700"
+                            active ? 'bg-gray-200' : '',
+                            'flex align-middle px-4 py-2 text-sm text-gray-700'
                           )}
                         >
                           <img
@@ -167,7 +159,7 @@ export default function NavBar() {
                             alt="profile icon"
                             width="25x"
                             className="mr-2"
-                          />{" "}
+                          />{' '}
                           My Profile
                         </a>
                       </Link>
@@ -178,8 +170,8 @@ export default function NavBar() {
                   {({ active }) => (
                     <div
                       className={classNames(
-                        active ? "bg-gray-100" : "",
-                        "flex align-middle px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                        active ? 'bg-gray-100' : '',
+                        'flex align-middle px-4 py-2 text-sm text-gray-700 cursor-pointer'
                       )}
                       onClick={() => handleSubmit()}
                     >
@@ -188,7 +180,7 @@ export default function NavBar() {
                         alt="logout icon"
                         width="25x"
                         className="mr-2"
-                      />{" "}
+                      />{' '}
                       Log Out
                     </div>
                   )}
@@ -229,10 +221,10 @@ export default function NavBar() {
                 <Link key={item.name} href={item.href} passHref>
                   <a
                     className={classNames(
-                      "px-3 py-2 rounded-md text-md font-Inter text-black hover:underline"
+                      'px-3 py-2 rounded-md text-md font-Inter text-black hover:underline'
                     )}
                     aria-current={
-                      router.pathname === item.href ? "page" : undefined
+                      router.pathname === item.href ? 'page' : undefined
                     }
                   >
                     {item.name}
@@ -241,7 +233,7 @@ export default function NavBar() {
               ))}
             </div>
           </div>
-{/* == Login Button ==
+          {/* == Login Button ==
           <div className="">
             <Link href="/login">
               <button
@@ -255,15 +247,15 @@ export default function NavBar() {
           </div>
  */}
 
-           <div className="ml-5">
-             <Link href="/signup">
-            <button
-              className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
-              onClick={() => setLoginState(!login)}
-            >
-              Login
-            </button>
-             </Link> 
+          <div className="ml-5">
+            <Link href="/signup">
+              <button
+                className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
+                onClick={() => setLoginState(!login)}
+              >
+                Login
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -271,7 +263,7 @@ export default function NavBar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-transparent drop-shadow-2xl">
+    <Disclosure as="nav" className="bg-transparent drop-shadow-2xl absolute top-0 w-full h-16">
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
@@ -295,12 +287,12 @@ export default function NavBar() {
                       <a
                         className={classNames(
                           router.pathname === item.href
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-600 hover:bg-gray-500 hover:text-white",
-                          "block px-3 py-2 rounded-md text-base font-medium"
+                            ? 'bg-gray-900 text-white'
+                            : 'text-gray-600 hover:bg-gray-500 hover:text-white',
+                          'block px-3 py-2 rounded-md text-base font-medium'
                         )}
                         aria-current={
-                          router.pathname === item.href ? "page" : undefined
+                          router.pathname === item.href ? 'page' : undefined
                         }
                       >
                         {item.name}
@@ -312,12 +304,12 @@ export default function NavBar() {
                       <a
                         className={classNames(
                           router.pathname === item.href
-                            ? "bg-gray-900 text-white"
-                            : "text-gray-600 hover:bg-gray-500 hover:text-white",
-                          "block px-3 py-2 rounded-md text-base font-medium"
+                            ? 'bg-gray-900 text-white'
+                            : 'text-gray-600 hover:bg-gray-500 hover:text-white',
+                          'block px-3 py-2 rounded-md text-base font-medium'
                         )}
                         aria-current={
-                          router.pathname === item.href ? "page" : undefined
+                          router.pathname === item.href ? 'page' : undefined
                         }
                       >
                         {item.name}
@@ -331,4 +323,3 @@ export default function NavBar() {
     </Disclosure>
   );
 }
-

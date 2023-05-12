@@ -1,22 +1,16 @@
+import { useToast } from '@chakra-ui/react';
 import { Dialog, Transition } from '@headlessui/react';
-import {
-  Field,
-  FieldArray,
-  FieldProps,
-  Form,
-  Formik,
-  useFormikContext,
-} from 'formik';
+import { Field, FieldArray, FieldProps, Form, Formik } from 'formik';
+import Link from 'next/link';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
+import DatePicker from '../CreateProjectPage/DatePicker';
 import * as Yup from 'yup';
 import { createProposal, getWalletAddress } from '../api/api';
-import { getCurrentDateTime, showCurrentDate } from './voteUtils';
-import Link from 'next/link';
+import { AiTwotoneCalendar } from 'react-icons/ai';
+import { getCurrentDateTime } from '../Vote/voteUtils';
+import Option from '../CreateProjectPage/Option';
 import { Proposal } from '../api/types';
-import { Toast } from '@chakra-ui/react';
-import { useToast } from '@chakra-ui/react';
-import DatePicker from 'react-datepicker';
-
+import { CustomDateInput } from './CustomDateInput';
 
 const formTypes = [
   { label: 'Loss Voting', value: 'loss' },
@@ -33,7 +27,7 @@ const minStakeValues = [
 let initialType = 'loss';
 let initialMinStakeVal = 0;
 
-const initialValues = {
+export const initialValues = {
   title: '',
   content: '',
   type: initialType,
@@ -66,8 +60,8 @@ const proposalSchema = Yup.object().shape({
   options: Yup.array().min(2, 'Please have at least 2 options'),
 });
 
-export default function NewProposal() {
-  const toast = useToast()
+export default function CreateProposalPage() {
+  const toast = useToast();
   const [address, setAddress] = useState('');
 
   useEffect(() => {
@@ -77,147 +71,242 @@ export default function NewProposal() {
   //Toast for error messages
   const errorNotification = (error: any) =>
     toast({
-      title: "Error",
+      title: 'Error',
       position: 'bottom-left',
-      status: "error",
+      status: 'error',
       duration: 3000,
-      isClosable: true
+      isClosable: true,
     });
 
   return (
-    <div className="w-full h-full">
-      <div className="flex flex-col max-w-7xl mx-auto p-2">
-        <div className="flex flex-row items-center justify-between px-4 ">
-          <div className="text-4xl text-gray-700 my-4">New Proposal</div>
-          <Link href={`/vote`}>
-            <div className="bg-gray-200 text-gray-600 px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
-              Back to vote
+    <div className="grid gap-2 content-center">
+      <h1 className="text-center text-blue-900 text-3xl font-bold pt-12">
+        Create a new proposal
+      </h1>
+      <div className="inline text-center">
+        <h2 className="bg-yellow-100 rounded-lg inline p-1">Project XYZ</h2>
+      </div>
+      <div className="px-40">
+        <label
+          htmlFor="title"
+          className="block mb-2 text-sm font-medium text-gray-600"
+        >
+          Title
+        </label>
+        <textarea
+          id="title"
+          className="block p-2 w-full box-border h-10 text-sm text-gray-900 bg-gray-300 rounded-lg border border-gray-300 resize-none mb-6
+                            focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:bg-slate-50
+                            hover:border-yellow-500 hover:bg-slate-100"
+        ></textarea>
+        <label
+          htmlFor="description"
+          className="block mb-2 text-sm font-medium text-gray-600"
+        >
+          Description
+        </label>
+        <textarea
+          id="description"
+          className="block box-border h-28 p-2 w-full text-sm text-gray-900 bg-gray-300 rounded-lg border border-gray-300 resize-none
+                            focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:bg-slate-50
+                            hover:border-yellow-500 hover:bg-slate-100"
+        ></textarea>
+        <div className="mt-6">
+          <div className="float-left w-1/2">
+            <h4 className="text-sm">Proposal Conditions</h4>
+            <div className="flex items-center mt-3">
+              <input
+                id="default-radio-1"
+                type="radio"
+                value=""
+                name="default-radio"
+                className="form-radio w-4 h-4 bg-slate-100 checked:bg-yellow-500 cursor-pointer"
+              ></input>
+              <label
+                htmlFor="default-radio-1"
+                className="ml-2 text-sm font-medium text-gray-900"
+              >
+                Loss Voting
+              </label>
+              <input
+                id="default-radio-2"
+                type="radio"
+                value=""
+                name="default-radio"
+                className="form-radio ml-6 w-4 h-4 bg-slate-100 checked:bg-yellow-500 cursor-pointer"
+              ></input>
+              <label
+                htmlFor="default-radio-2"
+                className="ml-2 text-sm font-medium text-gray-900"
+              >
+                Allocation Proposal
+              </label>
             </div>
-          </Link>
+            <div className="mt-5">
+              <label className="relative block w-5/6">
+                <DatePicker />
+                <AiTwotoneCalendar
+                  size={24}
+                  className="absolute top-1 right-3"
+                />
+              </label>
+            </div>
+          </div>
+          <div className="w-1/2 float-right">
+            {/* <h4 className="text-sm">Options</h4> */}
+            <div className="w-full">
+              <Option />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="max-w-7xl x-auto px-8 py-2">
-        <Formik
-          initialValues={initialValues}
-          validationSchema={proposalSchema}
-          validateOnMount={true}
-          onSubmit={(values, { resetForm, setSubmitting }) => {
-            // console.log(JSON.stringify(values));
-            submitProposal(address, values);
-            setSubmitting(false);
-            resetForm();
-          }}
-        >
-          {({ values, errors, touched, isValid, setSubmitting }) => (
-            <Form>
-              <div className="hidden">
-                {(values.min_stake = initialMinStakeVal)}
-                {(values.type = initialType)}
-              </div>
-
-              <div className="flex flex-col text-gray-600 lg:flex-row lg:space-x-4">
-                <div className="flex-col w-full">
-                  <Field
-                    name="title"
-                    component={CustomTextInput}
-                    label="Title"
-                    placeholder="Question"
-                    errors={errors}
-                    touched={touched}
-                  />
-                  <Field
-                    name="content"
-                    component={CustomLongTextInput}
-                    label="Content"
-                    placeholder="What is your proposal?"
-                    errors={errors}
-                    touched={touched}
-                  />
-                  <div className="flex-col w-full border-2 border-gray-200 rounded-xl my-6">
-                    <div className="flex flex-row space-x-2  items-end bg-blue-100 px-4 py-3 text-2xl font-semibold rounded-t-lg">
-                      <span>Choices</span>
-                      <div className="class">
-                        {errors.options && touched.options ? (
-                          <div className="text-red-500 font-thin text-sm">
-                            require at least 2 options
-                          </div>
-                        ) : null}
-                      </div>
-                    </div>
-
-                    <FieldArray name="options">
-                      {({ insert, remove, push }) => (
-                        <div className="flex flex-col w-full px-4 my-2 space-y-2">
-                          {values.options.length > 0 &&
-                            values.options.map((friend, index) => (
-                              <div
-                                className="flex flex-row space-x-2 border-2 border-gray-200 rounded-full items-center font-bold justify-between"
-                                key={index}
-                              >
-                                <div className="pl-8 cursor-default">
-                                  {index + 1}
-                                </div>
-                                <Field
-                                  name={`options.${index}.label`}
-                                  placeholder="option"
-                                  component={CustomOptionInput}
-                                />
-                                <button
-                                  type="button"
-                                  className="font-bold w-12"
-                                  onClick={() => remove(index)}
-                                >
-                                  <div className="w-4">X</div>
-                                </button>
-                              </div>
-                            ))}
-                          <button
-                            type="button"
-                            className="p-2 border-2 border-gray-200 rounded-full items-center px-8 font-bold w-full text-center justify-center"
-                            onClick={() =>
-                              push({ id: values.options.length + 1, label: '' })
-                            }
-                          >
-                            Add option
-                          </button>
-                        </div>
-                      )}
-                    </FieldArray>
-                  </div>
-                </div>
-                <div className="flex-col lg:w-96 bg-white rounded-xl border border-gray-200">
-                  <div className="border-b border-gray-200 bg-blue-100 px-8 py-3 rounded-t-lg font-bold text-xl">
-                    Actions
-                  </div>
-                  <div className="p-4">
-                    <Field name="type" component={CustomVoteInput} />
-                    <Field name="min_stake" component={CustomStakeInput} />
-                    <Field name="end_date" component={CustomDateInput} />
-                    <button
-                      type="submit"
-                      disabled={!isValid}
-                      className={
-                        !isValid
-                          ? `w-full rounded-full items-center px-5 py-3 text-sm font-medium text-gray-400 bg-white outline-none focus:outline-none m-1 hover:m-0 focus:m-0 border border-gray-400 hover:border-4 transition-all cursor-not-allowed`
-                          : `w-full rounded-full items-center px-5 py-3 text-sm font-medium text-indigo-600 bg-white outline-none focus:outline-none m-1 hover:m-0 focus:m-0 border border-indigo-600 hover:border-4 focus:border-4 hover:border-indigo-800 hover:text-black hover:bg-indigo-100 focus:border-purple-200 transition-all`
-                      }
-                      onClick={() => {
-                        getWalletAddress().then((address) => {
-                          submitProposal(address || '', values);
-                          setSubmitting(false);
-                        });
-                      }}
-                    >
-                      Publish
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </Form>
-          )}
-        </Formik>
+      <div className="text-center mt-6">
+        <button className="p-1 px-8 bg-amber-200 hover:bg-amber-300 font-bold rounded-lg">
+          Submit
+        </button>
       </div>
     </div>
+  );
+
+  return (
+    <>
+      <div className="w-full h-full">
+        <div className="flex flex-col max-w-7xl mx-auto p-2">
+          <div className="flex flex-row items-center justify-between px-4 ">
+            <div className="text-4xl text-gray-700 my-4">New Proposal</div>
+            <Link href={`/vote`}>
+              <div className="bg-gray-200 text-gray-600 px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
+                Back to vote
+              </div>
+            </Link>
+          </div>
+        </div>
+        <div className="max-w-7xl x-auto px-8 py-2">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={proposalSchema}
+            validateOnMount={true}
+            onSubmit={(values, { resetForm, setSubmitting }) => {
+              // console.log(JSON.stringify(values));
+              submitProposal(address, values);
+              setSubmitting(false);
+              resetForm();
+            }}
+          >
+            {({ values, errors, touched, isValid, setSubmitting }) => (
+              <Form>
+                <div className="hidden">
+                  {(values.min_stake = initialMinStakeVal)}
+                  {(values.type = initialType)}
+                </div>
+
+                <div className="flex flex-col text-gray-600 lg:flex-row lg:space-x-4">
+                  <div className="flex-col w-full">
+                    <Field
+                      name="title"
+                      component={CustomTextInput}
+                      label="Title"
+                      placeholder="Question"
+                      errors={errors}
+                      touched={touched}
+                    />
+                    <Field
+                      name="content"
+                      component={CustomLongTextInput}
+                      label="Content"
+                      placeholder="What is your proposal?"
+                      errors={errors}
+                      touched={touched}
+                    />
+                    <div className="flex-col w-full border-2 border-gray-200 rounded-xl my-6">
+                      <div className="flex flex-row space-x-2  items-end bg-blue-100 px-4 py-3 text-2xl font-semibold rounded-t-lg">
+                        <span>Choices</span>
+                        <div className="class">
+                          {errors.options && touched.options ? (
+                            <div className="text-red-500 font-thin text-sm">
+                              require at least 2 options
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      <FieldArray name="options">
+                        {({ insert, remove, push }) => (
+                          <div className="flex flex-col w-full px-4 my-2 space-y-2">
+                            {values.options.length > 0 &&
+                              values.options.map((friend, index) => (
+                                <div
+                                  className="flex flex-row space-x-2 border-2 border-gray-200 rounded-full items-center font-bold justify-between"
+                                  key={index}
+                                >
+                                  <div className="pl-8 cursor-default">
+                                    {index + 1}
+                                  </div>
+                                  <Field
+                                    name={`options.${index}.label`}
+                                    placeholder="option"
+                                    component={CustomOptionInput}
+                                  />
+                                  <button
+                                    type="button"
+                                    className="font-bold w-12"
+                                    onClick={() => remove(index)}
+                                  >
+                                    <div className="w-4">X</div>
+                                  </button>
+                                </div>
+                              ))}
+                            <button
+                              type="button"
+                              className="p-2 border-2 border-gray-200 rounded-full items-center px-8 font-bold w-full text-center justify-center"
+                              onClick={() =>
+                                push({
+                                  id: values.options.length + 1,
+                                  label: '',
+                                })
+                              }
+                            >
+                              Add option
+                            </button>
+                          </div>
+                        )}
+                      </FieldArray>
+                    </div>
+                  </div>
+                  <div className="flex-col lg:w-96 bg-white rounded-xl border border-gray-200">
+                    <div className="border-b border-gray-200 bg-blue-100 px-8 py-3 rounded-t-lg font-bold text-xl">
+                      Actions
+                    </div>
+                    <div className="p-4">
+                      <Field name="type" component={CustomVoteInput} />
+                      <Field name="min_stake" component={CustomStakeInput} />
+                      <Field name="end_date" component={CustomDateInput} />
+                      <button
+                        type="submit"
+                        disabled={!isValid}
+                        className={
+                          !isValid
+                            ? `w-full rounded-full items-center px-5 py-3 text-sm font-medium text-gray-400 bg-white outline-none focus:outline-none m-1 hover:m-0 focus:m-0 border border-gray-400 hover:border-4 transition-all cursor-not-allowed`
+                            : `w-full rounded-full items-center px-5 py-3 text-sm font-medium text-indigo-600 bg-white outline-none focus:outline-none m-1 hover:m-0 focus:m-0 border border-indigo-600 hover:border-4 focus:border-4 hover:border-indigo-800 hover:text-black hover:bg-indigo-100 focus:border-purple-200 transition-all`
+                        }
+                        onClick={() => {
+                          getWalletAddress().then((address) => {
+                            submitProposal(address || '', values);
+                            setSubmitting(false);
+                          });
+                        }}
+                      >
+                        Publish
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -284,7 +373,7 @@ function CustomStakeInput({
   field,
   form,
   ...props
-}: FieldProps<typeof initialValues['min_stake']>) {
+}: FieldProps<(typeof initialValues)['min_stake']>) {
   let [isOpen, setIsOpen] = useState(false);
   let [stakeLabel, setStakeLabel] = useState(getLabel());
   let buttonRefs = useRef(
@@ -411,7 +500,7 @@ function CustomVoteInput({
   field,
   form,
   ...props
-}: FieldProps<typeof initialValues['type']>) {
+}: FieldProps<(typeof initialValues)['type']>) {
   let [isOpen, setIsOpen] = useState(false);
   let buttonRefs = useRef(
     formTypes.map(() => React.createRef<HTMLButtonElement>())
@@ -522,109 +611,6 @@ function CustomVoteInput({
                       {type.label}
                     </button>
                   ))}
-                </div>
-              </div>
-            </Transition.Child>
-          </div>
-        </Dialog>
-      </Transition>
-    </>
-  );
-}
-
-function CustomDateInput({
-  field,
-  ...props
-}: FieldProps<typeof initialValues['end_date']>) {
-  const { setFieldValue } = useFormikContext();
-  let [isOpen, setIsOpen] = useState(false);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  return (
-    <>
-      <div className="flex flex-col w-full">
-        <button
-          className="w-full rounded-full items-center px-5 py-3 text-sm font-medium text-indigo-600 bg-white outline-none focus:outline-none m-1 hover:m-0 focus:m-0 border border-indigo-600 hover:border-indigo-800 hover:text-black hover:bg-indigo-100 transition-all"
-          onClick={openModal}
-        >
-          End Date: {showCurrentDate(field.value)}
-        </button>
-      </div>
-      <Transition
-        appear
-        show={isOpen}
-        as={Fragment}
-        // autoFocus={isOpen}
-      >
-        <Dialog
-          as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
-          onClose={closeModal}
-        >
-          <div className="min-h-screen px-4 text-center">
-            {/* Allow for clicking outside to close modal*/}
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0"
-              enterTo="opacity-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Dialog.Overlay className="fixed inset-0" />
-            </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
-            <span
-              className="inline-block h-screen align-middle"
-              aria-hidden="true"
-            >
-              &#8203;
-            </span>
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div className="inline-block w-full max-w-min px-6 py-4 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900 cursor-default text-center"
-                >
-                  Select Date
-                </Dialog.Title>
-                <div className="mt-2">
-                  <DatePicker
-                    {...field}
-                    {...props}
-                    value={String(field.value)}
-                    selected={(field.value && new Date(field.value)) || null}
-                    onChange={(val) => {
-                      if (val) setFieldValue(field.name, val.getTime());
-                    }}
-                    inline
-                    className="rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                  />
-                  <div className="text-center">
-                    <button
-                      className="rounded-full border border-purple-400 p-1 px-3 text-purple-600 text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent focus:bg-gray-100"
-                      onClick={closeModal}
-                    >
-                      Confirm
-                    </button>
-                  </div>
                 </div>
               </div>
             </Transition.Child>

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { getAccountHash } from "../components/api/utils";
-import NavBar from "../components/Layout/NavBar";
-import HeaderTextFormat from "../components/TextFormats/HeaderTextFormat";
-import Description from "../components/LandingPage/Description";
-import HeroBanner from "../components/LandingPage/HeroBanner";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { getAccountHash } from '../components/api/utils';
+import NavBar from '../components/Layout/NavBar';
+import HeaderTextFormat from '../components/TextFormats/HeaderTextFormat';
+import Description from '../components/LandingPage/Description';
+import HeroBanner from '../components/LandingPage/HeroBanner';
 import {
   Input,
   InputGroup,
@@ -13,10 +13,10 @@ import {
   Button,
   Heading,
   Text,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 export default function ResetPasswordEmail() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
   const [emailFound, setemailFound] = React.useState(true);
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     /*for backend, submit button sends a request to search for the email in the database, if not found return false, else return true*/
@@ -26,16 +26,16 @@ export default function ResetPasswordEmail() {
     // exists, change the state of the emailFound
     if (emailFound) {
       // if the user exists, redirect to the main page
-      window.location.href = "/enternewpassword";
+      window.location.href = '/enternewpassword';
     } else {
       // if the user doesn't exist, show an alert
-      alert("No user found");
+      alert('No user found');
     }
   };
 
   return (
     <>
-      <div className=" bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
+      <div className=" bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen">
         <div className="py-3">
           <form
             onSubmit={handleSubmit}
@@ -44,8 +44,8 @@ export default function ResetPasswordEmail() {
             <div className="grid place-items-center">
               <div className="px-20 py-5">
                 <h1 className="text-3xl  mt-36 text-center font-bold text-[#5D6379]">
-                  {" "}
-                  Reset Password{" "}
+                  {' '}
+                  Reset Password{' '}
                 </h1>
                 <div className="text-l justify-center items-center">
                   <h2 className="mb-1"> Email </h2>
