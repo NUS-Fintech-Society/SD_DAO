@@ -6,8 +6,6 @@ import AboutCard from '../../components/ProjectAbout/AboutCard';
 import {MdOutlineModeEdit} from "react-icons/md";
 import { useSession } from "next-auth/react";
 
-
-
 interface ProposalProps {
     proposedTitle1: string;
     proposedDescription1: string;
@@ -20,8 +18,8 @@ interface ProposalProps {
 const About: React.FC<ProposalProps> = props => {
 
    const { data: session } = useSession();
-
-    const [about, setAbout] = useState<string>('Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.');
+   const useAboutInputRef = useRef<HTMLTextAreaElement>(null);
+   const [about, setAbout] = useState<string>('ABC DAO is a DAO focussed on the education of members on DAO mechanisms. Our DAO goes past just theory, giving our members the opportunity to interact with the DAO and vote on a range of society-wide decisions.');
 
     const testData: {id: number;
                     name: string;
@@ -34,20 +32,20 @@ const About: React.FC<ProposalProps> = props => {
                     } = 
     
         {
-            id: 1,
-            name: "Pika Pika Association",
-            department: "Pikachu Foreign Affairs",
-            email: "test@hmail.com",
-            github: "pikachu",
-            linkedin: "jonthepikachu",
-            avatar:
-                'https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
-            created_at: 'test',
+          id: 1,
+          name: "SD DAO",
+          department: "Software Development",
+          email: "test@gmail.com",
+          github: "FTS_DAO",
+          linkedin: "DAO",
+          avatar:
+              'https://images.unsplash.com/photo-1576245482660-6fcf7492b4e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+          created_at: 'test',
         }
     
         const { isOpen, onOpen, onClose } = useDisclosure()
         const EditAboutModal = () => {
-          const useAboutInputRef = useRef<HTMLTextAreaElement>(null);
+          
           let canSubmit = true;
           const handleSubmit = () => {
             if (!useAboutInputRef.current!.value) {

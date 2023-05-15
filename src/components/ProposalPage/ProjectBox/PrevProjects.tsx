@@ -4,19 +4,19 @@ const PrevProject = () => {
     return (
         <>
             <ProjectBox
-                title="Project 01"
+                title="SD DAO"
                 aboutUrl="/projects/about"
                 viewUrl="/proposal"
                 addUrl="/proposal/newproposal"
                 />
             <ProjectBox
-                title="Project 02"
+                title="SD Fintech Month"
                 aboutUrl="/projects/about"
                 viewUrl="/proposal"
                 addUrl="/proposal/newproposal"
             />
             <ProjectBox
-                title="Project 03"
+                title="SD HRMS"
                 aboutUrl="/projects/about"
                 viewUrl="/proposal"
                 addUrl="/proposal/newproposal"
