@@ -44,12 +44,12 @@ export default function SignUpPage() {
 
   return (
     <>
-      <div className="bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen">
+      <div className="bg-signup-page bg-no-repeat bg-cover bg-left-top h-screen  min-h-screen -mt-16">
         <Center className="py-25">
           <form className="form mx-20 my rounded justify-center">
             <div className="grid place-items-center">
               <div className="px-20 py-5">
-                <h1 className="text-3xl  mt-36 text-center font-bold text-[#5D6379]">
+                <h1 className="text-3xl  mt-36 text-center font-bold text-black">
                   {" "}
                   Sign Up{" "}
                 </h1>

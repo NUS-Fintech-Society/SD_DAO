@@ -15,6 +15,7 @@ import "../../components/Proposal/newproposalpage.svg";
 import { getProposalHashes, getProposalInfo, getWalletAuthenticated, retrieveProposal } from "../../components/api/api";
 import { ProposalInfo } from "../../components/api/types";
 import { Proposal } from "../../components/api/types";
+import { useSession } from "next-auth/react";
 
 interface ProposalProps {
   proposedTitle1: string;
@@ -54,6 +55,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
 
   const [proposalList, setProposalList] = useState<Proposal[]>([]);
   const [proposalToShow, setProposalToShow] = useState(0);
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (proposalList.length === 0) {
@@ -172,8 +174,10 @@ const Proposal: React.FC<ProposalProps> = (props) => {
 
   return (
     <>
-      <div className={"proposalBackground"}>
-        <Center mt={-16}>
+      <div className={"proposalBackground bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16"}>
+      {session?
+      <div>
+         <Center mt={-16}>
           <VStack>
             <Heading mt={200}>Proposals</Heading>
             <Text
@@ -222,6 +226,12 @@ const Proposal: React.FC<ProposalProps> = (props) => {
             </VStack>
           </Stack>
         </Center>
+        </div>:
+        <div className = "h-screen flex items-center justify-center font-bold">
+       
+         Looks like you are not logged in, please sign in first!
+         
+          </div>}
       </div>
     </>
   );

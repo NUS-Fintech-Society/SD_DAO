@@ -4,6 +4,7 @@ import {Center, VStack, useDisclosure, Modal, ModalOverlay,
   Box, Heading, Image, Button, Textarea} from '@chakra-ui/react';
 import AboutCard from '../../components/ProjectAbout/AboutCard';
 import {MdOutlineModeEdit} from "react-icons/md";
+import { useSession } from "next-auth/react";
 
 
 
@@ -17,6 +18,8 @@ interface ProposalProps {
 }
 
 const About: React.FC<ProposalProps> = props => {
+
+   const { data: session } = useSession();
 
     const [about, setAbout] = useState<string>('Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.');
 
@@ -79,8 +82,9 @@ const About: React.FC<ProposalProps> = props => {
 
   return (
     <>
-        <div className={"bg-about-page bg-no-repeat bg-cover bg-left-top h-screen"}>
-        
+        <div className={"bg-about-page bg-no-repeat bg-cover bg-scroll bg-left-top min-h-screen -mt-16"}>
+        {session? 
+        <div>
         <VStack mt={-16} >
         <Box p={'100'}>
         <Center>
@@ -107,7 +111,15 @@ const About: React.FC<ProposalProps> = props => {
         </Center>
         </Box>
         </VStack>
+        
         {EditAboutModal()}
+        </div>:
+        <div className = "h-screen flex items-center justify-center font-bold">
+       
+        Looks like you are not logged in, please sign in first!
+        
+         </div>
+        }
         </div>
         
     </>
