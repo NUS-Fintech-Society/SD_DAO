@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import CreateProjectPage from "../../components/CreateProjectPage/CreateProjectPage"
 
 
-export default function createProposal() {
+export default function CreateProposal() {
     const { data: session } = useSession();
     return (
         <>
