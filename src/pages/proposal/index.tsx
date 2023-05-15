@@ -15,6 +15,7 @@ import "../../components/Proposal/newproposalpage.svg";
 import { getProposalHashes, getProposalInfo, getWalletAuthenticated, retrieveProposal } from "../../components/api/api";
 import { ProposalInfo } from "../../components/api/types";
 import { Proposal } from "../../components/api/types";
+import { useSession } from "next-auth/react";
 
 interface ProposalProps {
   proposedTitle1: string;
@@ -54,6 +55,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
 
   const [proposalList, setProposalList] = useState<Proposal[]>([]);
   const [proposalToShow, setProposalToShow] = useState(0);
+  const { data: session } = useSession();
 
   useEffect(() => {
     if (proposalList.length === 0) {
@@ -101,48 +103,30 @@ const Proposal: React.FC<ProposalProps> = (props) => {
     remainingTokens: number;
   }[] = [
     {
-      proposedTitle: "Proposed Title 1",
+      proposedTitle: "Use Holographic Consensus",
       proposedDescription:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "The holographic consensus DAO voting mechanism is designed to screen out and focus attention on proposals that are most likely to be passed in a DAO. This model of voting aims to solve the governance scalability-resilience problem in decentralized organizations.",
       endDate: "9/8/2023",
       minStake: 90,
       proposedType: "DAO",
       remainingTokens: 6,
     },
     {
-      proposedTitle: "Proposed Title 2",
+      proposedTitle: "Recruit 2 more FE Devs for Fintech monthwebsite",
       proposedDescription:
-        "Second entry of Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "We need more Front end developers for FTS website project to ensure that we reach our deadline in time.",
       endDate: "1/8/2023",
       minStake: 10,
-      proposedType: "Blockchain",
+      proposedType: "SD",
       remainingTokens: 6,
     },
     {
-      proposedTitle: "Proposed Title 3",
+      proposedTitle: "Organize monthly cohesions",
       proposedDescription:
-        "Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "Organize Monthly cohesions for Software Development department, this will promote teamwork and improve productivity in members.",
       endDate: "5/12/2023",
       minStake: 5,
-      proposedType: "Payments",
-      remainingTokens: 66,
-    },
-    {
-      proposedTitle: "Proposed Title 3",
-      proposedDescription:
-        "Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      endDate: "5/12/2023",
-      minStake: 5,
-      proposedType: "Payments",
-      remainingTokens: 6,
-    },
-    {
-      proposedTitle: "Proposed Title 3",
-      proposedDescription:
-        "Third entry Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      endDate: "5/12/2023",
-      minStake: 5,
-      proposedType: "Payments",
+      proposedType: "SD",
       remainingTokens: 66,
     },
   ];
@@ -172,8 +156,10 @@ const Proposal: React.FC<ProposalProps> = (props) => {
 
   return (
     <>
-      <div className={"proposalBackground"}>
-        <Center mt={-16}>
+      <div className={"proposalBackground bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16"}>
+      {session?
+      <div>
+         <Center mt={-16}>
           <VStack>
             <Heading mt={200}>Proposals</Heading>
             <Text
@@ -204,7 +190,7 @@ const Proposal: React.FC<ProposalProps> = (props) => {
               </Button>
             </Wrap>
             <VStack>
-              {proposalContent.map((obj) => {
+              {testData.map((obj) => {
                 return (
                   <Box paddingBottom={5}
                   key = {obj.proposedTitle}>
@@ -222,6 +208,12 @@ const Proposal: React.FC<ProposalProps> = (props) => {
             </VStack>
           </Stack>
         </Center>
+        </div>:
+        <div className = "h-screen flex items-center justify-center font-bold">
+       
+         Looks like you are not logged in, please sign in first!
+         
+          </div>}
       </div>
     </>
   );

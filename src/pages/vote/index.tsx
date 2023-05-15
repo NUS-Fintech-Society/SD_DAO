@@ -5,10 +5,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import VoteAboutTab from "../../components/Vote/VoteAboutTab";
 import VoteList from "../../components/Vote/VoteList";
 import { VotePanelLeft } from "../../components/Vote/VotePanelLeft";
+import { useSession } from "next-auth/react";
 
 export default function Vote() {
   const [rightPanelName, setRightPanelName] = useState("Proposals");
   const router = useRouter();
+  const { data: session } = useSession();
+
 
   function PanelRight() {
     if (rightPanelName === "Proposals") {
@@ -26,6 +29,7 @@ export default function Vote() {
 
   return (
     <div className="bg-vote-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen -mt-16">
+      {session? 
       <div className="py-5">
         <div className="px-20 pt-36 lg:pt-40 xl:pt-48 2xl:pt-64">
           <div className="w-full h-full">
@@ -57,7 +61,13 @@ export default function Vote() {
             </div>
           </div>
         </div>
-      </div>
+      </div>:
+      <div className = "h-screen flex items-center justify-center font-bold">
+       
+       Looks like you are not logged in, please sign in first!
+       
+        </div>  
+}
     </div>
   );
 }

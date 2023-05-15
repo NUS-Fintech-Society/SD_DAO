@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { AiFillGithub, AiFillLinkedin } from "react-icons/ai";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { useSession } from "next-auth/react";
 
 const sampleData = {
   id: 1,
@@ -40,6 +41,7 @@ const sampleData = {
 export default function Profile() {
   const [page, setPage] = useState("Profile");
   const [address, setAddress] = useState("");
+  const { data: session } = useSession();
 
   useEffect(() => {
     getWalletAddress().then((addr) => setAddress(addr));
@@ -112,7 +114,10 @@ export default function Profile() {
   }
 
   return (
-    <div className="bg-profile-page bg-no-repeat bg-cover bg-left-top h-screen">
+    
+    <div className="bg-profile-page bg-no-repeat bg-cover  bg-scroll  bg-left-top min-h-screen -mt-16">
+      {session?
+      <div>
       <Link href="/">
         <img
           src="/fintech_logo.png"
@@ -134,6 +139,13 @@ export default function Profile() {
           </VStack>
         </HStack>
       </Center>
+      </div>: 
+      <div className = "h-screen flex items-center justify-center font-bold">
+       
+      Looks like you are not logged in, please sign in first!
+      
+       </div>
+}
     </div>
   );
 }

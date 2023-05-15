@@ -28,7 +28,6 @@ const handleSubmit = async() => {
 
 const navigation_loggedout = [
   { name: "Home", href: `/` },
-  { name: "Projects", href: `/projects` },
 ];
 
 const navigation_loggedin = [
@@ -256,7 +255,7 @@ export default function NavBar() {
  */}
 
            <div className="ml-5">
-             <Link href="/signup">
+             <Link href="/login">
             <button
               className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
               onClick={() => setLoginState(!login)}
