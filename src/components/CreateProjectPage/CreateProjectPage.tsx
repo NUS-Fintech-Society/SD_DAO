@@ -10,7 +10,7 @@ export default function CreateProjectPage() {
 
     return (
         <>
-            <div className="grid gap-2 w-screen h-screen content-center bg-[url('/newproposalpage.svg')]">
+            <div className="grid gap-2 content-center bg-landing-page bg-no-repeat bg-cover bg-left-top h-screen -mt-16">
                 <h1 className="text-center text-blue-900 text-3xl font-bold">Create a new proposal</h1>
                 <div className="inline text-center">
                 <h2 className="bg-yellow-100 rounded-lg inline p-1">Project XYZ</h2>
