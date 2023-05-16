@@ -1,16 +1,14 @@
 import { useToast } from '@chakra-ui/react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Field, FieldArray, FieldProps, Form, Formik } from 'formik';
-import Link from 'next/link';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import DatePicker from '../CreateProjectPage/DatePicker';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { useAccount } from 'wagmi';
 import * as Yup from 'yup';
-import { createProposal, getWalletAddress } from '../api/api';
-import { AiTwotoneCalendar } from 'react-icons/ai';
+import useCreateProposal from '../../hooks/useCreateProposal';
 import { getCurrentDateTime } from '../Vote/voteUtils';
-import Option from '../CreateProjectPage/Option';
-import { Proposal } from '../api/types';
 import { CustomDateInput } from './CustomDateInput';
+import { CustomOptionInput } from './CustomOptionInput';
 
 const formTypes = [
   { label: 'Loss Voting', value: 'loss' },
@@ -25,288 +23,198 @@ const minStakeValues = [
 ];
 
 let initialType = 'loss';
-let initialMinStakeVal = 0;
+let initialMinStakeVal = 1;
 
-export const initialValues = {
-  title: '',
-  content: '',
-  type: initialType,
-  options: [{ id: 1, label: '' }],
-  min_stake: initialMinStakeVal,
-  end_date: getCurrentDateTime(),
-};
-
-async function submitProposal(
-  account: string | null,
-  values: Pick<Proposal, 'min_stake' | 'options' | 'type'>
-) {
-  if (account !== null) {
-    const finalValues = {
-      ...values,
-      create_date: getCurrentDateTime(),
-      numOfOptions: values.options.length,
-      isLossVoting: values.type === 'loss',
-      isAllocationProposal: values.type === 'allocation',
-      userId: account,
-    };
-
-    return createProposal(account, finalValues);
-  }
+export interface ProposalFormValues {
+  title: string;
+  description: string;
+  type: string;
+  options: { id: number; label: string }[];
+  min_stake: number;
+  endDate: number;
 }
+
+const initialValues: ProposalFormValues = {
+  title: '',
+  description: '',
+  type: initialType,
+  options: [
+    { id: 1, label: 'Yes' },
+    { id: 2, label: 'No' },
+  ],
+  min_stake: initialMinStakeVal,
+  endDate: getCurrentDateTime(),
+};
 
 const proposalSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
-  content: Yup.string().required('Content is required'),
+  description: Yup.string().required('Description is required'),
   options: Yup.array().min(2, 'Please have at least 2 options'),
 });
 
 export default function CreateProposalPage() {
+  const { address } = useAccount();
+  // TODO: integrate with project page
+  const { createProposal, isSuccess, txReceipt } = useCreateProposal(1);
   const toast = useToast();
-  const [address, setAddress] = useState('');
 
   useEffect(() => {
-    getWalletAddress().then((addr) => setAddress(addr));
-  }, []);
-
-  //Toast for error messages
-  const errorNotification = (error: any) =>
-    toast({
-      title: 'Error',
-      position: 'bottom-left',
-      status: 'error',
-      duration: 3000,
-      isClosable: true,
-    });
+    if (isSuccess) {
+      toast({
+        title: 'Proposal Created Successfully!',
+        status: 'success',
+        description: JSON.stringify(txReceipt),
+      });
+    }
+  }, [isSuccess]);
 
   return (
-    <div className="grid gap-2 content-center">
-      <h1 className="text-center text-blue-900 text-3xl font-bold pt-12">
-        Create a new proposal
-      </h1>
+    <div className="grid gap-2 content-center pb-16">
+      <h1 className="text-center text-5xl pt-12 pb-2">Create Proposal</h1>
       <div className="inline text-center">
         <h2 className="bg-yellow-100 rounded-lg inline p-1">Project XYZ</h2>
       </div>
-      <div className="px-40">
-        <label
-          htmlFor="title"
-          className="block mb-2 text-sm font-medium text-gray-600"
-        >
-          Title
-        </label>
-        <textarea
-          id="title"
-          className="block p-2 w-full box-border h-10 text-sm text-gray-900 bg-gray-300 rounded-lg border border-gray-300 resize-none mb-6
-                            focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:bg-slate-50
-                            hover:border-yellow-500 hover:bg-slate-100"
-        ></textarea>
-        <label
-          htmlFor="description"
-          className="block mb-2 text-sm font-medium text-gray-600"
-        >
-          Description
-        </label>
-        <textarea
-          id="description"
-          className="block box-border h-28 p-2 w-full text-sm text-gray-900 bg-gray-300 rounded-lg border border-gray-300 resize-none
-                            focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:bg-slate-50
-                            hover:border-yellow-500 hover:bg-slate-100"
-        ></textarea>
-        <div className="mt-6">
-          <div className="float-left w-1/2">
-            <h4 className="text-sm">Proposal Conditions</h4>
-            <div className="flex items-center mt-3">
-              <input
-                id="default-radio-1"
-                type="radio"
-                value=""
-                name="default-radio"
-                className="form-radio w-4 h-4 bg-slate-100 checked:bg-yellow-500 cursor-pointer"
-              ></input>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values, { resetForm, setSubmitting }) => {
+          console.log({ values, address });
+          if (address) {
+            createProposal({
+              isAllocationProposal: values.type === 'allocation',
+              isLossVoting: values.type === 'loss',
+              numOfOptions: values.options.length,
+              min_stake: values.min_stake,
+            });
+            setSubmitting(false);
+          }
+        }}
+        validationSchema={proposalSchema}
+        validateOnMount
+      >
+        {({ values, errors, touched, isValid, setSubmitting }) => {
+          return (
+            <Form className="px-40">
               <label
-                htmlFor="default-radio-1"
-                className="ml-2 text-sm font-medium text-gray-900"
+                htmlFor="title"
+                className="block mb-2 text-lg font-bold text-gray-800"
               >
-                Loss Voting
+                Title
               </label>
-              <input
-                id="default-radio-2"
-                type="radio"
-                value=""
-                name="default-radio"
-                className="form-radio ml-6 w-4 h-4 bg-slate-100 checked:bg-yellow-500 cursor-pointer"
-              ></input>
+              <Field
+                id="title"
+                type="text"
+                name="title"
+                placeholder="Proposal title"
+                className="block p-2 w-full box-border h-10 text-sm text-gray-900 bg-gray-300 rounded-lg border border-gray-300 resize-none mb-6 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:bg-slate-50 hover:border-yellow-500 hover:bg-slate-100"
+              />
               <label
-                htmlFor="default-radio-2"
-                className="ml-2 text-sm font-medium text-gray-900"
+                htmlFor="description"
+                className="block mb-2 text-lg font-bold text-gray-800"
               >
-                Allocation Proposal
+                Description
               </label>
-            </div>
-            <div className="mt-5">
-              <label className="relative block w-5/6">
-                <DatePicker />
-                <AiTwotoneCalendar
-                  size={24}
-                  className="absolute top-1 right-3"
-                />
-              </label>
-            </div>
-          </div>
-          <div className="w-1/2 float-right">
-            {/* <h4 className="text-sm">Options</h4> */}
-            <div className="w-full">
-              <Option />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="text-center mt-6">
-        <button className="p-1 px-8 bg-amber-200 hover:bg-amber-300 font-bold rounded-lg">
-          Submit
-        </button>
-      </div>
-    </div>
-  );
-
-  return (
-    <>
-      <div className="w-full h-full">
-        <div className="flex flex-col max-w-7xl mx-auto p-2">
-          <div className="flex flex-row items-center justify-between px-4 ">
-            <div className="text-4xl text-gray-700 my-4">New Proposal</div>
-            <Link href={`/vote`}>
-              <div className="bg-gray-200 text-gray-600 px-3 py-2 rounded-md text-sm font-medium cursor-pointer">
-                Back to vote
-              </div>
-            </Link>
-          </div>
-        </div>
-        <div className="max-w-7xl x-auto px-8 py-2">
-          <Formik
-            initialValues={initialValues}
-            validationSchema={proposalSchema}
-            validateOnMount={true}
-            onSubmit={(values, { resetForm, setSubmitting }) => {
-              // console.log(JSON.stringify(values));
-              submitProposal(address, values);
-              setSubmitting(false);
-              resetForm();
-            }}
-          >
-            {({ values, errors, touched, isValid, setSubmitting }) => (
-              <Form>
-                <div className="hidden">
-                  {(values.min_stake = initialMinStakeVal)}
-                  {(values.type = initialType)}
-                </div>
-
-                <div className="flex flex-col text-gray-600 lg:flex-row lg:space-x-4">
-                  <div className="flex-col w-full">
-                    <Field
-                      name="title"
-                      component={CustomTextInput}
-                      label="Title"
-                      placeholder="Question"
-                      errors={errors}
-                      touched={touched}
-                    />
-                    <Field
-                      name="content"
-                      component={CustomLongTextInput}
-                      label="Content"
-                      placeholder="What is your proposal?"
-                      errors={errors}
-                      touched={touched}
-                    />
-                    <div className="flex-col w-full border-2 border-gray-200 rounded-xl my-6">
-                      <div className="flex flex-row space-x-2  items-end bg-blue-100 px-4 py-3 text-2xl font-semibold rounded-t-lg">
-                        <span>Choices</span>
-                        <div className="class">
-                          {errors.options && touched.options ? (
-                            <div className="text-red-500 font-thin text-sm">
-                              require at least 2 options
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-
-                      <FieldArray name="options">
-                        {({ insert, remove, push }) => (
-                          <div className="flex flex-col w-full px-4 my-2 space-y-2">
-                            {values.options.length > 0 &&
-                              values.options.map((friend, index) => (
-                                <div
-                                  className="flex flex-row space-x-2 border-2 border-gray-200 rounded-full items-center font-bold justify-between"
-                                  key={index}
-                                >
-                                  <div className="pl-8 cursor-default">
-                                    {index + 1}
-                                  </div>
-                                  <Field
-                                    name={`options.${index}.label`}
-                                    placeholder="option"
-                                    component={CustomOptionInput}
-                                  />
-                                  <button
-                                    type="button"
-                                    className="font-bold w-12"
-                                    onClick={() => remove(index)}
-                                  >
-                                    <div className="w-4">X</div>
-                                  </button>
-                                </div>
-                              ))}
-                            <button
-                              type="button"
-                              className="p-2 border-2 border-gray-200 rounded-full items-center px-8 font-bold w-full text-center justify-center"
-                              onClick={() =>
-                                push({
-                                  id: values.options.length + 1,
-                                  label: '',
-                                })
-                              }
-                            >
-                              Add option
-                            </button>
-                          </div>
-                        )}
-                      </FieldArray>
-                    </div>
-                  </div>
-                  <div className="flex-col lg:w-96 bg-white rounded-xl border border-gray-200">
-                    <div className="border-b border-gray-200 bg-blue-100 px-8 py-3 rounded-t-lg font-bold text-xl">
-                      Actions
-                    </div>
-                    <div className="p-4">
-                      <Field name="type" component={CustomVoteInput} />
-                      <Field name="min_stake" component={CustomStakeInput} />
-                      <Field name="end_date" component={CustomDateInput} />
-                      <button
-                        type="submit"
-                        disabled={!isValid}
-                        className={
-                          !isValid
-                            ? `w-full rounded-full items-center px-5 py-3 text-sm font-medium text-gray-400 bg-white outline-none focus:outline-none m-1 hover:m-0 focus:m-0 border border-gray-400 hover:border-4 transition-all cursor-not-allowed`
-                            : `w-full rounded-full items-center px-5 py-3 text-sm font-medium text-indigo-600 bg-white outline-none focus:outline-none m-1 hover:m-0 focus:m-0 border border-indigo-600 hover:border-4 focus:border-4 hover:border-indigo-800 hover:text-black hover:bg-indigo-100 focus:border-purple-200 transition-all`
-                        }
-                        onClick={() => {
-                          getWalletAddress().then((address) => {
-                            submitProposal(address || '', values);
-                            setSubmitting(false);
-                          });
-                        }}
+              <Field
+                as="textarea"
+                name="description"
+                id="description"
+                placeholder="Proposal description"
+                className="block box-border h-28 p-2 w-full text-sm text-gray-900 bg-gray-300 rounded-lg border border-gray-300 resize-none focus:outline-none focus:ring-yellow-500 focus:border-yellow-500 focus:bg-slate-50 hover:border-yellow-500 hover:bg-slate-100"
+              />
+              <div className="mt-6 flex space-x-4">
+                <div className="w-1/2">
+                  <label htmlFor="options" className="text-lg font-bold">
+                    Proposal Type
+                  </label>
+                  <div className="flex items-center mt-3 space-x-3">
+                    {formTypes.map((proposalType) => (
+                      <div
+                        key={proposalType.value}
+                        className="flex items-center"
                       >
-                        Publish
-                      </button>
-                    </div>
+                        <input
+                          id={proposalType.label}
+                          type="radio"
+                          value={proposalType.value}
+                          name={proposalType.label}
+                          className="form-radio w-4 h-4 bg-slate-100 checked:bg-yellow-500 cursor-pointer"
+                        />
+                        <label
+                          htmlFor={proposalType.label}
+                          className="ml-1 text-sm font-medium text-gray-900"
+                        >
+                          {proposalType.label}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-5">
+                    <label
+                      htmlFor="endDate"
+                      className="block mb-2 text-lg font-bold text-gray-800"
+                    >
+                      End Date
+                    </label>
+                    <Field name="endDate" component={CustomDateInput} />
                   </div>
                 </div>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </div>
-    </>
+                <div className="w-1/2">
+                  <label
+                    htmlFor="options"
+                    className="block mb-2 text-lg font-bold text-gray-800"
+                  >
+                    Options
+                  </label>
+                  <div className="w-full">
+                    <FieldArray name="options">
+                      {({ remove, push }) => {
+                        return values.options.map((option, index) => {
+                          return (
+                            <div
+                              key={`${option.label} ${index}`}
+                              className="relative"
+                              // onKeyDown={(e) => {
+                              //   if (
+                              //     e.key === 'Enter' &&
+                              //     values.options[index]?.label !== ''
+                              //   ) {
+                              //     push({
+                              //       id: values.options.length,
+                              //       label: '',
+                              //     });
+                              //     console.log('pushing');
+                              //   }
+                              // }}
+                            >
+                              <Field
+                                name={`options.${index}.label`}
+                                placeholder={'Enter option name'}
+                                component={CustomOptionInput}
+                              />
+                              <AiOutlineDelete
+                                className="absolute right-2 top-3 cursor-pointer"
+                                onClick={() => remove(index)}
+                              />
+                            </div>
+                          );
+                        });
+                      }}
+                    </FieldArray>
+                  </div>
+                </div>
+              </div>
+              <div className="text-center mt-6">
+                <button
+                  className="p-1 px-8 bg-amber-200 hover:bg-amber-300 font-bold rounded-lg"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </Form>
+          );
+        }}
+      </Formik>
+    </div>
   );
 }
 
@@ -334,46 +242,11 @@ const CustomTextInput = ({
   </div>
 );
 
-const CustomLongTextInput = ({
-  field,
-  form,
-  label,
-  ...props
-}: FieldProps & { label: string }) => (
-  <div className="flex flex-col my-2 space-y-1">
-    <div className="flex flex-row space-x-2 items-end">
-      <div className="text-gray-500 font-semibold text-2xl">{label}</div>
-      <div className="class">
-        {form.errors.content && form.touched.content ? (
-          <div className="text-red-500 font-thin text-sm">required</div>
-        ) : null}
-      </div>
-    </div>
-    <textarea
-      rows={6}
-      {...field}
-      {...props}
-      className="border border-gray-200 rounded-lg p-2 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent font-medium"
-    />
-  </div>
-);
-
-const CustomOptionInput = ({ field, form, ...props }: FieldProps) => (
-  <div className="flex flex-col w-full">
-    <input
-      type="text"
-      {...field}
-      {...props}
-      className="p-2 shadow-sm text-base focus:outline-none focus:border-transparent font-bold text-center"
-    />
-  </div>
-);
-
 function CustomStakeInput({
   field,
   form,
   ...props
-}: FieldProps<(typeof initialValues)['min_stake']>) {
+}: FieldProps<ProposalFormValues['min_stake']>) {
   let [isOpen, setIsOpen] = useState(false);
   let [stakeLabel, setStakeLabel] = useState(getLabel());
   let buttonRefs = useRef(
@@ -500,7 +373,7 @@ function CustomVoteInput({
   field,
   form,
   ...props
-}: FieldProps<(typeof initialValues)['type']>) {
+}: FieldProps<ProposalFormValues['type']>) {
   let [isOpen, setIsOpen] = useState(false);
   let buttonRefs = useRef(
     formTypes.map(() => React.createRef<HTMLButtonElement>())

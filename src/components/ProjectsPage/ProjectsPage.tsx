@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi';
-import useGetProposals from '../../hooks/useGetProposals';
 import NextProject from './ProjectBox/NextProject';
 import PrevProject from './ProjectBox/PrevProjects';
 
 export default function ProjectsPage() {
   const [nextPage, setNextPage] = useState(false);
-  const { data } = useGetProposals();
-
-  console.log({ data });
 
   function handleNextPage() {
     if (!nextPage) {
@@ -23,7 +19,7 @@ export default function ProjectsPage() {
   }
 
   return (
-    <div className="flex items-center justify-center flex-col space-y-4 pt-16">
+    <div className="flex items-center justify-center flex-col space-y-4">
       <h1 className="text-center text-5xl pt-12 pb-6">Projects</h1>
       <div className="flex h-full place-items-center w-full">
         <div className="w-2/12 flex items-center">
@@ -36,22 +32,22 @@ export default function ProjectsPage() {
             </button>
           </div>
         </div>
-        <div className="w-8/12 h-[290px] flex-none  relative">
+        <div className="w-8/12 flex-none relative">
           {!nextPage && (
             <>
-              <div className="flex space-x-16 absolute w-full justify-center">
+              <div className="flex space-x-16 w-full justify-center">
                 <PrevProject />
               </div>
             </>
           )}
           {nextPage && (
             <>
-              <div className="flex space-x-16 absolute w-full justify-center">
+              <div className="flex space-x-16 w-full justify-center">
                 <NextProject />
               </div>
             </>
           )}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 content-center flex space-x-8">
+          <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 content-center flex space-x-8">
             {nextPage && (
               <>
                 <span className="w-8 h-1 bg-gray-200"></span>

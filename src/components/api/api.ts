@@ -1,36 +1,16 @@
-import ipfsClient from 'ipfs-http-client';
+import { create } from 'ipfs-http-client';
+import { getContract } from 'viem';
 import { Proposal, ProposalInfo } from './types';
 
 const IPFS_URL = 'abcdao.infura-ipfs.io';
-const ADDRESS = '0x0091d2eb482899b2bc0e786706daa77ed1604c2b';
 
-const ipfs = ipfsClient.create({
-  host: IPFS_URL,
-  port: 5001,
-  protocol: 'https',
+const ipfs = create({
+  url: 'https://ipfs.infura.io:5001/api/v0',
 });
 
 export async function uploadProposal(text: string) {
   const added = await ipfs.add(text);
   return added.path;
-}
-
-export async function getWalletAddress() {
-  try {
-    const provider = getWeb3Provider();
-    if (provider) {
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
-      return address;
-    }
-  } catch (err) {
-    return '';
-  }
-  return '';
-}
-
-export async function getWalletAuthenticated() {
-  return (await getWalletAddress()) !== '';
 }
 
 export async function retrieveProposal(
@@ -39,22 +19,6 @@ export async function retrieveProposal(
   return fetch(`https://${IPFS_URL}/ipfs/${proposalHash}`).then((x) =>
     x.json()
   );
-}
-
-export function getWeb3Provider() {
-  if (typeof window !== undefined) {
-    // @ts-ignore
-    return new ethers.providers.Web3Provider(window.ethereum, 'goerli');
-  }
-}
-
-export function getInfuraProvider() {
-  return new ethers.providers.InfuraProvider('goerli', process.env.PROJECT_ID);
-}
-
-export function getContract() {
-  const provider = getInfuraProvider();
-  return new ethers.Contract(ADDRESS, contractData.abi, provider);
 }
 
 export async function getProposalHashes(): Promise<string[]> {

@@ -1,16 +1,11 @@
+import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { useToast } from '@chakra-ui/react';
-import { BellIcon, HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
-import Image from 'next/image';
-import { useSession } from 'next-auth/react';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { hash } from 'bcryptjs';
-import { signOut } from 'next-auth/react';
-
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useState } from 'react';
-import { getWalletAddress, getWeb3Provider } from '../api/api';
-import { getShortAccountHash } from '../api/utils';
 
 const handleSubmit = async () => {
   const result = await signOut({
@@ -40,14 +35,7 @@ export default function NavBar() {
   const password = '123';
   const numSaltRounds = 8;
   const hashed = hash(password, numSaltRounds);
-
-  const toast = useToast();
   const router = useRouter();
-  const [address, setAddress] = useState('');
-
-  useEffect(() => {
-    getWalletAddress().then((address) => setAddress(address));
-  }, []);
 
   // Pending Log In Page
 
@@ -118,6 +106,7 @@ export default function NavBar() {
                     </a>
                   </Link>
                 ))}
+                <ConnectButton />
               </div>
             </div>
           </div>
@@ -248,7 +237,7 @@ export default function NavBar() {
  */}
 
           <div className="ml-5">
-            <Link href="/signup">
+            <Link href="/login">
               <button
                 className="border bg-white text-black rounded-2xl px-5 font-chakraPetch tracking-wide"
                 onClick={() => setLoginState(!login)}
@@ -263,7 +252,10 @@ export default function NavBar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-transparent drop-shadow-2xl absolute top-0 w-full h-16">
+    <Disclosure
+      as="nav"
+      className="bg-transparent drop-shadow-2xl absolute top-0 w-full h-16"
+    >
       {({ open }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">

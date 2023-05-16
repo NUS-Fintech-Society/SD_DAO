@@ -21,4 +21,9 @@ export default defineNextConfig({
   env: {
     INFURA_API_KEY: process.env.INFURA_API_KEY,
   },
+  webpack: (config) => {
+    // for rainbow wallet polyfills https://www.rainbowkit.com/docs/installation#react-nextjs-and-webpack
+    config.resolve.fallback = { fs: false, net: false, tls: false };
+    return config;
+  },
 });

@@ -25,7 +25,7 @@ export default function Vote() {
   }
 
   return (
-    <div className="bg-vote-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen">
+    <div className="bg-vote-page bg-scroll bg-cover bg-no-repeat bg-left-top min-h-screen pt-16">
       <div className="py-5">
         <div className="px-20 pt-36 lg:pt-40 xl:pt-48 2xl:pt-64">
           <div className="w-full h-full">
